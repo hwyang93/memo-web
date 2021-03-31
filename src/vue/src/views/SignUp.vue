@@ -96,13 +96,9 @@ export default {
     };
   },
   methods: {
-    test: function () {
-      console.log(this);
-    },
     goSignUp: function () {
       this.axiosUtil.post("/api/main/signUp.do", this.form, (result) => {
         alert("가입되었습니다.");
-        console.log(this);
         this.$router.push("/login");
       });
     },

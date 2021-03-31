@@ -519,12 +519,12 @@ header .navbar-expand-md .navbar-toggler {
 /*------------- :: 05 Home Banner -------------*/
 .home-banner {
   background: #f9f9f9;
-  height: 96vh;
+  height: 70vh;
   position: relative;
 }
 
 .home-banner-row {
-  height: 96vh;
+  height: 70vh;
 }
 
 .home-banner .content-center {
@@ -3050,4 +3050,16 @@ a.btn.blog-btn .flaticon-double-angle-pointing-to-right:before {
 .helping-area-cont h1.section-title {
   text-transform: inherit;
   font-size: 42px;
+}
+
+.bAddr {
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.title {
+  font-weight: bold;
+  display: block;
 }
