@@ -1,6 +1,6 @@
 package memoWeb.web.main.controller;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.service.MemberService;
 import memoWeb.web.main.service.MemberVO;
 
@@ -25,8 +25,13 @@ public class MainContorller {
 	}
 	
 	@PostMapping("login.do")
-	public String login(Model model, @RequestBody MemberVO member) {
-		MemberVO result = memberService.login(member.getUserId(), member.getUserPassword());
+	public String login(Model model, @RequestBody MemberVO member, HttpSession session) {
+		MemberVO result = null;
+		result = memberService.login(member.getUserId(), member.getUserPassword());
+		
+		if (result != null) {
+			session.setAttribute(CommonConstants.SESSION, result);
+		}
 		
 		model.addAttribute("result", result);
 		return "jsonView";

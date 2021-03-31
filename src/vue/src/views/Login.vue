@@ -67,7 +67,6 @@ export default {
   methods: {
     goLogin: function () {
       axiosUtil.post("/api/main/login.do", this.form, (result) => {
-        console.log(result.data.result);
         if (result.data.result == null) {
           alert("일치하는 회원이 없습니다.");
         } else {

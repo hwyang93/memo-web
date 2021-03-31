@@ -7,6 +7,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import qs from "qs";
 import utils from "./utils/axios-util";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.use(BootstrapVue);
 Vue.use(qs);
