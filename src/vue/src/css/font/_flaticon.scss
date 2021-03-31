@@ -1,0 +1,106 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 19/06/2019 07:10
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-double-angle-pointing-to-right:before { content: "\f100"; }
+.flaticon-close-envelope:before { content: "\f101"; }
+.flaticon-music-player-play:before { content: "\f102"; }
+.flaticon-checked:before { content: "\f103"; }
+.flaticon-placeholder-filled-point:before { content: "\f104"; }
+.flaticon-play-button:before { content: "\f105"; }
+.flaticon-right-arrow:before { content: "\f106"; }
+.flaticon-facebook-logo:before { content: "\f107"; }
+.flaticon-google-plus-symbol:before { content: "\f108"; }
+.flaticon-twitter-logo-silhouette:before { content: "\f109"; }
+.flaticon-linkedin-logo:before { content: "\f10a"; }
+.flaticon-google-plus:before { content: "\f10b"; }
+.flaticon-right-arrow-1:before { content: "\f10c"; }
+.flaticon-forward-arrow:before { content: "\f10d"; }
+.flaticon-left-arrow:before { content: "\f10e"; }
+.flaticon-back-arrow:before { content: "\f10f"; }
+.flaticon-phone-receiver:before { content: "\f110"; }
+.flaticon-fax:before { content: "\f111"; }
+.flaticon-instagram-symbol:before { content: "\f112"; }
+.flaticon-award:before { content: "\f113"; }
+.flaticon-checklist:before { content: "\f114"; }
+.flaticon-clock:before { content: "\f115"; }
+.flaticon-smile:before { content: "\f116"; }
+.flaticon-leadership:before { content: "\f117"; }
+.flaticon-lock:before { content: "\f118"; }
+.flaticon-help:before { content: "\f119"; }
+.flaticon-market:before { content: "\f11a"; }
+.flaticon-team:before { content: "\f11b"; }
+.flaticon-analysis:before { content: "\f11c"; }
+.flaticon-envelope:before { content: "\f11d"; }
+.flaticon-like:before { content: "\f11e"; }
+.flaticon-magnifying-glass:before { content: "\f11f"; }
+.flaticon-chat-1:before { content: "\f120"; }
+    
+    $font-Flaticon-double-angle-pointing-to-right: "\f100";
+    $font-Flaticon-close-envelope: "\f101";
+    $font-Flaticon-music-player-play: "\f102";
+    $font-Flaticon-checked: "\f103";
+    $font-Flaticon-placeholder-filled-point: "\f104";
+    $font-Flaticon-play-button: "\f105";
+    $font-Flaticon-right-arrow: "\f106";
+    $font-Flaticon-facebook-logo: "\f107";
+    $font-Flaticon-google-plus-symbol: "\f108";
+    $font-Flaticon-twitter-logo-silhouette: "\f109";
+    $font-Flaticon-linkedin-logo: "\f10a";
+    $font-Flaticon-google-plus: "\f10b";
+    $font-Flaticon-right-arrow-1: "\f10c";
+    $font-Flaticon-forward-arrow: "\f10d";
+    $font-Flaticon-left-arrow: "\f10e";
+    $font-Flaticon-back-arrow: "\f10f";
+    $font-Flaticon-phone-receiver: "\f110";
+    $font-Flaticon-fax: "\f111";
+    $font-Flaticon-instagram-symbol: "\f112";
+    $font-Flaticon-award: "\f113";
+    $font-Flaticon-checklist: "\f114";
+    $font-Flaticon-clock: "\f115";
+    $font-Flaticon-smile: "\f116";
+    $font-Flaticon-leadership: "\f117";
+    $font-Flaticon-lock: "\f118";
+    $font-Flaticon-help: "\f119";
+    $font-Flaticon-market: "\f11a";
+    $font-Flaticon-team: "\f11b";
+    $font-Flaticon-analysis: "\f11c";
+    $font-Flaticon-envelope: "\f11d";
+    $font-Flaticon-like: "\f11e";
+    $font-Flaticon-magnifying-glass: "\f11f";
+    $font-Flaticon-chat-1: "\f120";
