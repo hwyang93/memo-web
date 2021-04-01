@@ -43,7 +43,7 @@
 
 ---------------------------------------------------------------- */
 
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Serif+Caption|PT+Serif:400,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Serif+Caption|PT+Serif:400,700&display=swap');
 
 /* 
 font-family: 'PT Serif', serif;
@@ -69,7 +69,7 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-size: 16px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 p {
@@ -106,7 +106,7 @@ h3,
 .btn,
 nav,
 .service-title a {
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
 }
 
 h1,
@@ -171,10 +171,10 @@ button:focus {
   outline: none !important;
 }
 
-[class^="flaticon-"]:before,
-[class*=" flaticon-"]:before,
-[class^="flaticon-"]:after,
-[class*=" flaticon-"]:after {
+[class^='flaticon-']:before,
+[class*=' flaticon-']:before,
+[class^='flaticon-']:after,
+[class*=' flaticon-']:after {
   font-family: Flaticon;
   font-size: 19px;
   font-style: normal;
@@ -246,7 +246,6 @@ button:focus {
 
 /*------------- :: 03 Button -------------*/
 
-.btn,
 .btn:link,
 .btn:visited {
   text-transform: capitalize;
@@ -315,7 +314,7 @@ a:hover {
 }
 
 .navbar .dropdown .dropdown-menu .nav-link {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #fff;
   font-weight: normal;
 }
@@ -349,7 +348,7 @@ ul.dropdown-menu.row.dropdown-menu.container {
 
 .main-navbar li.nav-item.dropdown.mega-dropdown .dropdown-menu li a {
   font-size: 16px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: normal;
   color: #fff;
   margin: 3px 0;
@@ -396,7 +395,7 @@ nav.main-navbar.h_stiky ul.navbar-nav {
 }
 
 .navbar-nav .dropdown-menu .lable_title:before {
-  content: "";
+  content: '';
   display: block;
   height: 3px;
   position: absolute;
@@ -425,7 +424,7 @@ nav.navbar.navbar-default.navbar-expand-md {
   color: #1e2f41;
   font-size: 16px;
   min-height: 46px;
-  font-family: "PT Serif", serif;
+  font-family: 'PT Serif', serif;
 }
 
 .open_time_inner i.far.fa-clock {
@@ -462,7 +461,7 @@ nav .dropdown-toggle:hover::after {
 }
 
 nav .dropdown-toggle::after {
-  content: "\f10e";
+  content: '\f10e';
   font-family: Flaticon;
   font-size: 10px;
   border: 0;
@@ -500,7 +499,7 @@ header .navbar-expand-md .navbar-toggler {
 }
 
 .navbar-toggler-icon:before {
-  content: "";
+  content: '';
   height: 2px;
   width: 22px;
   background: #616161;
@@ -553,7 +552,7 @@ header .navbar-expand-md .navbar-toggler {
   background-repeat: no-repeat;
   background-position: center;
   overflow: hidden;
-  content: "";
+  content: '';
   display: block;
   left: 0;
   right: 0;
@@ -583,7 +582,7 @@ header .navbar-expand-md .navbar-toggler {
   right: 0;
   top: 0;
   bottom: 0;
-  content: "";
+  content: '';
 }
 
 .right-img-box_inner {
@@ -611,7 +610,7 @@ header .navbar-expand-md .navbar-toggler {
 }
 
 .banner_social_area .social_media:before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 4px;
@@ -664,7 +663,7 @@ header .navbar-expand-md .navbar-toggler {
 }
 
 .banner_social_area .social_media a:before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 38px;
@@ -731,12 +730,7 @@ header .navbar-expand-md .navbar-toggler {
 
 /*------------- :: 07 Page Heading -------------*/
 .page-title-section {
-  background: linear-gradient(
-      4deg,
-      rgba(4, 4, 4, 0.63) 17%,
-      rgba(21, 21, 21, 0.65) 69%
-    ),
-    url(../images/all-img/header-bg1.jpg);
+  background: linear-gradient(4deg, rgba(4, 4, 4, 0.63) 17%, rgba(21, 21, 21, 0.65) 69%), url(../images/all-img/header-bg1.jpg);
   background-size: cover;
   background-position: center;
   color: #ccc;
@@ -805,7 +799,7 @@ header .navbar-expand-md .navbar-toggler {
 }
 
 .about-list li i.dot {
-  content: "";
+  content: '';
   width: 14px;
   height: 14px;
   background: #ffa600;
@@ -842,7 +836,7 @@ ul.about-list.nav {
   background-repeat: no-repeat;
   background-position: top;
   overflow: hidden;
-  content: "";
+  content: '';
   display: block;
   left: 0;
   right: 0px;
@@ -919,7 +913,7 @@ span.icon-circle {
 .service-title a {
   display: block;
   color: #01aeb4;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 10px 0;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
@@ -1039,7 +1033,7 @@ section.counter_2 {
 .counter-col-inner h4 {
   color: #fff;
   font-weight: normal;
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
   font-weight: 600;
 }
 
@@ -1052,7 +1046,7 @@ section.counter_2 {
   height: 100%;
 }
 
-.outer_radius [class="m"] + use {
+.outer_radius [class='m'] + use {
   fill: #393d46;
 }
 
@@ -1091,7 +1085,7 @@ ul.nav.nav-pills.row li.nav-item {
 }
 
 .team_member_img:after {
-  content: "";
+  content: '';
   display: block;
   height: 158px;
   background: linear-gradient(180deg, #f9f9f9 -51%, #f3f3f300 0%, #f9f9f9 48%);
@@ -1172,7 +1166,7 @@ ul.inner-pricing li {
   display: block;
   color: #01aeb4;
   font-size: 80px;
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
   font-weight: 600;
 }
 
@@ -1260,7 +1254,7 @@ ul.inner-pricing li {
 }
 
 .owl-carousel .owl-nav button span:after {
-  content: "\f10e";
+  content: '\f10e';
   font-family: Flaticon;
   font-size: 50px;
   font-style: normal;
@@ -1280,7 +1274,7 @@ ul.inner-pricing li {
 }
 
 .owl-carousel .owl-nav button.owl-next span:after {
-  content: "\f10c";
+  content: '\f10c';
 }
 
 .owl-carousel.btn_aline .owl-nav button.owl-next {
@@ -1364,7 +1358,7 @@ ul.inner-pricing li {
 }
 
 .owl-carousel .owl-dots button.owl-dot:before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 24px;
@@ -1406,7 +1400,7 @@ p.post_date {
 }
 
 p.post_date:before {
-  content: "";
+  content: '';
   display: block;
   width: 12px;
   height: 68px;
@@ -1448,7 +1442,7 @@ a.btn.blog-btn i:before {
   font-weight: bold;
   padding-bottom: 3px;
   line-height: 1;
-  font-family: "PT Serif", serif;
+  font-family: 'PT Serif', serif;
 }
 
 .post_catipon img.img_post_user {
@@ -1463,7 +1457,7 @@ a.btn.blog-btn i:before {
 li.post_user h4 a {
   color: #00adb5;
   line-height: 22px;
-  font-family: "PT Serif", serif;
+  font-family: 'PT Serif', serif;
 }
 
 li.post_user {
@@ -1613,7 +1607,7 @@ img.footer_logo {
 }
 
 li.li_twitter:after {
-  content: "";
+  content: '';
   width: 30px;
   background: #393d46;
   position: absolute;
@@ -1770,7 +1764,7 @@ ul.about-plannings.nav li {
   min-width: 46%;
   padding: 0 15px;
   float: left;
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
   font-weight: 600;
   text-align: center;
   font-size: 18px;
@@ -1828,13 +1822,7 @@ ul.about-plannings.nav li {
   margin-bottom: 0;
 }
 .widgets-title {
-  background: linear-gradient(
-    73deg,
-    #00adb5 61%,
-    #00adb5 2%,
-    #00adb5 14%,
-    #9a1f1f00 -8%
-  );
+  background: linear-gradient(73deg, #00adb5 61%, #00adb5 2%, #00adb5 14%, #9a1f1f00 -8%);
   padding: 8px 30px;
   color: #fff;
   overflow: hidden;
@@ -1844,14 +1832,8 @@ ul.about-plannings.nav li {
   position: relative;
 }
 .widgets-title:after {
-  content: "";
-  background: linear-gradient(
-    90deg,
-    #00adb5 57%,
-    #393d46 13%,
-    #393d46 65%,
-    #9a1f1f00 37%
-  );
+  content: '';
+  background: linear-gradient(90deg, #00adb5 57%, #393d46 13%, #393d46 65%, #9a1f1f00 37%);
   position: absolute;
   width: 80px;
   top: -8px;
@@ -2016,14 +1998,14 @@ ul.about-plannings.nav li {
 }
 
 .media-body.post-right-text a {
-  font-family: "Roboto Slab", serif;
+  font-family: 'Roboto Slab', serif;
 }
 
 .blog_post-details .post_user h4 {
   font-size: 18px;
   color: #00adb5;
   margin-top: -3px;
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
 }
 
 .blog_post-details .post_user span.date {
@@ -2098,7 +2080,7 @@ a.reply-btn {
   font-size: 18px;
   text-decoration: none;
   font-weight: bold;
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
 }
 
 .comment_detail h5 {
@@ -2141,7 +2123,7 @@ a.pull_left_comment {
 h4.comment_detail_title {
   padding: 0px 0px;
   margin-bottom: 2px;
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
   color: #00adb5;
 }
 
@@ -2330,7 +2312,7 @@ section.service-section {
   overflow: hidden;
 }
 .member_name:after {
-  content: "";
+  content: '';
   background-color: #ffffff;
   position: absolute;
   height: 47%;
@@ -2477,7 +2459,7 @@ ul.team_mbr_contact {
   overflow: hidden;
 }
 .page_team_details .member_name:after {
-  content: "";
+  content: '';
   background-color: white;
   position: absolute;
   height: 47%;
@@ -2519,7 +2501,7 @@ ul.team_mbr_contact {
 }
 
 .skillbar-title {
-  font-family: "PT Serif", serif !important;
+  font-family: 'PT Serif', serif !important;
   font-weight: 600;
   -moz-border-radius-topleft: 3px;
   -moz-border-radius-bottomleft: 3px;
@@ -2545,7 +2527,7 @@ ul.team_mbr_contact {
 
 .skillbar:before {
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   z-index: -1;
   width: 99%;
@@ -2559,7 +2541,7 @@ ul.team_mbr_contact {
 
 .skillbar-boll {
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   border: 2px solid;
   width: 82px;
@@ -2583,7 +2565,7 @@ ul.team_mbr_contact {
   z-index: 99999;
   margin: 5px;
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   left: 5px;
   right: 0;
@@ -2598,7 +2580,7 @@ ul.team_mbr_contact {
   height: 70px;
   border-radius: 50%;
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   z-index: -1;
   -moz-box-shadow: inset 0 0 10px #000000;
@@ -2687,7 +2669,7 @@ ul.team_mbr_contact {
 
 .not-found-inner h2 {
   font-size: 70px;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: 'Open Sans', sans-serif !important;
   font-weight: bold;
   margin-bottom: 60px;
   line-height: 1;
@@ -2701,8 +2683,7 @@ ul.team_mbr_contact {
 
 section.not-found {
   position: relative;
-  background: linear-gradient(4deg, #f9f9f9d9 17%, #f9f9f9cf 69%),
-    url(../images/all-img/404.jpg);
+  background: linear-gradient(4deg, #f9f9f9d9 17%, #f9f9f9cf 69%), url(../images/all-img/404.jpg);
   background-size: cover;
   background-position: center;
 }
@@ -2755,28 +2736,18 @@ i.flaticon-double-angle-pointing-to-right.left {
   border-radius: 50%;
   height: 80px;
   width: 80px;
-  content: "";
+  content: '';
   background-color: #ffffff;
 }
 
 .bg-img-1 {
-  background: linear-gradient(
-      4deg,
-      rgba(255, 255, 255, 0.85) 17%,
-      rgba(255, 255, 255, 0.85) 69%
-    ),
-    url(../images/all-img/bg-img-1.png);
+  background: linear-gradient(4deg, rgba(255, 255, 255, 0.85) 17%, rgba(255, 255, 255, 0.85) 69%), url(../images/all-img/bg-img-1.png);
   background-size: cover;
   background-position: center;
 }
 
 .bg-img-2 {
-  background: linear-gradient(
-      4deg,
-      rgba(255, 255, 255, 0.85) 17%,
-      rgba(255, 255, 255, 0.85) 69%
-    ),
-    url(../images/all-img/bg-img-2.jpg);
+  background: linear-gradient(4deg, rgba(255, 255, 255, 0.85) 17%, rgba(255, 255, 255, 0.85) 69%), url(../images/all-img/bg-img-2.jpg);
   background-size: cover;
   background-position: center;
 }
@@ -2884,12 +2855,12 @@ i.flaticon-double-angle-pointing-to-right.left {
 }
 
 .accordion-custom_d .card-header .btn.collapsed:after {
-  content: "\f10e";
+  content: '\f10e';
   transition: all 0.4s;
 }
 
 .accordion-custom_d .card-header .btn:after {
-  content: "\f10c";
+  content: '\f10c';
   font-family: Flaticon;
   font-size: 20px;
   border: 0;
