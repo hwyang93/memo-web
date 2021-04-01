@@ -15,13 +15,40 @@
               <div class="row">
                 <div class="form-group col-md-12">
                   <div class="form-group search_2">
-                    <input type="text" class="form-control" placeholder="장소, 주소" id="s" />
+                    <input type="text" class="form-control" placeholder="검색" id="s" />
                     <button type="button" class="btn">
                       <i class="fas fa-search"></i>
                     </button>
                   </div>
-                  <div class="input-group">
-                    <input v-model="form.addr" type="text" class="form-control" placeholder="주소" />
+                  <div class="contact-section comment_form">
+                    <div class="contactus_form">
+                      <h3 class="comment_title"><span></span></h3>
+                      <div class="row">
+                        <div class="form-group col-lg-12">
+                          <div class="input-group">
+                            <input v-model="form.promisePlace" type="text" class="form-control" placeholder="주소" readonly />
+                          </div>
+                        </div>
+                        <div class="form-group col-lg-12">
+                          <div class="input-group">
+                            <input v-model="form.startDate" type="text" class="form-control" placeholder="First Name" />
+                          </div>
+                        </div>
+                        <div class="form-group col-lg-12">
+                          <div class="input-group">
+                            <input v-model="form.endDate" type="text" class="form-control" placeholder="Last Name" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group">
+                          <textarea v-model="form.memo" class="form-control" placeholder="메모" style="resize: none"></textarea>
+                        </div>
+                      </div>
+                      <div class="comment_submit_btn text-right">
+                        <b-button variant="outline-primary" @click="onSave()">일정 저장</b-button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -42,7 +69,10 @@ export default {
       localLat: 0,
       localLng: 0,
       form: {
-        addr: '',
+        startDate: '2021-04-01',
+        endDate: '2021-04-01',
+        promisePlace: '',
+        memo: '일정',
         latLng: {}
       }
     };
@@ -85,7 +115,7 @@ export default {
             detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
             var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
-            this.form.addr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+            this.form.promisePlace = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
             // 마커를 클릭한 위치에 표시합니다
             marker.setPosition(mouseEvent.latLng);
             marker.setMap(map);
@@ -138,6 +168,13 @@ export default {
       // } else {
       //   alert("GPS를 지원하지 않습니다");
       // }
+    },
+    onSave() {
+      debugger;
+      this.axiosUtil.post('/api/main/saveUserSchedule.do', this.form, result => {
+        alert('저장되었습니다.');
+        console.log(this);
+      });
     }
   },
   beforeMount() {},

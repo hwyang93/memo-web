@@ -6,11 +6,7 @@
           <div class="col-lg-6 col-md-12">
             <div class="contcat_info">
               <div class="section-heading ml-0">
-                <img
-                  src="../images/all-img/logo.png"
-                  alt="logo_img"
-                  class="img-fluid"
-                />
+                <img src="../images/all-img/logo.png" alt="logo_img" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -19,58 +15,32 @@
             <div class="row">
               <div class="form-group col-md-12">
                 <div class="input-group">
-                  <input
-                    v-model="form.userId"
-                    type="text"
-                    class="form-control"
-                    placeholder="아이디"
-                  />
+                  <input v-model="form.userId" type="text" class="form-control" placeholder="아이디" />
                 </div>
               </div>
               <div class="form-group col-md-12">
                 <div class="input-group">
-                  <input
-                    v-model="form.userPassword"
-                    type="password"
-                    class="form-control"
-                    placeholder="비밀번호"
-                  />
+                  <input v-model="form.userPassword" type="password" class="form-control" placeholder="비밀번호" />
                 </div>
               </div>
               <div class="form-group col-md-12">
                 <div class="input-group">
-                  <input
-                    v-model="form.userPasswordChk"
-                    type="password"
-                    class="form-control"
-                    placeholder="비밀번호 확인"
-                  />
+                  <input v-model="form.userPasswordChk" type="password" class="form-control" placeholder="비밀번호 확인" />
                 </div>
               </div>
               <div class="form-group col-md-12">
                 <div class="input-group">
-                  <input
-                    v-model="form.userEmail"
-                    type="email"
-                    class="form-control"
-                    placeholder="Email"
-                  />
+                  <input v-model="form.userEmail" type="email" class="form-control" placeholder="Email" />
                 </div>
               </div>
               <div class="form-group col-md-12">
                 <div class="input-group">
-                  <input
-                    v-model="form.userName"
-                    type="text"
-                    class="form-control"
-                    placeholder="이름"
-                  />
+                  <input v-model="form.userName" type="text" class="form-control" placeholder="이름" />
                 </div>
               </div>
             </div>
             <div class="d-flex justify-end">
-              <button class="btn large-btn" @click="goSignUp()">가입</button>
-              <button class="btn large-btn" @click="test()">가입</button>
+              <b-button variant="primary" size="lg" @click="goSignUp()">가입</b-button>
             </div>
           </div>
         </div>
@@ -80,29 +50,28 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  name: "signUp",
+  name: 'signUp',
   data() {
     return {
       form: {
-        userId: "",
-        userPassword: "",
-        userPasswordChk: "",
-        userEmail: "",
-        userName: "",
-      },
+        userId: '',
+        userPassword: '',
+        userPasswordChk: '',
+        userEmail: '',
+        userName: ''
+      }
     };
   },
   methods: {
     goSignUp: function () {
-      this.axiosUtil.post("/api/main/signUp.do", this.form, (result) => {
-        alert("가입되었습니다.");
-        this.$router.push("/login");
+      console.log(this.axiosUtil);
+      this.axiosUtil.post('/api/main/signUp.do', this.form, result => {
+        alert('가입되었습니다.');
+        this.$router.push('/login');
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

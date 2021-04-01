@@ -27,16 +27,16 @@ const router = new VueRouter({
   routes
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (!store.state.auth.isLogin) {
-//     if (to.path === "/login" || to.path === "/signUp") {
-//       next();
-//     } else {
-//       next("/login");
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (!store.state.auth.isLogin) {
+    if (to.path === '/login' || to.path === '/signUp') {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;
