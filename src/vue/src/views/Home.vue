@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import axiosUtil from '../utils/axios-util.js';
 export default {
   name: 'Main',
   components: {},
@@ -170,8 +171,7 @@ export default {
       // }
     },
     onSave() {
-      debugger;
-      this.axiosUtil.post('/api/main/saveUserSchedule.do', this.form, result => {
+      axiosUtil.post('/api/main/saveUserSchedule.do', this.form, result => {
         alert('저장되었습니다.');
         console.log(this);
       });

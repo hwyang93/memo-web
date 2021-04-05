@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import axiosUtil from '../utils/axios-util.js';
 export default {
   name: 'signUp',
   data() {
@@ -65,8 +66,7 @@ export default {
   },
   methods: {
     goSignUp: function () {
-      console.log(this.axiosUtil);
-      this.axiosUtil.post('/api/main/signUp.do', this.form, result => {
+      axiosUtil.post('/api/main/signUp.do', this.form, result => {
         alert('가입되었습니다.');
         this.$router.push('/login');
       });

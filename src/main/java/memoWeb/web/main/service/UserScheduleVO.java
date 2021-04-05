@@ -1,11 +1,6 @@
 package memoWeb.web.main.service;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,7 +8,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
-@Entity(name = "userSchedule")
+@Entity
+@Table(name = "USER_SCHEDULE")
 @SequenceGenerator(
         name="USER_SCHEDULE_SEQ",
         sequenceName="USER_SCHEDULE_SEQ",
@@ -27,103 +23,31 @@ public class UserScheduleVO {
 		strategy=GenerationType.SEQUENCE,
 		generator="USER_SCHEDULE_SEQ"
 	)
-	@Column(name = "idx")
-	private String idx;
+	@Column(name = "IDX")
+	private int idx;
 
-	@Column(name = "user_id")
+	@Column(name = "USER_ID")
 	private String userId;
 
-	@Column(name = "reg_date")
+	@Column(name = "REG_DATE")
 	private String regDate;
 
-	@Column(name = "start_data")
-	private String startData;
+	@Column(name = "START_DATE")
+	private String startDate;
 
-	@Column(name = "end_date")
+	@Column(name = "END_DATE")
 	private String endDate;
 
-	@Column(name = "promise_place")
+	@Column(name = "PROMISE_PLACE")
 	private String promisePlace;
 
-	@Column(name = "lon")
+	@Column(name = "LON")
 	private String lon;
 
-	@Column(name = "lat")
+	@Column(name = "LAT")
 	private String lat;
 
-	@Column(name = "memo")
+	@Column(name = "MEMO")
 	private String memo;
-
-	public String getIdx() {
-		return idx;
-	}
-
-	public void setIdx(String idx) {
-		this.idx = idx;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
-	}
-
-	public String getStartData() {
-		return startData;
-	}
-
-	public void setStartData(String startData) {
-		this.startData = startData;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getPromisePlace() {
-		return promisePlace;
-	}
-
-	public void setPromisePlace(String promisePlace) {
-		this.promisePlace = promisePlace;
-	}
-
-	public String getLon() {
-		return lon;
-	}
-
-	public void setLon(String lon) {
-		this.lon = lon;
-	}
-
-	public String getLat() {
-		return lat;
-	}
-
-	public void setLat(String lat) {
-		this.lat = lat;
-	}
-
-	public String getMemo() {
-		return memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
 
 }

@@ -1,5 +1,6 @@
-package memoWeb.web;
+package memoWeb.web.config;
 
+import memoWeb.web.MemoWebApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
