@@ -1,68 +1,33 @@
 package memoWeb.web.main.service;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.Table;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
-@Entity(name = "member")
+@Getter
+@Setter
+@Entity
+@Table(name = "MEMBER")
 public class MemberVO {
 	@Id
+	@Column(name = "USER_ID")
 	private String userId;
+	@Column(name = "USER_PASSWORD")
 	private String userPassword;
+	@Column(name = "USER_EMAIL")
 	private String userEmail;
+	@Column(name = "USER_NAME")
 	private String userName;
 	
-	@Column(name = "reg_date", insertable = false, updatable = false,
+	@Column(name = "REG_DATE", insertable = false, updatable = false,
             columnDefinition = "Date default sysdate")
 	private String regDate;
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
-	}
-	
-	
-	
-	
 }

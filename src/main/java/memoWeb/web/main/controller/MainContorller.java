@@ -50,7 +50,9 @@ public class MainContorller {
 	}
 	
 	@PostMapping("saveUserSchedule.do")
-	public String saveUserSchedule(Model model, @RequestBody UserScheduleVO userSchedule) {
+	public String saveUserSchedule(Model model, @RequestBody UserScheduleVO userSchedule, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute(CommonConstants.SESSION);
+		userSchedule.setUserId(member.getUserId());
 		UserScheduleVO result = mainService.saveUserSchedule(userSchedule);
 		
 		model.addAttribute("result", result);
