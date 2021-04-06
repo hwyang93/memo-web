@@ -1,4 +1,4 @@
-package memoWeb.web.main.service;
+package memoWeb.web.main.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

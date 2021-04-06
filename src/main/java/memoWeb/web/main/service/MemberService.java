@@ -1,5 +1,6 @@
 package memoWeb.web.main.service;
 
+import memoWeb.web.main.domain.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,13 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	public MemberVO login (String userId, String userPassword) {
-		return memberRepository.findAllByUserIdAndUserPassword(userId, userPassword);
+	public MemberVO login (MemberVO member) {
+		return memberRepository.findAllByUserIdAndUserPassword(member);
 	}
-	
+
 	public MemberVO signUp (MemberVO member) {
 		return memberRepository.save(member);
 	}
-	
+
 	
 }

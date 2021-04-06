@@ -2,9 +2,9 @@ package memoWeb.web.main.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import memoWeb.web.main.service.MemberVO;
+import memoWeb.web.main.domain.MemberVO;
 
-public interface MemberRepository extends JpaRepository<MemberVO, Long>{
-	MemberVO findAllByUserIdAndUserPassword(String userId, String userPassword);
+public interface MemberRepository{
+	MemberVO findAllByUserIdAndUserPassword(MemberVO memeber);
 	MemberVO save(MemberVO member);
 }

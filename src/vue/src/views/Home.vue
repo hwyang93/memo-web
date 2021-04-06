@@ -71,11 +71,14 @@ export default {
       localLng: 0,
       form: {
         startDate: '2021-04-01',
-        endDate: '2021-04-01',
+        endDate: '2021-04-15',
         promisePlace: '',
         memo: '일정',
+        lon:'',
+        lat:'',
         latLng: {}
-      }
+      },
+      userScheduleList:[]
     };
   },
   watch: {
@@ -103,12 +106,21 @@ export default {
         position: markerPosition
       });
       var infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
-
       // 마커가 지도 위에 표시되도록 설정합니다
       marker.setMap(map);
 
+      // this.userScheduleList.forEach(item => {
+      //   var pa = {
+      //     La : item.lon,
+      //     Ma : item.lat
+      //   }
+      //   marker.setPosition(pa);
+      //   marker.setMap(map);
+      // })
+
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(map, 'click', mouseEvent => {
+        console.log(mouseEvent.latLng);
         this.form.latLng = mouseEvent.latLng;
         geocoder.coord2Address(mouseEvent.latLng.La, mouseEvent.latLng.Ma, (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
@@ -117,6 +129,8 @@ export default {
 
             var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
             this.form.promisePlace = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+            this.form.lon = mouseEvent.latLng.La;
+            this.form.lat = mouseEvent.latLng.Ma;
             // 마커를 클릭한 위치에 표시합니다
             marker.setPosition(mouseEvent.latLng);
             marker.setMap(map);
@@ -140,15 +154,7 @@ export default {
     },
     getLocation() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          this.showPosition,
-          {},
-          {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: Infinity
-          }
-        );
+        navigator.geolocation.getCurrentPosition(this.showPosition);
       }
       // if (navigator.geolocation) {
       //   navigator.geolocation.getCurrentPosition(
@@ -173,15 +179,23 @@ export default {
     onSave() {
       axiosUtil.post('/api/main/saveUserSchedule.do', this.form, result => {
         alert('저장되었습니다.');
-        console.log(this);
+      });
+    },
+    getSchedule() {
+      axiosUtil.get('/api/main/getUserSchedule.do', {}, result => {
+        this.userScheduleList = result.data.userScheduleList;
       });
     }
   },
-  beforeMount() {},
+  beforeMount() {
+    this.getSchedule();
+
+  },
   mounted() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition);
-    }
+    this.getLocation();
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(this.showPosition);
+    // }
     // window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   }
 };
