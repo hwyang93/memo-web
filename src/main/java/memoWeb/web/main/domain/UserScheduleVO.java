@@ -1,4 +1,4 @@
-package memoWeb.web.main.service;
+package memoWeb.web.main.domain;
 
 import javax.persistence.*;
 
