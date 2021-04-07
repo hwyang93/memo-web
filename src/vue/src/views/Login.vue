@@ -59,8 +59,8 @@ export default {
   data() {
     return {
       form: {
-        userId: "",
-        userPassword: "",
+        userId: "aaa",
+        userPassword: "aaa",
       },
     };
   },
