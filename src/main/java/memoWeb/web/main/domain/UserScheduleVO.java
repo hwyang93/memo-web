@@ -26,6 +26,9 @@ public class UserScheduleVO {
 	@Column(name = "IDX")
 	private int idx;
 
+	@Column(name = "TITLE")
+	private String title;
+	
 	@Column(name = "USER_ID")
 	private String userId;
 

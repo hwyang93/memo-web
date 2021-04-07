@@ -26,7 +26,12 @@
                       <div class="row">
                         <div class="form-group col-lg-12">
                           <div class="input-group">
-                            <input v-model="form.promisePlace" type="text" class="form-control" placeholder="주소" readonly />
+                            <input v-model="form.title" type="text" class="form-control" placeholder="제목" readonly />
+                          </div>
+                        </div>
+                        <div class="form-group col-lg-12">
+                          <div class="input-group">
+                            <input v-model="form.promisePlace" type="text" class="form-control" placeholder="위치" readonly />
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
@@ -69,7 +74,11 @@ export default {
     return {
       localLat: 0,
       localLng: 0,
+      map: null,
+      clusterer:null,
+      infowindow:null,
       form: {
+        title:'제목입력',
         startDate: '2021-04-01',
         endDate: '2021-04-15',
         promisePlace: '',
@@ -88,39 +97,33 @@ export default {
   },
   methods: {
     initMap() {
-      var container = document.getElementById('map');
-      var options = {
+      const container = document.getElementById('map');
+      const options = {
         center: new kakao.maps.LatLng(this.localLat, this.localLng),
         level: 3
       };
 
-      // 주소-좌표 변환 객체를 생성합니다
-      var geocoder = new kakao.maps.services.Geocoder();
-
-      var map = new kakao.maps.Map(container, options);
+      this.map = new kakao.maps.Map(container, options);
       // 마커가 표시될 위치입니다
-      var markerPosition = new kakao.maps.LatLng(this.localLat, this.localLng);
-
+      const markerPosition = new kakao.maps.LatLng(this.localLat, this.localLng);
       // 마커를 생성합니다
-      var marker = new kakao.maps.Marker({
+      const marker = new kakao.maps.Marker({
         position: markerPosition
       });
-      var infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
       // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(map);
+      marker.setMap(this.map);
 
-      // this.userScheduleList.forEach(item => {
-      //   var pa = {
-      //     La : item.lon,
-      //     Ma : item.lat
-      //   }
-      //   marker.setPosition(pa);
-      //   marker.setMap(map);
-      // })
+      this.clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 7 // 클러스터 할 최소 지도 레벨
+      });
 
+      // 주소-좌표 변환 객체를 생성합니다
+      const geocoder = new kakao.maps.services.Geocoder();
+      this.infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, 'click', mouseEvent => {
-        console.log(mouseEvent.latLng);
+      kakao.maps.event.addListener(this.map, 'click', mouseEvent => {
         this.form.latLng = mouseEvent.latLng;
         geocoder.coord2Address(mouseEvent.latLng.La, mouseEvent.latLng.Ma, (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
@@ -133,17 +136,20 @@ export default {
             this.form.lat = mouseEvent.latLng.Ma;
             // 마커를 클릭한 위치에 표시합니다
             marker.setPosition(mouseEvent.latLng);
-            marker.setMap(map);
+            marker.setMap(this.map);
 
             // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
+            this.infowindow.setContent(content);
+            this.infowindow.open(this.map, marker);
           }
         });
       });
+      if (this.userScheduleList.length > 0) {
+        this.setMarkers();
+      }
     },
     addScript() {
-      const script = document.createElement('script');
+      let script = document.createElement('script');
       script.onload = () => kakao.maps.load(this.initMap);
       script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=233fb509b41527eb6530cb8ca5b635c5&libraries=services,clusterer,drawing';
       document.head.appendChild(script);
@@ -184,19 +190,42 @@ export default {
     getSchedule() {
       axiosUtil.get('/api/main/getUserSchedule.do', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
+        this.getLocation();
       });
+    },
+    setMarkers() {
+      let markers = this.userScheduleList.map(item => {
+        return new kakao.maps.Marker({
+          position : new kakao.maps.LatLng(item.lat, item.lon)
+        });
+      });
+      this.clusterer.addMarkers(markers);
+
+      markers.map((marker,index) => {
+        let content = '<div>장소 : ' + this.userScheduleList[index].promisePlace + '</div>';
+        content += '<div>일정 : ' + this.userScheduleList[index].startDate + ' ~ ' + this.userScheduleList[index].endDate + '</div>';
+        content += '<div>일정 : ' + this.userScheduleList[index].memo + '</div>';
+        // let infowindow = new kakao.maps.InfoWindow({
+        //   content : content
+        // });
+
+        // 마커에 마우스오버 이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'mouseover', () => {
+          this.infowindow.setContent(content);
+          this.infowindow.open(this.map, marker);
+        });
+
+        // 마커에 마우스오버 이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'mouseout', () => {
+          this.infowindow.close();
+        });
+      })
     }
   },
   beforeMount() {
     this.getSchedule();
-
   },
   mounted() {
-    this.getLocation();
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(this.showPosition);
-    // }
-    // window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   }
 };
 </script>

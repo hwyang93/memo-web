@@ -33,27 +33,11 @@
           class="navbar-nav navbar__nav nav justify-content-end"
           id="top-menu"
         >
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle active"
-              href="index.html"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Home
-            </a>
-            <ul class="dropdown-menu">
-              <li class="nav-item">
-                <a class="dropdown-item active" href="index.html"> Home 1</a>
-              </li>
-              <li class="nav-item">
-                <a class="dropdown-item" href="index-2.html"> Home 2 </a>
-              </li>
-            </ul>
+          <li class="nav-item">
+            <a @click="goMenu('/')" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
-            <a href="about.html" class="nav-link"> About Us </a>
+            <a @click="goMenu('/mySchedule/main')" class="nav-link"> 내일정 </a>
           </li>
           <li class="nav-item">
             <a href="service.html" class="nav-link"> Services </a>
@@ -191,3 +175,14 @@
   </nav>
   <!--navbar-end-->
 </template>
+
+<script>
+export default {
+  name: "TopMenu",
+  methods: {
+    goMenu(url) {
+      this.$router.push(url);
+    }
+  }
+}
+</script>
