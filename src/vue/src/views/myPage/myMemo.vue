@@ -17,16 +17,7 @@
             </div>
           </div>
           <!--widgets-cat-->
-          <div class="blog-sidebar-widgets">
-            <h3 class="widgets-title"> Categories </h3>
-            <div class="blog-sidebar-widgets-inner">
-              <ul>
-                <li class="cat-item">
-                  <a href="blog-detail.htm"> - Business strategy </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <left-menu></left-menu>
           <!--tags-sidebar-->
           <div class="blog-sidebar-widgets tags-blog-sidebar mb-0">
             <h3 class="widgets-title"><span>  Tags </span></h3>
@@ -70,9 +61,12 @@
 
 <script>
 import axiosUtil from "@/utils/axios-util";
-
+import leftMenu from "@/views/myPage/leftMenu";
 export default {
-  name: "scheduleMain",
+  name: "memo",
+  components: {
+    leftMenu
+  },
   data() {
     return {
       userScheduleList: []
@@ -80,7 +74,7 @@ export default {
   },
   methods: {
     getSchedule() {
-      axiosUtil.get('/api/main/getUserSchedule.do', {}, result => {
+      axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
         console.log(this.userScheduleList);
       });

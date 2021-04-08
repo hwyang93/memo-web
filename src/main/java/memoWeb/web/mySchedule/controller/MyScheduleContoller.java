@@ -28,8 +28,8 @@ public class MyScheduleContoller {
     @GetMapping("getUserScheduleListAll.do")
     public String getUserScheduleListAll(Model model, HttpSession session) {
         MemberVO member = (MemberVO) session.getAttribute(CommonConstants.SESSION);
-        List<UserScheduleVO> result = myScheduleService.getUserScheduleListAll(member);
-        model.addAttribute("result", result);
+        List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
+        model.addAttribute("userScheduleList", userScheduleList);
         return "jsonView";
     }
 }
