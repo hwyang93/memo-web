@@ -22,9 +22,19 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/SignUp.vue')
   },
   {
-    path: '/mySchedule/main',
-    name: 'Main',
-    component: () => import(/* webpackChunkName: "main" */ '../views/mySchedule/scheduleMain.vue')
+    path: '/myPage/schedule',
+    name: 'Schedule',
+    component: () => import(/* webpackChunkName: "main" */ '../views/myPage/mySchedule.vue')
+  },
+  {
+    path: '/myPage/memo',
+    name: 'Memo',
+    component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myMemo.vue')
+  },
+  {
+    path: '/myPage/group',
+    name: 'Group',
+    component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myGroup.vue')
   }
 ];
 

@@ -185,6 +185,7 @@ export default {
     onSave() {
       axiosUtil.post('/api/main/saveUserSchedule.do', this.form, result => {
         alert('저장되었습니다.');
+        this.getSchedule();
       });
     },
     getSchedule() {
