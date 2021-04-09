@@ -6,7 +6,6 @@ import memoWeb.web.main.domain.QMemberVO;
 import memoWeb.web.main.domain.QUserScheduleVO;
 import memoWeb.web.main.domain.UserScheduleVO;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
-@Transactional
 public class MainRepositoryImpl implements MainRepository{
 
     @PersistenceContext
