@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <main class="home-banner">
+    <main class="home-banner bg-gray">
       <div class="container home-banner-container">
         <div class="row home-banner-row">
           <!-- kakao map -->
@@ -10,7 +10,7 @@
             </div>
           </div>
           <!-- 위치 정보 입력 -->
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <div class="content-center">
               <div class="row">
                 <div class="form-group col-md-12">

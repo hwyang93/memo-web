@@ -32,20 +32,20 @@
 	:: 18 Blog Sidebar
 	:: 19 Blog Comment Section
 	:: 20 Service Details Page
-	:: 21 Team Member Page 
+	:: 21 Team Member Page
 	:: 22 Team Member Details Page
 	:: 23 Contact Page
 	:: 24 404 Page
 	:: 25 Additional CSS
 	:: 26 Accordion
-	:: 27  Page Loader 
+	:: 27  Page Loader
 	:: 28 Pagination
 
 ---------------------------------------------------------------- */
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Serif+Caption|PT+Serif:400,700&display=swap');
 
-/* 
+/*
 font-family: 'PT Serif', serif;
 font-family: 'PT Serif Caption', serif;
 font-family: 'Open Sans', sans-serif;
@@ -440,6 +440,7 @@ header .main-navbar .navbar-nav .nav-link {
   display: flex;
   align-items: center;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 header .main-navbar .navbar-nav .nav-link.active,
@@ -517,17 +518,19 @@ header .navbar-expand-md .navbar-toggler {
 
 /*------------- :: 05 Home Banner -------------*/
 .home-banner {
-  background: #f9f9f9;
-  height: 70vh;
+  /* background: #f9f9f9; */
+  /* height: 70vh; */
   position: relative;
 }
 
 .home-banner-row {
-  height: 70vh;
+  /* height: 70vh; */
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .home-banner .content-center {
-  height: 95%;
+  height: 100%;
 }
 
 .banner-content h1 {
@@ -1786,10 +1789,11 @@ ul.about-plannings.nav li {
 
 .form-group.search_2 {
   position: relative;
+  padding: 0 20px;
   overflow: hidden;
   display: flex;
   margin-bottom: 0;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 .search_2 .btn {

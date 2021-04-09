@@ -9,7 +9,7 @@
             <h3 class="widgets-title">  조회 </h3>
             <div class="blog-sidebar-widgets-inner">
               <form class="searchform">
-                <div class="form-group search_2">
+                <div class="form-group search_2 p-0">
                   <input type="text" class="form-control" placeholder="키워드 검색" id="s">
                   <button type="button" class="btn"><i class="fas fa-search"></i></button>
                 </div>
@@ -44,7 +44,7 @@
       <div class="col-lg-8 col-md-12 blog_page">
         <div class="row">
           <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx">
-            <div class="card bg-light mb-3" style="height: 350px;">
+            <div class="card mb-3" style="height: 350px;">
               <div class="card-header">{{ item.title }}</div>
               <div class="card-body">
                 <h5 class="card-title">주소</h5>
