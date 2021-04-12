@@ -1,19 +1,20 @@
 package memoWeb.web.mySchedule.controller;
 
-import memoWeb.common.constant.CommonConstants;
-import memoWeb.web.main.domain.MemberVO;
-import memoWeb.web.main.domain.UserScheduleVO;
-import memoWeb.web.mySchedule.service.MyScheduleService;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import memoWeb.common.constant.CommonConstants;
+import memoWeb.web.main.domain.MemberVO;
+import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.mySchedule.service.MyScheduleService;
 
 @Controller
 @RequestMapping("/api/mySchedule")
@@ -31,5 +32,17 @@ public class MyScheduleContoller {
         List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
         model.addAttribute("userScheduleList", userScheduleList);
         return "jsonView";
+    }
+    
+    @GetMapping("getScheduleDetail.do")
+    public ModelAndView getScheduleDetail(ModelAndView model, HttpSession session) {
+    	String userId = session.getId();
+    	System.out.println(userId);
+		/*
+		 * UserScheduleVO usVO = myScheduleService.getUserScheduleDetail();
+		 * model.addObject("myScheduleDetail",usVO);
+		 * model.setViewName("myPage/myScheduleDetail");
+		 */
+    	return model;
     }
 }

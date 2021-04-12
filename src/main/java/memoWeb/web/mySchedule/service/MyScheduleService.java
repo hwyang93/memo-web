@@ -21,4 +21,5 @@ public class MyScheduleService {
     public List<UserScheduleVO> getUserScheduleListAll(MemberVO member) {
         return myScheduleRepository.getUserScheduleListAll(member);
     }
+
 }

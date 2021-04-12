@@ -41,55 +41,19 @@
         </div>
       </div>
       <!--/sidebar-close-->
-      <div class="col-lg-8 col-md-12 blog_page">
-        <div class="row">
-          <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx">
-            <div class="card mb-3" style="height: 350px">
-              <div class="card-header">{{ item.title }}</div>
-              <div class="card-body">
-                <h5 class="card-title">주소</h5>
-                <p class="card-text">{{ item.promisePlace }}</p>
-                <h5 class="card-title">일정</h5>
-                <p class="card-text">{{ item.startDate + ' ~ ' + item.endDate }}</p>
-                <h5 class="card-title">메모</h5>
-                <p class="card-text">{{ item.memo }}</p>
-                <button @click="goDetail('myPage/myScheduleDetail')">보기</button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div>
+        <h1>data detail</h1>
       </div>
     </div>
   </section>
 </template>
-
 <script>
-import axiosUtil from '@/utils/axios-util';
+import axiosUtll from '@/utils/axios-util';
 import leftMenu from '@/views/myPage/leftMenu';
 export default {
-  name: 'schedule',
+  name: 'myScheduleDetail',
   components: {
     leftMenu
-  },
-  data() {
-    return {
-      userScheduleList: []
-    };
-  },
-  methods: {
-    getSchedule() {
-      axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
-        this.userScheduleList = result.data.userScheduleList;
-        console.log(this.userScheduleList);
-      });
-    },
-    goDetail(url) {
-      console.log(url);
-      this.$router.push(url);
-    }
-  },
-  beforeMount() {
-    this.getSchedule();
   }
 };
 </script>
