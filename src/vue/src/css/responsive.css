@@ -109,7 +109,7 @@
         -webkit-transform: scale(1, 0);
         transition: all 0.2s linear;
         -webkit-transition: all 0.2s linear;
-        top: 70px;
+        top: 48px; /* 70 */
         padding: 0px 15px;
     }
     .main-navbar .mega_menu.dropdown>.dropdown-menu {
@@ -153,14 +153,14 @@
     li.nav-item.dropdown.mega-dropdown {
         position: static;
     }
-	
+
     .navbar .dropdown-menu {
         width: 100%;
         left: 0;
         right: 0;
         top: 45px;
     }
-	
+
     .navbar .dropdown-menu {
         border: 1px solid rgba(0, 0, 0, 0.15);
         top: 99%;
@@ -189,7 +189,7 @@
     .member_name h3 {
         font-size: 20px;
     }
-	
+
 }
 
 @media (max-width:991px) {
@@ -224,7 +224,7 @@
 	}
     .sidebar.sidbar_left {
         margin-bottom: 60px;
-		
+
     }
     .sidebar.sidbar_right {
         margin-top: 60px;
@@ -305,7 +305,7 @@
         align-items: center;
         width: 100%;
         justify-content: space-between;
-      
+
     }
     .row.p-0.testimonial_row {
         margin: 0;
@@ -353,7 +353,7 @@
 	}
 	.navbar-expand-md .navbar-nav .mega_menu .dropdown-menu {
 	  padding: 0px!important;
-	
+
     }
     li.dropdown-submenu:last-child {
         border: 0;
@@ -408,7 +408,7 @@
     }
 }
 
-   
+
 @media (max-width:767px) {
 	 .brand_toggle_cont {
         margin: 0px 15px;
@@ -464,7 +464,7 @@
     .banner_btn {
         margin-top: 50px;
     }
-    
+
     .banner_social_area {
         display: none;
     }
