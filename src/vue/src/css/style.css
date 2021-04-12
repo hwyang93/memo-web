@@ -106,7 +106,7 @@ h3,
 .btn,
 nav,
 .service-title a {
-  font-family: 'PT Serif', serif !important;
+  /* font-family: 'PT Serif', serif !important; */
 }
 
 h1,
@@ -410,7 +410,7 @@ nav.main-navbar.h_stiky ul.navbar-nav {
 }
 
 nav.navbar.navbar-default.navbar-expand-md {
-  min-height: 100px;
+  min-height: 60px; /* 100 */
   border-bottom: 2px solid #e1e0e0;
   padding: 0;
   margin: 0;
@@ -1826,7 +1826,7 @@ ul.about-plannings.nav li {
   margin-bottom: 0;
 }
 .widgets-title {
-  background: linear-gradient(73deg, #00adb5 61%, #00adb5 2%, #00adb5 14%, #9a1f1f00 -8%);
+  background: linear-gradient(90deg, #00adb5 61%, #00adb5 2%, #00adb5 14%, #9a1f1f00 -8%);
   padding: 8px 30px;
   color: #fff;
   overflow: hidden;
@@ -1837,15 +1837,16 @@ ul.about-plannings.nav li {
 }
 .widgets-title:after {
   content: '';
-  background: linear-gradient(90deg, #00adb5 57%, #393d46 13%, #393d46 65%, #9a1f1f00 37%);
+  background: linear-gradient(90deg, #00adb5 57%, #393d46 13%, #9a1f1f00 37%);
   position: absolute;
-  width: 80px;
-  top: -8px;
+  width: 68px;
+  top: 0px;
   height: 100%;
-  transform: rotate(-45deg);
+  transform: rotate(180deg);
   bottom: 0;
-  right: 23%;
-  height: 87px;
+  right: 28%;
+  border-radius: 50% 0% 0 50%;
+  height: 50px;
 }
 .blog-sidebar-widgets li:last-child a {
   border-bottom: 0 !important;
@@ -1872,6 +1873,7 @@ ul.about-plannings.nav li {
   transition: all 0.4s;
   -ms-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  cursor: pointer;
 }
 
 .blog-sidebar-widgets li a:hover {
@@ -3037,4 +3039,23 @@ a.btn.blog-btn .flaticon-double-angle-pointing-to-right:before {
 .title {
   font-weight: bold;
   display: block;
+}
+
+.user-area {
+  margin-left: auto;
+}
+.user-area ul {
+  margin-bottom: 0;
+}
+.user-info {
+  margin-right: 15px;
+  color: #ff5400;
+}
+
+.navbar-nav.menu {
+  flex-basis: 100%;
+}
+nav .no-arrow.dropdown-toggle::after {
+  content: '';
+  margin-left: 0;
 }
