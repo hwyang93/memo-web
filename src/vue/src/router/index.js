@@ -37,9 +37,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myGroup.vue')
   },
   {
-    path: '/myPage/schedule/myScheduleDetail',
-    name: 'myScheduleDetail',
-    component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myScheduleDetail.vue')
+    path: '/myPage/group/groupDetail',
+    name: 'groupDetail',
+    component: () => import(/* webpackChunkName: "main" */ '../views/myPage/groupDetail.vue')
   }
 ];
 

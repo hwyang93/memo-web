@@ -53,8 +53,6 @@
                 <p class="card-text">{{ item.startDate + ' ~ ' + item.endDate }}</p>
                 <h5 class="card-title">메모</h5>
                 <p class="card-text">{{ item.memo }}</p>
-                <!-- <button @click="goDetail('myPage/myScheduleDetail')">보기</button> -->
-                <router-link :to="{ idx: 'myScheduleDetail', params: { idx: item.idx } }">보기</router-link>
               </div>
             </div>
           </div>
