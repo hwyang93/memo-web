@@ -95,6 +95,16 @@
               <p>I'm the second tab</p>
             </b-tab>
           </b-tabs>
+          <router-link :to="'/groupDetail/1'">
+            <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue; float: left">
+              <div class="group">
+                <figure>
+                  <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
+                  <p style="padding: 5px; text-align: center">info : 그룹정보</p>
+                </figure>
+              </div>
+            </div>
+          </router-link>
         </div>
         <!-- </div> -->
 
