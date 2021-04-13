@@ -25,9 +25,9 @@ public class UserVO {
 	private String userEmail;
 	@Column(name = "USER_NAME")
 	private String userName;
-	
+
 	@Column(name = "REG_DATE", insertable = false, updatable = false,
-            columnDefinition = "Date default sysdate")
+			columnDefinition = "Date default sysdate")
 	private String regDate;
 
 }

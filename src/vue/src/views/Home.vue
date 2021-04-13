@@ -75,19 +75,19 @@ export default {
       localLat: 0,
       localLng: 0,
       map: null,
-      clusterer:null,
-      infowindow:null,
+      clusterer: null,
+      infowindow: null,
       form: {
-        title:'제목입력',
+        title: '제목입력',
         startDate: '2021-04-01',
         endDate: '2021-04-15',
         promisePlace: '',
         memo: '일정',
-        lon:'',
-        lat:'',
+        lon: '',
+        lat: '',
         latLng: {}
       },
-      userScheduleList:[]
+      userScheduleList: []
     };
   },
   watch: {
@@ -197,12 +197,12 @@ export default {
     setMarkers() {
       let markers = this.userScheduleList.map(item => {
         return new kakao.maps.Marker({
-          position : new kakao.maps.LatLng(item.lat, item.lon)
+          position: new kakao.maps.LatLng(item.lat, item.lon)
         });
       });
       this.clusterer.addMarkers(markers);
 
-      markers.map((marker,index) => {
+      markers.map((marker, index) => {
         let content = '<div>장소 : ' + this.userScheduleList[index].promisePlace + '</div>';
         content += '<div>일정 : ' + this.userScheduleList[index].startDate + ' ~ ' + this.userScheduleList[index].endDate + '</div>';
         content += '<div>일정 : ' + this.userScheduleList[index].memo + '</div>';
@@ -220,13 +220,12 @@ export default {
         kakao.maps.event.addListener(marker, 'mouseout', () => {
           this.infowindow.close();
         });
-      })
+      });
     }
   },
   beforeMount() {
     this.getSchedule();
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
