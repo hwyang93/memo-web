@@ -43,16 +43,13 @@
       <!--/sidebar-close-->
       <div class="col-lg-8 col-md-12 blog_page">
         <div class="row">
-          <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx">
-            <figure>
-              <figcaption class="post_catipon text-left">
-                <h3>{{ item.title }}</h3>
-                <p>주소 <br/> {{ item.promisePlace }}</p>
-                <p>일정 <br/> {{ item.startDate + ' ~ ' + item.endDate }}</p>
-                <p>메모 <br/>{{ item.memo }}</p>
-              </figcaption>
-            </figure>
-          </div>
+<!--          <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx">-->
+            <div>
+              <b-form-tags input-id="tags-basic" v-model="searchUser"></b-form-tags>
+              <p class="mt-2">Value: {{ searchUser }}</p>
+            </div>
+          <b-button variant="primary" size="lg" @click="goCreateGroup()">가입</b-button>
+<!--          </div>-->
         </div>
       </div>
     </div>
@@ -69,19 +66,26 @@ export default {
   },
   data() {
     return {
-      userScheduleList: []
+      userScheduleList: [],
+      searchUser: []
     }
   },
   methods: {
-    getSchedule() {
-      axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
-        this.userScheduleList = result.data.userScheduleList;
-        console.log(this.userScheduleList);
+    goCreateGroup() {
+      let obj = [];
+      debugger;
+      this.searchUser.forEach(item => {
+        obj.push({
+          "groupUser" : item
+        })
+      })
+      axiosUtil.post('/api/myGroup/test.do', obj, result => {
+
       });
     }
   },
   beforeMount() {
-    this.getSchedule();
+    // this.getSchedule();
   }
 }
 </script>
