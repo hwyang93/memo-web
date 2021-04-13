@@ -1,15 +1,13 @@
 package memoWeb.web.main.repository;
 
-import memoWeb.web.main.domain.MemberVO;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
 
 import java.util.List;
 
 public interface MainRepository{
-	MemberVO getMember(MemberVO member);
-	MemberVO signUp(MemberVO member);
+	UserVO getMember(UserVO member);
+	UserVO signUp(UserVO member);
 	UserScheduleVO saveUserSchedule(UserScheduleVO userSchedule);
-	List<UserScheduleVO> getScheduleList(MemberVO member);
+	List<UserScheduleVO> getScheduleList(UserVO member);
 }

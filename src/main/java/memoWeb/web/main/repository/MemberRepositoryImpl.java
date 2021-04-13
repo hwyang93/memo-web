@@ -1,8 +1,8 @@
 package memoWeb.web.main.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import memoWeb.web.main.domain.MemberVO;
-import memoWeb.web.main.domain.QMemberVO;
+import memoWeb.web.main.domain.QUserVO;
+import memoWeb.web.main.domain.UserVO;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,19 +13,19 @@ public class MemberRepositoryImpl implements MemberRepository{
 
     @PersistenceContext
     private EntityManager em;
+    QUserVO qUser = QUserVO.userVO;
 
     @Override
-    public MemberVO findAllByUserIdAndUserPassword(MemberVO member) {
-        final JPAQuery<MemberVO> query = new JPAQuery<>(em);
-        QMemberVO qMember = QMemberVO.memberVO;
-        return query.from(qMember)
-                .where(qMember.userId.eq(member.getUserId())
-                .and(qMember.userPassword.eq(member.getUserPassword())))
+    public UserVO findAllByUserIdAndUserPassword(UserVO member) {
+        final JPAQuery<UserVO> query = new JPAQuery<>(em);
+        return query.from(qUser)
+                .where(qUser.userId.eq(member.getUserId())
+                .and(qUser.userPassword.eq(member.getUserPassword())))
                 .fetchOne();
     }
 
     @Override
-    public MemberVO save(MemberVO member) {
+    public UserVO save(UserVO member) {
         em.persist(member);
         return member;
     }

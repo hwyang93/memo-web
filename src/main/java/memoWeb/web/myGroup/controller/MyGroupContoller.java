@@ -1,10 +1,7 @@
 package memoWeb.web.myGroup.controller;
 
-import memoWeb.common.constant.CommonConstants;
-import memoWeb.web.main.domain.MemberVO;
-import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.service.MyGroupService;
-import memoWeb.web.mySchedule.service.MyScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +24,7 @@ public class MyGroupContoller {
 
     @GetMapping("getUserList.do")
     public String getUserList(Model model, HttpSession session, HashMap<String, Object> params) {
-
+        List<UserVO> memberList = myGroupService.getUserList((String) params.get("keyword"));
         return "jsonView";
     }
 

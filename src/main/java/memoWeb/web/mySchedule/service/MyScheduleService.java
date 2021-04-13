@@ -1,8 +1,7 @@
 package memoWeb.web.mySchedule.service;
 
-import com.querydsl.jpa.impl.JPAQuery;
-import memoWeb.web.main.domain.MemberVO;
 import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.mySchedule.repository.MyScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class MyScheduleService {
         this.myScheduleRepository = myScheduleRepository;
     }
 
-    public List<UserScheduleVO> getUserScheduleListAll(MemberVO member) {
+    public List<UserScheduleVO> getUserScheduleListAll(UserVO member) {
         return myScheduleRepository.getUserScheduleListAll(member);
     }
 
