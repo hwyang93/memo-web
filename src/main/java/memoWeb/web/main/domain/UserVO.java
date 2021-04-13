@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class UserVO {
 	@Id
 	@Column(name = "USER_ID")
