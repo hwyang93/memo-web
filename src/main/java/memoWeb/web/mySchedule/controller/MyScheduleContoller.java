@@ -39,25 +39,4 @@ public class MyScheduleContoller {
 		
 		return "jsonView";
 	}
-
-    private static MyScheduleService myScheduleService;
-
-    @Autowired
-    public MyScheduleContoller(MyScheduleService myScheduleService) {
-        this.myScheduleService = myScheduleService;
-    }
-
-    @GetMapping("getUserScheduleListAll.do")
-    public String getUserScheduleListAll(Model model, HttpSession session) {
-        UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-        List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
-        model.addAttribute("userScheduleList", userScheduleList);
-        return "jsonView";
-    }
-    
-    @GetMapping("getScheduleDetail.do")
-    public ModelAndView getScheduleDetail(ModelAndView model, HttpSession session) {
-
-    	return model;
-    }
 }
