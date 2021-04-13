@@ -70,6 +70,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
+  background: #f4f3ef;
 }
 
 p {
@@ -188,8 +189,13 @@ button:focus {
 }
 
 .space {
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.space-type-1 {
+  padding-top: 15px;
+  padding-bottom: 35px;
 }
 
 .space-top {
@@ -3041,6 +3047,30 @@ a.btn.blog-btn .flaticon-double-angle-pointing-to-right:before {
   display: block;
 }
 
+
+
+
+/* -----------------
+
+custom css
+
+----------------- */
+
+/* title start */
+.title-type-1 {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: right;
+  line-height: 1.5;
+}
+/* title end */
+
+.space-type-1 {
+  padding-top: 15px;
+  /* padding-bottom: 35px; */
+}
+
 .user-area {
   margin-left: auto;
 }
@@ -3058,4 +3088,42 @@ a.btn.blog-btn .flaticon-double-angle-pointing-to-right:before {
 nav .no-arrow.dropdown-toggle::after {
   content: '';
   margin-left: 0;
+}
+
+.shadow-wrap-1 {
+  border-radius: 6px;
+  box-shadow: 0 6px 10px -4px rgb(0 0 0 / 15%);
+  background-color: #fff;
+}
+
+.sidbar_left {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+
+
+
+.tab-area-gf {
+  margin-top: 30px;
+}
+
+/* friends list start */
+.user-list-area {
+  display: flex;
+  flex-direction: column;
+}
+.user-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.user-pic {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
 }
