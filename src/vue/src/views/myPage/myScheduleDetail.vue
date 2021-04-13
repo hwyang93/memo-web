@@ -54,6 +54,27 @@ export default {
   name: 'myScheduleDetail',
   components: {
     leftMenu
+  },
+  computed: {
+    idx() {
+      return this.$route.params.idx;
+    }
+  },
+  data() {
+    return {
+      userSchedule
+    };
+  },
+  methods: {
+    getScheduleDetail() {
+      axiosUtil.get('/api/mySchedule/getScheduleDetail.do', this.idx, result => {
+        this.userSchedule = result.data.userSchedule;
+        console.log(this.userSchedule);
+      });
+    }
+  },
+  beforeMount() {
+    this.getScheduleDetail();
   }
 };
 </script>

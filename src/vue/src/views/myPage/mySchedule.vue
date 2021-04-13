@@ -53,7 +53,8 @@
                 <p class="card-text">{{ item.startDate + ' ~ ' + item.endDate }}</p>
                 <h5 class="card-title">메모</h5>
                 <p class="card-text">{{ item.memo }}</p>
-                <button @click="goDetail('myPage/myScheduleDetail')">보기</button>
+                <!-- <button @click="goDetail('myPage/myScheduleDetail')">보기</button> -->
+                <router-link :to="{ idx: 'myScheduleDetail', params: { idx: item.idx } }">보기</router-link>
               </div>
             </div>
           </div>
@@ -82,10 +83,6 @@ export default {
         this.userScheduleList = result.data.userScheduleList;
         console.log(this.userScheduleList);
       });
-    },
-    goDetail(url) {
-      console.log(url);
-      this.$router.push(url);
     }
   },
   beforeMount() {
