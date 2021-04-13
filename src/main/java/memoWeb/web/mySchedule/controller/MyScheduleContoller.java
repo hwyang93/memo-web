@@ -19,30 +19,24 @@ import memoWeb.web.mySchedule.service.MyScheduleService;
 @Controller
 @RequestMapping("/api/mySchedule")
 public class MyScheduleContoller {
-    private static MyScheduleService myScheduleService;
+	private static MyScheduleService myScheduleService;
 
-    @Autowired
-    public MyScheduleContoller(MyScheduleService myScheduleService) {
-        this.myScheduleService = myScheduleService;
-    }
+	@Autowired
+	public MyScheduleContoller(MyScheduleService myScheduleService) {
+		this.myScheduleService = myScheduleService;
+	}
 
-    @GetMapping("getUserScheduleListAll.do")
-    public String getUserScheduleListAll(Model model, HttpSession session) {
-        UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-        List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
-        model.addAttribute("userScheduleList", userScheduleList);
-        return "jsonView";
-    }
-    
-    @GetMapping("getScheduleDetail.do")
-    public ModelAndView getScheduleDetail(ModelAndView model, HttpSession session) {
-    	String userId = session.getId();
-    	System.out.println(userId);
-		/*
-		 * UserScheduleVO usVO = myScheduleService.getUserScheduleDetail();
-		 * model.addObject("myScheduleDetail",usVO);
-		 * model.setViewName("myPage/myScheduleDetail");
-		 */
-    	return model;
-    }
+	@GetMapping("getUserScheduleListAll.do")
+	public String getUserScheduleListAll(Model model, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute(CommonConstants.SESSION);
+		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
+		model.addAttribute("userScheduleList", userScheduleList);
+		return "jsonView";
+	}
+
+	@GetMapping("getScheduleDetail.do")
+	public String getScheduleDetail(ModelAndView model, HttpSession session, int idx) {
+		
+		return "jsonView";
+	}
 }
