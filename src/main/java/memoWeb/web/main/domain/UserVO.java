@@ -15,22 +15,19 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "USERS")
-public class MemberVO {
+public class UserVO {
+	@Id
+	@Column(name = "USER_ID")
+	private String userId;
+	@Column(name = "USER_PASSWORD")
+	private String userPassword;
+	@Column(name = "USER_EMAIL")
+	private String userEmail;
+	@Column(name = "USER_NAME")
+	private String userName;
 
-	public class UserVO {
+	@Column(name = "REG_DATE", insertable = false, updatable = false,
+			columnDefinition = "Date default sysdate")
+	private String regDate;
 
-		@Id
-		@Column(name = "USER_ID")
-		private String userId;
-		@Column(name = "USER_PASSWORD")
-		private String userPassword;
-		@Column(name = "USER_EMAIL")
-		private String userEmail;
-		@Column(name = "USER_NAME")
-		private String userName;
-		
-		@Column(name = "REG_DATE", insertable = false, updatable = false,
-				columnDefinition = "Date default sysdate")
-		private String regDate;
-
-	}
+}
