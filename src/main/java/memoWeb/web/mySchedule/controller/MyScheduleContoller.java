@@ -28,15 +28,9 @@ public class MyScheduleContoller {
 
 	@GetMapping("getUserScheduleListAll.do")
 	public String getUserScheduleListAll(Model model, HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute(CommonConstants.SESSION);
+		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
 		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
 		model.addAttribute("userScheduleList", userScheduleList);
-		return "jsonView";
-	}
-
-	@GetMapping("getScheduleDetail.do")
-	public String getScheduleDetail(ModelAndView model, HttpSession session, int idx) {
-		
 		return "jsonView";
 	}
 }
