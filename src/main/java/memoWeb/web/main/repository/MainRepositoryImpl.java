@@ -1,10 +1,10 @@
 package memoWeb.web.main.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import memoWeb.web.main.domain.MemberVO;
-import memoWeb.web.main.domain.QMemberVO;
 import memoWeb.web.main.domain.QUserScheduleVO;
+import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,21 +18,21 @@ public class MainRepositoryImpl implements MainRepository{
 
     @PersistenceContext
     private EntityManager em;
-    QMemberVO qMember = QMemberVO.memberVO;
+    QUserVO qUser = QUserVO.userVO;
     QUserScheduleVO qUserSchedule = QUserScheduleVO.userScheduleVO;
 
     @Override
-    public MemberVO getMember(MemberVO member) {
-        final JPAQuery<MemberVO> query = new JPAQuery<>(em);
+    public UserVO getMember(UserVO member) {
+        final JPAQuery<UserVO> query = new JPAQuery<>(em);
 
-        return query.from(qMember)
-                .where(qMember.userId.eq(member.getUserId())
-                        .and(qMember.userPassword.eq(member.getUserPassword())))
+        return query.from(qUser)
+                .where(qUser.userId.eq(member.getUserId())
+                        .and(qUser.userPassword.eq(member.getUserPassword())))
                 .fetchOne();
     }
 
     @Override
-    public MemberVO signUp(MemberVO member) {
+    public UserVO signUp(UserVO member) {
         em.persist(member);
         return member;
     }
@@ -44,7 +44,7 @@ public class MainRepositoryImpl implements MainRepository{
     }
 
     @Override
-    public List<UserScheduleVO> getScheduleList(MemberVO member) {
+    public List<UserScheduleVO> getScheduleList(UserVO member) {
         final JPAQuery<UserScheduleVO> query = new JPAQuery<>(em);
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         return query.from(qUserSchedule)

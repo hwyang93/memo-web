@@ -1,9 +1,8 @@
 package memoWeb.web.myGroup.service;
 
-import memoWeb.web.main.domain.MemberVO;
-import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.UserRelationVO;
 import memoWeb.web.myGroup.repository.MyGroupRepository;
-import memoWeb.web.mySchedule.repository.MyScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,12 @@ public class MyGroupService {
         this.myGroupRepository = myGroupRepository;
     }
 
-    public List<MemberVO> getUserList(String keyword) {
+    public List<UserVO> getUserList(String keyword) {
         return myGroupRepository.getUserList(keyword);
+    }
+
+    public UserRelationVO joinUserRelation (UserRelationVO userRelation) {
+        return null;
+
     }
 }

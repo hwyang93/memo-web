@@ -1,8 +1,7 @@
 package memoWeb.web.main.service;
 
-import memoWeb.web.main.domain.MemberVO;
-import memoWeb.web.main.domain.QMemberVO;
 import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,11 @@ public class MainService {
 		this.mainRepository = mainRepository;
 	}
 
-	public MemberVO login (MemberVO member) {
+	public UserVO login (UserVO member) {
 		return mainRepository.getMember(member);
 	}
 
-	public MemberVO signUp (MemberVO member) {
+	public UserVO signUp (UserVO member) {
 		return mainRepository.signUp(member);
 	}
 
@@ -32,7 +31,7 @@ public class MainService {
 		return mainRepository.saveUserSchedule(userSchedule);
 	}
 
-	public List<UserScheduleVO> getScheduleList (MemberVO member) {
+	public List<UserScheduleVO> getScheduleList (UserVO member) {
 		return mainRepository.getScheduleList(member);
 	}
 
