@@ -43,7 +43,7 @@
       <!--/sidebar-close-->
       <div class="col-lg-8 col-md-12 blog_page">
         <div class="row">
-          <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx">
+          <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx" @click="showModal">
             <div class="card mb-3" style="height: 350px">
               <div class="card-header">{{ item.title }}</div>
               <div class="card-body">
@@ -58,9 +58,40 @@
           </div>
         </div>
       </div>
+
+      <div class="md-containar" id="modal" v-show="is_show">
+        <div class="scheduleDetail">
+          <div class="md-schedule">
+            <div class="md-b">
+              <div class="md-header"></div>
+              <div class="md-body">
+                <h5 class="md-title">주소</h5>
+                <p class="md-text"></p>
+                <h5 class="md-title">일정</h5>
+                <p class="md-text"></p>
+                <h5 class="md-title">메모</h5>
+                <p class="md-text"></p>
+              </div>
+            </div>
+            <div class="md-footer">
+              <b-button>수정</b-button>
+              <b-button>삭제</b-button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
+<style>
+.md-containar {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.scheduleDetail {
+  width: 40%;
+}
+</style>
+
 
 <script>
 import axiosUtil from '@/utils/axios-util';
