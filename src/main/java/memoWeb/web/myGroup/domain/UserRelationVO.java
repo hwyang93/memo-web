@@ -1,4 +1,4 @@
-package memoWeb.web.main.domain;
+package memoWeb.web.myGroup.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,20 +14,17 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "USERS")
-public class MemberVO {
+@Table(name = "USER_RELATION")
+public class UserRelationVO {
 	@Id
-	@Column(name = "USER_ID")
-	private String userId;
-	@Column(name = "USER_PASSWORD")
-	private String userPassword;
-	@Column(name = "USER_EMAIL")
-	private String userEmail;
-	@Column(name = "USER_NAME")
-	private String userName;
-	
+	@Column(name = "FOLLOW_USER_ID")
+	private String followUserId;
+	@Column(name = "FOLLOWING_USER_ID")
+	private String followingUserId;
 	@Column(name = "REG_DATE", insertable = false, updatable = false,
             columnDefinition = "Date default sysdate")
 	private String regDate;
+	@Column(name = "RELATION_STATUS")
+	private String relationStatus;
 
 }

@@ -1,9 +1,9 @@
 package memoWeb.web.mySchedule.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import memoWeb.web.main.domain.MemberVO;
 import memoWeb.web.main.domain.QUserScheduleVO;
 import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserVO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ public class MyScheduleRepositoryImpl implements MyScheduleRepository{
 
 
     @Override
-    public List<UserScheduleVO> getUserScheduleListAll(MemberVO member) {
+    public List<UserScheduleVO> getUserScheduleListAll(UserVO member) {
         final JPAQuery<UserScheduleVO> query = new JPAQuery<>(em);
         return query.from(qUserSchedule)
                 .where(qUserSchedule.userId.eq(member.getUserId()))
