@@ -21,8 +21,15 @@ public class MyGroupService {
         return myGroupRepository.getUserList(keyword);
     }
 
-    public UserRelationVO joinUserRelation (UserRelationVO userRelation) {
-        return null;
+    public UserVO getUserInfo (UserVO user){
+        return myGroupRepository.getUserInfo(user);
+    };
 
+    public UserRelationVO joinUserRelation (UserRelationVO userRelation) {
+        return myGroupRepository.joinUserRelation(userRelation);
+    }
+
+    public List<UserRelationVO> getFriendList (UserRelationVO userRelation) {
+        return myGroupRepository.getFriendList(userRelation);
     }
 }
