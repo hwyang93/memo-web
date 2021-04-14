@@ -1,11 +1,10 @@
 <template>
-
   <section class="container space-type-1 blog_page">
     <h1 class="title-type-1">My Group</h1>
     <div class="row">
       <!--blog-sidbar-->
       <div class="col-lg-4 col-md-12 ">
-        <div class="sidebar sidbar_left shadow-wrap-1">
+        <div class="sidebar sidebar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
             <h3 class="widgets-title">조회</h3>
@@ -22,7 +21,7 @@
           <left-menu />
           <!--tags-sidebar-->
           <div class="blog-sidebar-widgets tags-blog-sidebar mb-0">
-            <h3 class="widgets-title"><span>  Tags </span></h3>
+            <h3 class="widgets-title"><span>Tags</span></h3>
             <div class="blog-sidebar-widgets-inner">
               <div class="tagcloud">
                 <a href="index.html" class="tag-cloud-link"> Marketing </a>
@@ -66,7 +65,7 @@
             <b-tab title="Group" active>
               <h3 class="">그룹 관리</h3>
               <div class="group-area">
-                <router-link :to="'/groupDetail/1'">
+                <router-link :to="'/myPage/group/groupDetail'">
                   <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue;">
                     <div class="group">
                       <figure>
@@ -80,10 +79,8 @@
 
 
               <h3 class="">그룹원 추가</h3>
-
               <div>
                 <b-button v-b-modal.modal-center>멤버 추가 하기</b-button>
-
                 <b-modal id="modal-center" centered title="그룹에 친구 추가">
                   <ul class="user-list-area">
                     <li class="user-list">

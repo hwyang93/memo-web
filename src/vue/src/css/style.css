@@ -193,11 +193,6 @@ button:focus {
   padding-bottom: 60px;
 }
 
-.space-type-1 {
-  padding-top: 15px;
-  padding-bottom: 35px;
-}
-
 .space-top {
   padding-top: 120px;
 }
@@ -3096,7 +3091,7 @@ nav .no-arrow.dropdown-toggle::after {
   background-color: #fff;
 }
 
-.sidbar_left {
+.sidebar_left {
   padding-top: 30px;
   padding-bottom: 30px;
 }
