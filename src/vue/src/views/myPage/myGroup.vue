@@ -8,7 +8,7 @@
         <div class="sidebar sidbar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
-            <h3 class="widgets-title">  조회 </h3>
+            <h3 class="widgets-title">조회</h3>
             <div class="blog-sidebar-widgets-inner">
               <form class="searchform">
                 <div class="form-group search_2 p-0">
@@ -64,10 +64,25 @@
         <div class="tab-area-gf">
           <b-tabs content-class="mt-3" fill>
             <b-tab title="Group" active>
+              <h3 class="">그룹 관리</h3>
+              <div class="group-area">
+                <router-link :to="'/groupDetail/1'">
+                  <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue;">
+                    <div class="group">
+                      <figure>
+                        <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
+                        <p style="padding: 5px; text-align: center">info : 그룹정보</p>
+                      </figure>
+                    </div>
+                  </div>
+                </router-link>
+              </div>
+
+
               <h3 class="">그룹원 추가</h3>
 
               <div>
-                <b-button v-b-modal.modal-center>그룹 추가 하기</b-button>
+                <b-button v-b-modal.modal-center>멤버 추가 하기</b-button>
 
                 <b-modal id="modal-center" centered title="그룹에 친구 추가">
                   <ul class="user-list-area">
@@ -95,16 +110,7 @@
               <p>I'm the second tab</p>
             </b-tab>
           </b-tabs>
-          <router-link :to="'/groupDetail/1'">
-            <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue; float: left">
-              <div class="group">
-                <figure>
-                  <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
-                  <p style="padding: 5px; text-align: center">info : 그룹정보</p>
-                </figure>
-              </div>
-            </div>
-          </router-link>
+
         </div>
         <!-- </div> -->
 
