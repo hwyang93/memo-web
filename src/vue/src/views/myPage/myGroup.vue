@@ -1,10 +1,9 @@
 <template>
-
   <section class="container space-type-1 blog_page">
     <h1 class="title-type-1">My Group</h1>
     <div class="row">
       <!--blog-sidbar-->
-      <div class="col-lg-4 col-md-12 ">
+      <div class="col-lg-4 col-md-12">
         <div class="sidebar sidbar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
@@ -12,7 +11,7 @@
             <div class="blog-sidebar-widgets-inner">
               <form class="searchform">
                 <div class="form-group search_2 p-0">
-                  <input type="text" class="form-control" placeholder="키워드 검색" id="s">
+                  <input type="text" class="form-control" placeholder="키워드 검색" id="s" />
                   <button type="button" class="btn"><i class="fas fa-search"></i></button>
                 </div>
               </form>
@@ -22,19 +21,19 @@
           <left-menu />
           <!--tags-sidebar-->
           <div class="blog-sidebar-widgets tags-blog-sidebar mb-0">
-            <h3 class="widgets-title"><span>  Tags </span></h3>
+            <h3 class="widgets-title"><span> Tags </span></h3>
             <div class="blog-sidebar-widgets-inner">
               <div class="tagcloud">
                 <a href="index.html" class="tag-cloud-link"> Marketing </a>
-                <a href="index.html" class="tag-cloud-link"> Font  </a>
+                <a href="index.html" class="tag-cloud-link"> Font </a>
                 <a href="index.html" class="tag-cloud-link"> Design </a>
                 <a href="index.html" class="tag-cloud-link"> Networking </a>
-                <a href="index.html" class="tag-cloud-link"> I Interior  </a>
+                <a href="index.html" class="tag-cloud-link"> I Interior </a>
                 <a href="index.html" class="tag-cloud-link"> Seo </a>
                 <a href="index.html" class="tag-cloud-link"> theme </a>
                 <a href="index.html" class="tag-cloud-link">Web design </a>
-                <a href="index.html" class="tag-cloud-link">  Post </a>
-                <a href="index.html" class="tag-cloud-link">  Developing </a>
+                <a href="index.html" class="tag-cloud-link"> Post </a>
+                <a href="index.html" class="tag-cloud-link"> Developing </a>
                 <a href="index.html" class="tag-cloud-link"> Socail </a>
                 <a href="index.html" class="tag-cloud-link"> html </a>
               </div>
@@ -88,14 +87,14 @@
                   <ul class="user-list-area">
                     <li class="user-list">
                       <a href="#" class="user-pic">
-                        <img src="../../images/friends/user-sample.jpg" alt="">
+                        <img src="../../images/friends/user-sample.jpg" alt="" />
                       </a>
                       <a href="#" class="user-name">charm_bbong</a>
                       <button class="btn btn-info" id="btn-add-group">Add</button>
                     </li>
                     <li class="user-list">
                       <a href="#" class="user-pic">
-                        <img src="../../images/friends/user-sample.jpg" alt="">
+                        <img src="../../images/friends/user-sample.jpg" alt="" />
                       </a>
                       <a href="#" class="user-name">charm_bbong</a>
                       <button class="btn btn-info" id="btn-add-group">Add</button>
@@ -110,27 +109,35 @@
               <p>I'm the second tab</p>
             </b-tab>
           </b-tabs>
-
+          <router-link :to="'/groupDetail/55'">
+            <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue; float: left">
+              <div class="group">
+                <figure>
+                  <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
+                  <p style="padding: 5px; text-align: center">info : 그룹정보</p>
+                </figure>
+              </div>
+            </div>
+          </router-link>
         </div>
         <!-- </div> -->
-
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import axiosUtil from "@/utils/axios-util";
-import leftMenu from "@/views/myPage/leftMenu";
+import axiosUtil from '@/utils/axios-util';
+import leftMenu from '@/views/myPage/leftMenu';
 export default {
-  name: "group",
+  name: 'group',
   components: {
     leftMenu
   },
   data() {
     return {
       userScheduleList: []
-    }
+    };
   },
   methods: {
     getSchedule() {
@@ -143,11 +150,11 @@ export default {
   beforeMount() {
     // this.getSchedule();
   }
-}
+};
 </script>
 
 <style>
-  .modal-backdrop {
-    background-color: rgba(0,0,0,.3);
-  }
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 </style>

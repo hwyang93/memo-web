@@ -21,4 +21,16 @@ public class MyScheduleService {
         return myScheduleRepository.getUserScheduleListAll(member);
     }
 
+	public UserScheduleVO getScheduleDetail(int idx) {
+		return myScheduleRepository.getScheduleDetail(idx);
+	}
+
+	public long updateSchedule(UserScheduleVO userScheduleVO) {
+		return myScheduleRepository.updateSchedule(userScheduleVO);
+	}
+
+	public long deleteSchedule(int idx) {
+		return myScheduleRepository.deleteSchedule(idx);
+	}
+
 }
