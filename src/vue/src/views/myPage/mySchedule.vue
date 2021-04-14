@@ -48,7 +48,7 @@
               <div class="card-header">{{ item.title }}</div>
               <div class="card-body">
                 <h5 class="card-title">주소</h5>
-                <p class="card-text">{{ item.promisePlace }}</p>
+                <p class="card-text" aria-readonly>{{ item.promisePlace }}</p>
                 <h5 class="card-title">일정</h5>
                 <p class="card-text">{{ $moment(item.startDate).format('YYYY-MM-DD') + ' ~ ' + $moment(item.endDate).format('YYYY-MM-DD') }}</p>
                 <h5 class="card-title">메모</h5>
@@ -63,13 +63,13 @@
         <div class="modal modal-overlay">
           <div class="modal-window">
             <div class="md-map">
-              <div id="map" class="map"></div>
+              <div id="map" class="map md-map-1"></div>
             </div>
             <div class="md-content md-default" v-if="isdefault">
               <div class="md-header">{{ scheduleDetail.title }}</div>
               <div class="md-body">
                 <h5 class="md-title">주소</h5>
-                <p class="md-text">{{ scheduleDetail.promisePlace }}</p>
+                <p class="md-text" aria-readonly="false">{{ scheduleDetail.promisePlace }}</p>
                 <h5 class="md-title">일정</h5>
                 <p class="md-text">{{ $moment(scheduleDetail.startDate).format('YYYY-MM-DD') + ' ~ ' + $moment(scheduleDetail.endDate).format('YYYY-MM-DD') }}</p>
                 <h5 class="md-title">메모</h5>
@@ -196,6 +196,10 @@
   height: 120px;
   resize: none;
 }
+.md-map-1 {
+  width: 100%;
+  height: 100%;
+}
 </style>
 
 
@@ -218,6 +222,7 @@ export default {
       isStatusOn: false,
       isdefault: true,
       isModify: false,
+      backPromisePlace: null,
       userScheduleList: [],
       scheduleDetail: {}
     };
@@ -236,6 +241,8 @@ export default {
     showModal(idx) {
       axiosUtil.get('/api/mySchedule/getScheduleDetail.do', { params: { idx: idx } }, result => {
         this.scheduleDetail = result.data.scheduleDetail;
+        this.backPromisePlace = this.scheduleDetail.promisePlace;
+        this.getLocation();
       });
 
       this.isStatusOn = true;
@@ -268,25 +275,27 @@ export default {
       this.infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(this.map, 'click', mouseEvent => {
-        this.scheduleDetail.latLng = mouseEvent.latLng;
-        geocoder.coord2Address(mouseEvent.latLng.La, mouseEvent.latLng.Ma, (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+        if (this.isdefault == false) {
+          this.scheduleDetail.latLng = mouseEvent.latLng;
+          geocoder.coord2Address(mouseEvent.latLng.La, mouseEvent.latLng.Ma, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+              detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
-            var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
-            this.scheduleDetail.promisePlace = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
-            this.scheduleDetail.lon = mouseEvent.latLng.La;
-            this.scheduleDetail.lat = mouseEvent.latLng.Ma;
-            // 마커를 클릭한 위치에 표시합니다
-            marker.setPosition(mouseEvent.latLng);
-            marker.setMap(this.map);
+              var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
+              this.scheduleDetail.promisePlace = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+              this.scheduleDetail.lon = mouseEvent.latLng.La;
+              this.scheduleDetail.lat = mouseEvent.latLng.Ma;
+              // 마커를 클릭한 위치에 표시합니다
+              marker.setPosition(mouseEvent.latLng);
+              marker.setMap(this.map);
 
-            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-            this.infowindow.setContent(content);
-            this.infowindow.open(this.map, marker);
-          }
-        });
+              // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+              this.infowindow.setContent(content);
+              this.infowindow.open(this.map, marker);
+            }
+          });
+        }
       });
       if (this.scheduleDetail.length > 0) {
         this.setMarkers();
@@ -331,7 +340,6 @@ export default {
       this.isModify = true;
     },
     save: function () {
-      console.log(this.scheduleDetail);
       axiosUtil.post('/api/mySchedule/updateSchedule.do', this.scheduleDetail, result => {
         alert('수정되었습니다.');
         this.isStatusOn = false;
@@ -352,12 +360,13 @@ export default {
     cancel: function () {
       this.isdefault = true;
       this.isModify = false;
+      this.scheduleDetail.promisePlace = this.backPromisePlace;
     },
     close: function () {
       this.isStatusOn = false;
     },
     setMarkers() {
-      let markers = this.userScheduleList.map(item => {
+      let markers = this.scheduleDetail.map(item => {
         return new kakao.maps.Marker({
           position: new kakao.maps.LatLng(item.lat, item.lon)
         });

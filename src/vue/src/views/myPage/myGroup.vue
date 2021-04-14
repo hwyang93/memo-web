@@ -66,7 +66,7 @@
               <h3 class="">그룹 관리</h3>
               <div class="group-area">
                 <router-link :to="'/groupDetail/1'">
-                  <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue;">
+                  <div class="testGroup" style="width: 30%; height: 150px; margin-right: 20px; border: 1px solid #ccc; background: aliceblue">
                     <div class="group">
                       <figure>
                         <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
@@ -76,7 +76,6 @@
                   </div>
                 </router-link>
               </div>
-
 
               <h3 class="">그룹원 추가</h3>
 
