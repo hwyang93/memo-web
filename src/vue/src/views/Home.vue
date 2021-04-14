@@ -26,7 +26,7 @@
                       <div class="row">
                         <div class="form-group col-lg-12">
                           <div class="input-group">
-                            <input v-model="form.title" type="text" class="form-control" placeholder="제목" readonly />
+                            <input v-model="form.title" type="text" class="form-control" placeholder="제목" />
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
