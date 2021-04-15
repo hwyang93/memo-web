@@ -20,7 +20,7 @@ public class TransactionAspect {
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 
-	private static final String EXPRESSION = "execution(* memoWeb..repository.*Impl.*(..))";
+	private static final String EXPRESSION = "execution(* memoWeb..service.*Service.*(..))";
 
 	@Bean
 	public TransactionInterceptor transactionAdvice() {
