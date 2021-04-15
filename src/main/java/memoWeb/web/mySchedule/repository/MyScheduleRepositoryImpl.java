@@ -53,7 +53,6 @@ public class MyScheduleRepositoryImpl implements MyScheduleRepository{
 							.set(qUserSchedule.startDate, userScheduleVO.getStartDate())
 							.set(qUserSchedule.lat, userScheduleVO.getLat())
 							.set(qUserSchedule.lon, userScheduleVO.getLon())
-							.where(qUserSchedule.idx.eq(userScheduleVO.getIdx()))
 							.execute();
 	}
 

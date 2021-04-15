@@ -69,7 +69,7 @@
               <div class="md-header">{{ scheduleDetail.title }}</div>
               <div class="md-body">
                 <h5 class="md-title">주소</h5>
-                <p class="md-text" aria-readonly="false">{{ scheduleDetail.promisePlace }}</p>
+                <p class="md-text">{{ scheduleDetail.promisePlace }}</p>
                 <h5 class="md-title">일정</h5>
                 <p class="md-text">{{ $moment(scheduleDetail.startDate).format('YYYY-MM-DD') + ' ~ ' + $moment(scheduleDetail.endDate).format('YYYY-MM-DD') }}</p>
                 <h5 class="md-title">메모</h5>
@@ -97,7 +97,7 @@
             </footer>
             <footer class="modal-footer foo-modify" v-else-if="isModify">
               <button class="saveBtn md-btn" @click="save">Save</button>
-              <button class="deleteBtn md-btn" @click="deleteBtn(scheduleDetail.idx)">Delete</button>
+              <button class="deleteBtn md-btn" @click="deleteBtn">Delete</button>
               <button class="cancelBtn md-btn" @click="cancel">Cancel</button>
             </footer>
           </div>
@@ -158,7 +158,7 @@
   padding: 1.5rem 2rem;
 }
 .md-title {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7rem;
 }
 .md-text:last-child {
   margin-bottom: 0;
@@ -189,8 +189,8 @@
 }
 .md-modify .md-text {
   padding: 0.2rem;
-  margin-bottom: 0.75rem;
-  width: 80%;
+  margin-bottom: 0.7rem;
+  width: 90%;
 }
 .md-modify textarea {
   height: 120px;
@@ -199,6 +199,10 @@
 .md-map-1 {
   width: 100%;
   height: 100%;
+}
+#startDate,
+#endDate {
+  width: 80%;
 }
 </style>
 
@@ -237,7 +241,7 @@ export default {
     }
   },
   methods: {
-    getSchedule() {
+    getSchedule: function () {
       axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
       });
@@ -354,8 +358,8 @@ export default {
         this.getSchedule();
       });
     },
-    deleteBtn(idx) {
-      axiosUtil.get('/api/mySchedule/deleteSchedule.do', { params: { idx: idx } }, result => {
+    deleteBtn() {
+      axiosUtil.get('/api/mySchedule/deleteSchedule.do', { params: { idx: this.scheduleDetail.idx } }, result => {
         alert('삭제되었습니다.');
         this.isStatusOn = false;
         this.isdefault = true;
@@ -367,8 +371,6 @@ export default {
       this.isdefault = true;
       this.isModify = false;
       this.scheduleDetail.promisePlace = this.backPromisePlace;
-      this.scheduleDetail.lon = this.backlon;
-      this.scheduleDetail.lat = this.backlat;
     },
     close: function () {
       this.isStatusOn = false;
