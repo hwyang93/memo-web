@@ -62,7 +62,7 @@
       <transition name="modal" v-if="isStatusOn">
         <div class="modal modal-overlay">
           <div class="modal-window">
-            <div class="md-map">
+            <div class="md-map md-container">
               <div id="map" class="map md-map-1"></div>
             </div>
             <div class="md-content md-default" v-if="isdefault">
@@ -77,16 +77,16 @@
               </div>
             </div>
             <div class="md-content md-modify" v-else-if="isModify">
-              <input type="hidden" v-model="scheduleDetail.idx" />
-              <div class="md-header"><input type="text" class="md-header" v-model="scheduleDetail.title" /></div>
+              <input type="hidden" v-model="this.scheduleDetail.idx" />
+              <div class="md-header"><input type="text" class="md-header" v-model="this.scheduleDetail.title" /></div>
               <div class="md-body">
                 <h5 class="md-title">주소</h5>
-                <input type="text" class="md-text" v-model="scheduleDetail.promisePlace" />
+                <input type="text" class="md-text" v-model="this.scheduleDetail.promisePlace" />
                 <h5 class="md-title">일정</h5>
-                <input type="text" class="md-text" v-model="scheduleDetail.startDate" /><br />
-                <input type="text" class="md-text" v-model="scheduleDetail.endDate" />
+                시작 : <input type="date" class="md-text" id="startDate" :value="$moment(scheduleDetail.startDate).format('YYYY-MM-DD')" /><br />
+                종료 : <input type="date" class="md-text" id="endDate" :value="$moment(scheduleDetail.endDate).format('YYYY-MM-DD')" />
                 <h5 class="md-title">메모</h5>
-                <textarea class="md-text" v-model="scheduleDetail.memo"></textarea>
+                <textarea class="md-text" v-model="this.scheduleDetail.memo"></textarea>
               </div>
             </div>
             <footer class="modal-footer foo-default" v-if="isdefault">
@@ -223,6 +223,10 @@ export default {
       isdefault: true,
       isModify: false,
       backPromisePlace: null,
+      backlon: null,
+      backlat: null,
+      startDate: '',
+      endDate: '',
       userScheduleList: [],
       scheduleDetail: {}
     };
@@ -242,6 +246,8 @@ export default {
       axiosUtil.get('/api/mySchedule/getScheduleDetail.do', { params: { idx: idx } }, result => {
         this.scheduleDetail = result.data.scheduleDetail;
         this.backPromisePlace = this.scheduleDetail.promisePlace;
+        this.backlat = this.scheduleDetail.lat;
+        this.backlon = this.scheduleDetail.lon;
         this.getLocation();
       });
 
@@ -250,13 +256,13 @@ export default {
     initMap() {
       const container = document.getElementById('map');
       const options = {
-        center: new kakao.maps.LatLng(this.localLat, this.localLng),
+        center: new kakao.maps.LatLng(this.scheduleDetail.lat, this.scheduleDetail.lon),
         level: 3
       };
 
       this.map = new kakao.maps.Map(container, options);
       // 마커가 표시될 위치입니다
-      const markerPosition = new kakao.maps.LatLng(this.localLat, this.localLng);
+      const markerPosition = new kakao.maps.LatLng(this.scheduleDetail.lat, this.scheduleDetail.lon);
       // 마커를 생성합니다
       const marker = new kakao.maps.Marker({
         position: markerPosition
@@ -361,6 +367,8 @@ export default {
       this.isdefault = true;
       this.isModify = false;
       this.scheduleDetail.promisePlace = this.backPromisePlace;
+      this.scheduleDetail.lon = this.backlon;
+      this.scheduleDetail.lat = this.backlat;
     },
     close: function () {
       this.isStatusOn = false;
