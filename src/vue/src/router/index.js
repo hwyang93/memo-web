@@ -37,7 +37,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myGroup.vue')
   },
   {
-    path: '/myPage/group/groupDetail',
+    path: '/myPage/group/groupDetail/:id?',
     name: 'groupDetail',
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/groupDetail.vue')
   }

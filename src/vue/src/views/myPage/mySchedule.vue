@@ -3,7 +3,7 @@
     <div class="row">
       <!--blog-sidbar-->
       <div class="col-lg-4 col-md-12">
-        <div class="sidebar sidbar_left bg-gray">
+        <div class="sidebar sidebar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
             <h3 class="widgets-title">조회</h3>
@@ -44,10 +44,8 @@
       <div class="col-lg-8 col-md-12 blog_page">
         <div class="row">
           <div class="blog_post col-lg-6 col-md-6" v-for="item in userScheduleList" :key="item.idx">
-            <div class="card mb-3" style="height: 350px" @click="showModal(item.idx)">
-              <div class="detail-card">
-                <p id="dc-text">___ Detail</p>
-              </div>
+            <div class="detail-card"><p id="dc-text">___ Detail</p></div>
+            <div class="card mb-3 shadow-wrap-1" style="height: 350px" @click="showModal(item.idx)">
               <div class="card-header">{{ item.title }}</div>
               <div class="card-body">
                 <h5 class="card-title">주소</h5>
