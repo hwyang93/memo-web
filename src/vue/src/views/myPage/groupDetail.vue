@@ -3,7 +3,7 @@
     <h1 class="title-type-1">Group Detail</h1>
     <div class="row">
       <div class="col-sm-12">
-        <div class="shadow-wrap-1">
+        <div class="group-detail-content shadow-wrap-1">
           ja
         </div>
       </div>

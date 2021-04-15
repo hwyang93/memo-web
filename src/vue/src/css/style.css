@@ -3059,7 +3059,17 @@ custom css
   text-align: right;
   line-height: 1.5;
 }
+.title-type-2 {
+  margin: 20px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1;
+}
 /* title end */
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 
 .space-type-1 {
   padding-top: 15px;
@@ -3097,7 +3107,9 @@ nav .no-arrow.dropdown-toggle::after {
 }
 
 
-
+.my-group-content {
+  padding: 15px;
+}
 
 .tab-area-gf {
   margin-top: 30px;
@@ -3121,4 +3133,28 @@ nav .no-arrow.dropdown-toggle::after {
   height: 30px;
   border-radius: 50%;
   overflow: hidden;
+}
+
+.group-list-area {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: 1%;
+}
+.group-list-area a {
+  display: block;
+  width: 30%;
+  height: 150px;
+  margin-top: 20px;
+  margin-right: 3%;
+  border: 1px solid #ccc;
+  background: aliceblue;
+}
+
+.add-member-area {
+  /* margin: 20px 0; */
+}
+
+.group-detail-content {
+  padding: 15px;
 }
