@@ -3076,6 +3076,10 @@ custom css
   /* padding-bottom: 35px; */
 }
 
+.blog_post {
+  cursor: pointer;
+}
+
 .user-area {
   margin-left: auto;
 }
@@ -3134,6 +3138,22 @@ nav .no-arrow.dropdown-toggle::after {
   border-radius: 50%;
   overflow: hidden;
 }
+/* friends list end */
+
+.group-item {
+  height: 100%;
+}
+
+.group-item h4 {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  text-align: center
+}
+
+.group-item p {
+  padding: 5px;
+  text-align: center
+}
 
 .group-list-area {
   display: flex;
@@ -3157,4 +3177,19 @@ nav .no-arrow.dropdown-toggle::after {
 
 .group-detail-content {
   padding: 15px;
+}
+
+
+.button-area {
+  display: flex;
+  justify-content: center;
+}
+.button-area button:first-child {
+  margin-right: 10px;
+}
+
+.label-sub {
+  margin-bottom: .5rem;
+  color: #585858;
+  font-size: 16px;
 }

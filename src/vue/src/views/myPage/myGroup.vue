@@ -52,7 +52,7 @@
               <b-button v-b-modal.modal-center>그룹 만들기</b-button>
                 <b-modal id="modal-center" centered title="그룹 만들기">
 
-                  <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                  <b-form @submit="onSubmit" @reset="onReset" v-if="form.show">
                     <b-form-group
                       id="input-group-1"
                       label="Group Name:"
@@ -76,63 +76,53 @@
                       ></b-form-input>
                     </b-form-group>
 
-                    <b-form-group id="input-group-3" label="Food:" label-for="input-3">
+                    <!-- <b-form-group id="input-group-3" label="Food:" label-for="input-3">
                       <b-form-select
                         id="input-3"
                         v-model="form.food"
                         :options="foods"
                         required
                       ></b-form-select>
-                    </b-form-group>
+                    </b-form-group> -->
 
-                    <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-                      <b-form-checkbox-group
-                        v-model="form.checked"
-                        id="checkboxes-4"
-                        :aria-describedby="ariaDescribedby"
-                      >
-                        <b-form-checkbox value="me">Check me out</b-form-checkbox>
-                        <b-form-checkbox value="that">Check that out</b-form-checkbox>
-                      </b-form-checkbox-group>
-                    </b-form-group>
+                    <p class="label-sub">멤버 추가:</p>
 
-                    <b-button type="submit" variant="primary">Submit</b-button>
-                    <b-button type="reset" variant="danger">Reset</b-button>
+                    <ul class="user-list-area">
+                      <li class="user-list">
+                        <a href="#" class="user-pic">
+                          <img src="../../images/friends/user-sample.jpg" alt="" />
+                        </a>
+                        <a href="#" class="user-name">charm_bbong</a>
+                        <button class="btn btn-info" id="btn-add-group">Add</button>
+                      </li>
+                      <li class="user-list">
+                        <a href="#" class="user-pic">
+                          <img src="../../images/friends/user-sample.jpg" alt="" />
+                        </a>
+                        <a href="#" class="user-name">charm_bbong</a>
+                        <button class="btn btn-info" id="btn-add-group">Add</button>
+                      </li>
+                    </ul>
+                    <div class="button-area">
+                      <b-button type="submit" variant="primary">Submit</b-button>
+                      <b-button type="reset" variant="danger">Reset</b-button>
+                    </div>
                   </b-form>
 
-                  <ul class="user-list-area">
-                    <li class="user-list">
-                      <a href="#" class="user-pic">
-                        <img src="../../images/friends/user-sample.jpg" alt="" />
-                      </a>
-                      <a href="#" class="user-name">charm_bbong</a>
-                      <button class="btn btn-info" id="btn-add-group">Add</button>
-                    </li>
-                    <li class="user-list">
-                      <a href="#" class="user-pic">
-                        <img src="../../images/friends/user-sample.jpg" alt="" />
-                      </a>
-                      <a href="#" class="user-name">charm_bbong</a>
-                      <button class="btn btn-info" id="btn-add-group">Add</button>
-                    </li>
-                  </ul>
+
                 </b-modal>
               <div class="group-list-area">
                 <router-link :to="'/myPage/group/groupDetail/'" class="shadow-wrap-1">
-                  <div class="testGroup" style="">
-                    <div class="group">
-                      <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
-                      <p style="padding: 5px; text-align: center">info : 그룹정보</p>
-                    </div>
+                  <div class="group-item" style="">
+                    <h4>그룹이름</h4>
+                    <p>info : 그룹정보</p>
                   </div>
                 </router-link>
 
                 <router-link :to="'/myPage/group/groupDetail'" class="shadow-wrap-1">
-                  <div class="testGroup" style="">
-                    <div class="group">
-                      <h4 style="border-bottom: 1px solid #ccc; padding: 5px; text-align: center">그룹이름</h4>
-                      <p style="padding: 5px; text-align: center">info : 그룹정보</p>
-                    </div>
+                  <div class="group-item" style="">
+                    <h4>그룹이름</h4>
+                    <p>info : 그룹정보</p>
                   </div>
                 </router-link>
 
@@ -163,7 +153,29 @@
 
             <b-tab title="Friends">
               <h3 class="title-type-2">친구 관리</h3>
-              <p>I'm the second tab</p>
+              <p>친구 찾기: </p>
+              <b-form inline>
+                <b-form-input id="inline-form-input-name" class="mb-2 mr-sm-2 mb-sm-0" placeholder="enter user name"></b-form-input>
+                <b-button variant="primary">Search</b-button>
+              </b-form>
+
+              <h3 class="title-type-2">친구 목록</h3>
+              <ul class="user-list-area">
+                    <li class="user-list">
+                      <a href="#" class="user-pic">
+                        <img src="../../images/friends/user-sample.jpg" alt="" />
+                      </a>
+                      <a href="#" class="user-name">charm_bbong</a>
+                      <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                    </li>
+                    <li class="user-list">
+                      <a href="#" class="user-pic">
+                        <img src="../../images/friends/user-sample.jpg" alt="" />
+                      </a>
+                      <a href="#" class="user-name">charm_bbong</a>
+                      <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                    </li>
+                  </ul>
             </b-tab>
           </b-tabs>
         </div>
@@ -190,11 +202,9 @@ export default {
       form: {
         groupName: '',
         groupInfo: '',
-        food: null,
-        checked: []
+        show: true
       },
-      foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-      show: true
+
     };
   },
   methods: {
@@ -219,15 +229,11 @@ export default {
     },
     onReset(event) {
       event.preventDefault()
-      // Reset our form values
       this.form.groupName = ''
       this.form.groupInfo = ''
-      this.form.food = null
-      this.form.checked = []
-      // Trick to reset/clear native browser form validation state
-      this.show = false
+      this.form.show = false
       this.$nextTick(() => {
-        this.show = true
+        this.form.show = true
       })
     }
 
