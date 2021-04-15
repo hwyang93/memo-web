@@ -128,8 +128,10 @@ export default {
       isdefault: true,
       isModify: false,
       backPromisePlace: null,
-      backlat: '',
-      backlon: '',
+      backlon: null,
+      backlat: null,
+      startDate: '',
+      endDate: '',
       userScheduleList: [],
       scheduleDetail: {}
     };
@@ -149,10 +151,10 @@ export default {
       axiosUtil.get('/api/mySchedule/getScheduleDetail.do', { params: { idx: idx } }, result => {
         this.scheduleDetail = result.data.scheduleDetail;
         this.backPromisePlace = this.scheduleDetail.promisePlace;
-        this.getLocation();
-        this.initMap();
         this.backlat = this.scheduleDetail.lat;
         this.backlon = this.scheduleDetail.lon;
+        this.getLocation();
+        this.initMap();
       });
 
       this.isStatusOn = true;
@@ -273,8 +275,8 @@ export default {
       this.isdefault = true;
       this.isModify = false;
       this.scheduleDetail.promisePlace = this.backPromisePlace;
-      this.scheduleDetail.lat = this.backlat;
       this.scheduleDetail.lon = this.backlon;
+      this.scheduleDetail.lat = this.backlat;
       this.initMap();
     },
     close: function () {
