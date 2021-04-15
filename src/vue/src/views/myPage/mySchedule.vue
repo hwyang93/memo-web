@@ -371,6 +371,7 @@ export default {
       this.isdefault = true;
       this.isModify = false;
       this.scheduleDetail.promisePlace = this.backPromisePlace;
+      this.scheduleDetail.latLng = mouseEvent.latLng;
     },
     close: function () {
       this.isStatusOn = false;
