@@ -197,7 +197,7 @@ export default {
   },
   data() {
     return {
-      userScheduleList: [],
+      // userScheduleList: [],
       userList: [],
       form: {
         groupName: '',
@@ -208,15 +208,15 @@ export default {
     };
   },
   methods: {
-    getSchedule() {
-      axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
-        this.userScheduleList = result.data.userScheduleList;
-        console.log(this.userScheduleList);
-      });
-    },
+    // getSchedule() {
+    //   axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
+    //     this.userScheduleList = result.data.userScheduleList;
+    //     console.log(this.userScheduleList);
+    //   });
+    // },
     getUserInfo() {
       var params =  {
-        keyword : 'test'
+        keyword : ''
       }
       axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
         this.userList = result.data.userList;

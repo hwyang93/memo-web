@@ -106,106 +106,6 @@
     </div>
   </section>
 </template>
-<style>
-.modal-overlay {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
-.modal-window {
-  background: #fff;
-  overflow: hidden;
-  width: 60%;
-  transition: opacity 0.4s, transform 0.4ms;
-}
-.modal-footer {
-  padding: 0.7rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-}
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.4s;
-}
-.modal-leave-active {
-  transition: opacity 0.4s ease 0.2s;
-}
-.md-map {
-  float: left;
-  width: 50%;
-  height: 500px;
-}
-.md-content {
-  width: 50%;
-  float: left;
-  height: 500px;
-}
-.md-header {
-  padding: 1rem 2rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-}
-.md-body {
-  flex: 1 1 auto;
-  padding: 1.5rem 2rem;
-}
-.md-title {
-  margin-bottom: 0.7rem;
-}
-.md-text:last-child {
-  margin-bottom: 0;
-}
-.md-btn {
-  border: 0;
-  border-radius: 0.75rem;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-}
-.ModifyBtn {
-  background: #00adb5;
-}
-.saveBtn {
-  background: lightcoral;
-}
-.deleteBtn {
-  background: darkgray;
-}
-.md-modify .md-header {
-  padding: 0.73rem;
-}
-.md-modify .md-header input {
-  padding: 0.2rem;
-  background: #fff;
-  width: 80%;
-  border: 1px solid #ccc;
-  margin-left: 1rem;
-}
-.md-modify .md-text {
-  padding: 0.2rem;
-  margin-bottom: 0.7rem;
-  width: 90%;
-}
-.md-modify textarea {
-  height: 120px;
-  resize: none;
-}
-.md-map-1 {
-  width: 100%;
-  height: 100%;
-}
-#startDate,
-#endDate {
-  width: 80%;
-}
-</style>
-
 
 <script>
 import axiosUtil from '@/utils/axios-util';
@@ -253,6 +153,7 @@ export default {
         this.backlat = this.scheduleDetail.lat;
         this.backlon = this.scheduleDetail.lon;
         this.getLocation();
+        this.initMap();
       });
 
       this.isStatusOn = true;
@@ -350,6 +251,8 @@ export default {
       this.isModify = true;
     },
     save: function () {
+      this.scheduleDetail.startDate = document.getElementById('startDate').value;
+      this.scheduleDetail.endDate = document.getElementById('endDate').value;
       axiosUtil.post('/api/mySchedule/updateSchedule.do', this.scheduleDetail, result => {
         alert('수정되었습니다.');
         this.isStatusOn = false;
@@ -371,7 +274,9 @@ export default {
       this.isdefault = true;
       this.isModify = false;
       this.scheduleDetail.promisePlace = this.backPromisePlace;
-      this.scheduleDetail.latLng = mouseEvent.latLng;
+      this.scheduleDetail.lon = this.backlon;
+      this.scheduleDetail.lat = this.backlat;
+      this.initMap();
     },
     close: function () {
       this.isStatusOn = false;
