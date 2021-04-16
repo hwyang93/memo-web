@@ -4,7 +4,6 @@ import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.GroupMemberVO;
 import memoWeb.web.myGroup.domain.GroupsVO;
-import memoWeb.web.myGroup.domain.UserGroupVO;
 import memoWeb.web.myGroup.domain.UserRelationVO;
 import memoWeb.web.myGroup.service.MyGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ public class MyGroupContoller {
 
     @GetMapping("getUserList.do")
     public String getUserList(Model model, HttpSession session, @RequestParam HashMap<String, Object> params) {
-
         List<UserVO> result = myGroupService.getUserList(params);
         model.addAttribute("userList", result);
         return "jsonView";
@@ -41,7 +39,7 @@ public class MyGroupContoller {
         return "jsonView";
     }
 
-    @PostMapping("joinUserRelation")
+    @PostMapping("joinUserRelation.do")
     public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationVO userRelation) {
         userRelation.setFollowUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         userRelation.setRelationStatus("W");
@@ -75,7 +73,7 @@ public class MyGroupContoller {
     }
 
     @PostMapping("createGroup.do")
-    public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, GroupsVO group){
+    public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group){
         int groupIdx = myGroupService.getGroupIdx();
 
         group.setGroupMasterUser(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
