@@ -1849,6 +1849,25 @@ ul.about-plannings.nav li {
   border-radius: 50% 0% 0 50%;
   height: 50px;
 }
+
+@media (max-width:992px) {
+  .widgets-title:after {
+    right: 34%;
+  }
+}
+
+@media (max-width:768px) {
+  .widgets-title:after {
+    right: 32%;
+  }
+}
+
+@media (max-width:500px) {
+  .widgets-title:after {
+    right: 31%;
+  }
+}
+
 .blog-sidebar-widgets li:last-child a {
   border-bottom: 0 !important;
   padding-bottom: 0;
@@ -3189,6 +3208,51 @@ nav .no-arrow.dropdown-toggle::after {
   color: #585858;
   font-size: 16px;
 }
+
+/* search friend area start */
+
+.search-friend-area {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.search-drop {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 50%;
+  padding: 15px;
+  border: 1px solid #eee;
+  background: #fff;
+}
+.search-drop.show {
+  display: block;
+}
+.search-result-box {
+  margin-bottom: 0;
+}
+.search-result-list {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.search-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.user-box span {
+  margin-left: 15px;
+}
+
+/* search friend area end */
 
 /* mySchedule css 추가 */
 .modal-overlay {
