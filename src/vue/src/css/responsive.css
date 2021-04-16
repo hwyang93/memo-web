@@ -16,10 +16,10 @@
         display: none;
     }
 	.team-cont .social_media li a {
-    width: 38px;
-    height: 38px;
-    line-height: 38px;
-}
+        width: 38px;
+        height: 38px;
+        line-height: 38px;
+    }
 }
 
 @media (max-width:1366px) {
@@ -34,8 +34,7 @@
         background: linear-gradient(90deg, #ff4181 20%, #0288d1 -47%);
     }
 
-
-   .banner_social_area {
+    .banner_social_area {
 		align-items: flex-end;
 		left: 0;
 		width: 100%;
@@ -73,13 +72,13 @@
 		width:100%;
 	}
 
-.service-content {
-	padding: 25px 12px;
-}
+    .service-content {
+        padding: 25px 12px;
+    }
 }
 
 @media (min-width: 992px) {
-	 .main-navbar .dropdown:hover>.dropdown-menu {
+	.main-navbar .dropdown:hover>.dropdown-menu {
         -webkit-transform: scale(1, 1);
         transform: scale(1, 1);
         opacity: 1;
@@ -88,7 +87,7 @@
         max-width: 190px;
     }
 	.mega_menu li.dropdown-submenu.col-lg-3 {
-    float: left;
+        float: left;
 }
     .main-navbar.h_stiky .brand_toggle_cont,
     .main-navbar.h_stiky.navbar.navbar-default.navbar-expand-md {
@@ -327,6 +326,7 @@
     }
     .out_cont_box {
         -webkit-transform: translateY(0)!important;
+        transform: translateY(0)!important;
         width: 100%!important;
     }
     header .main-navbar .navbar-nav .nav-link {
@@ -352,7 +352,7 @@
 		padding: 10px 0;
 	}
 	.navbar-expand-md .navbar-nav .mega_menu .dropdown-menu {
-	  padding: 0px!important;
+	    padding: 0px!important;
 
     }
     li.dropdown-submenu:last-child {
@@ -371,6 +371,7 @@
     }
     .navbar-expand-sm .navbar-nav {
         -ms-flex-direction: row !important;
+        flex-direction: row!important;
         width: 100%;
     }
     .testimonial-tabs li.nav-item.col-sm-6 {
@@ -410,7 +411,7 @@
 
 
 @media (max-width:767px) {
-	 .brand_toggle_cont {
+	.brand_toggle_cont {
         margin: 0px 15px;
     }
     .team_member_img a.navbar-brand {

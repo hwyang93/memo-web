@@ -2,7 +2,7 @@
   <div>
     <section class="bg-img-1 space contact_page">
       <div class="container">
-        <div class="row cont-cover">
+        <div class="row cont-cover align-items-center">
           <div class="col-lg-6 col-md-12">
             <div class="contcat_info">
               <div class="section-heading ml-0">
@@ -17,7 +17,7 @@
                 <div class="input-group">
                   <input v-model="form.userId" type="text" class="form-control" placeholder="아이디" />
                 </div>
-          7    </div>
+              </div>
               <div class="form-group col-md-12">
                 <div class="input-group">
                   <input v-model="form.userPassword" type="password" class="form-control" placeholder="비밀번호" />
@@ -75,4 +75,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+  section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
