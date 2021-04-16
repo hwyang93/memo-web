@@ -3274,7 +3274,8 @@ nav .no-arrow.dropdown-toggle::after {
 .md-modify .md-text {
   padding: 0.2rem;
   margin-bottom: 0.7rem;
-  width: 90%;
+  width: 95%;
+  border: 1px solid #ccc;
 }
 .md-modify textarea {
   height: 120px;
@@ -3286,7 +3287,7 @@ nav .no-arrow.dropdown-toggle::after {
 }
 #startDate,
 #endDate {
-  width: 80%;
+  width: 83%;
 }
 .mb-3 {
   cursor: pointer;
