@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
 @Entity
@@ -25,9 +25,10 @@ public class UserVO {
 	private String userEmail;
 	@Column(name = "USER_NAME")
 	private String userName;
-
 	@Column(name = "REG_DATE", insertable = false, updatable = false,
 			columnDefinition = "Date default sysdate")
 	private String regDate;
+	@Column(name = "OPEN_FLAG")
+	private String openFlag;
 
 }

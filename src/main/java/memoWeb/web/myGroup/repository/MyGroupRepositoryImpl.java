@@ -4,14 +4,15 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserVO;
-import memoWeb.web.myGroup.domain.QUserRelationVO;
-import memoWeb.web.myGroup.domain.UserRelationVO;
+import memoWeb.web.myGroup.domain.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -21,15 +22,16 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     private EntityManager em;
     QUserVO qUser = QUserVO.userVO;
     QUserRelationVO qUserRelation = QUserRelationVO.userRelationVO;
-
+    QGroupsVO qGroups = QGroupsVO.groupsVO;
+    QGroupMemberVO qGroupMember = QGroupMemberVO.groupMemberVO;
 
     @Override
-    public List<UserVO> getUserList(String keyword) {
+    public List<UserVO> getUserList(HashMap<String, Object> params) {
         final JPAQuery<UserVO> query = new JPAQuery<>(em);
         return query.from(qUser)
-                .where(qUser.userId.contains(keyword)
-                .or(qUser.userName.contains(keyword)
-                .or(qUser.userEmail.contains(keyword))))
+                .where(qUser.userId.contains((String) params.get("keyword"))
+                        .or(qUser.userName.contains((String) params.get("keyword"))
+                                .or(qUser.userEmail.contains((String) params.get("keyword")))))
                 .fetch();
     }
 
@@ -61,4 +63,39 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
                 .where(builder)
                 .fetch();
     }
+
+    @Override
+    public int getGroupIdx() {
+        final JPAQuery<UserGroupVO> query = new JPAQuery<>(em);
+        return Optional.ofNullable(query.from(qGroups).select(qGroups.groupIdx.max()).fetchOne()).orElseGet(()->1);
+    }
+
+    @Override
+    public void createGroup(GroupsVO group) {
+        em.persist(group);
+    }
+
+    @Override
+    public void joinGroupMember(GroupMemberVO groupMember) {
+        em.persist(groupMember);
+    }
+
+    @Override
+    public List<GroupsVO> getGroupList(UserVO user) {
+        final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
+        return query.from(qGroups)
+                .where(qGroupMember.groupUser.eq(user.getUserId())
+                .and(qGroups.groupIdx.eq(qGroupMember.groupIdx)))
+                .fetch();
+    }
+
+    @Override
+    public GroupsVO getGroupInfo(GroupsVO group) {
+        final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
+        return query.from(qGroups)
+                .where(qGroups.groupIdx.eq(group.getGroupIdx()))
+                .fetchOne();
+    }
+
+
 }
