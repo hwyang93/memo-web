@@ -3,7 +3,6 @@ package memoWeb.web.myGroup.repository;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.GroupMemberVO;
 import memoWeb.web.myGroup.domain.GroupsVO;
-import memoWeb.web.myGroup.domain.UserGroupVO;
 import memoWeb.web.myGroup.domain.UserRelationVO;
 
 import java.util.HashMap;
@@ -19,4 +18,5 @@ public interface MyGroupRepository {
     public void joinGroupMember(GroupMemberVO groupMember);
     public List<GroupsVO> getGroupList(UserVO user);
     public GroupsVO getGroupInfo(GroupsVO group);
+
 }
