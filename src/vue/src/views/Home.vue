@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <main class="home-banner bg-gray">
-      <div class="container home-banner-container">
-        <div class="row home-banner-row">
+    <main class="home-banner">
+      <div class="container home-banner-container space-type-1">
+        <div class="row home-banner-row shadow-wrap-1">
           <!-- kakao map -->
           <div class="col-lg-8 col-sm-12">
             <div class="content-center">
