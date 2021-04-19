@@ -1,5 +1,15 @@
 package memoWeb.web.myGroup.repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,6 +25,16 @@ import javax.persistence.PersistenceContext;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+
+import memoWeb.web.main.domain.QUserVO;
+import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupMemberVO;
+import memoWeb.web.myGroup.domain.GroupsVO;
+import memoWeb.web.myGroup.domain.QGroupMemberVO;
+import memoWeb.web.myGroup.domain.QGroupsVO;
+import memoWeb.web.myGroup.domain.QUserRelationVO;
+import memoWeb.web.myGroup.domain.UserGroupVO;
+import memoWeb.web.myGroup.domain.UserRelationVO;
 
 @Repository
 @Transactional
