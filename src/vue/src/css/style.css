@@ -3234,9 +3234,13 @@ nav .no-arrow.dropdown-toggle::after {
 }
 .search-result-list {
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.search-result-list:last-child {
+  margin-bottom: 0;
 }
 .search-result {
   display: flex;

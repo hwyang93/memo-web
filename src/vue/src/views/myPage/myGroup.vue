@@ -243,6 +243,15 @@ export default {
     //   });
     // },
     openDrop() {
+      // var test = [];
+      // var temp;
+      // for(var i = 0; i<10; i++) {
+      //   temp = {};
+      //   temp.groupIdx = groupIdx;
+      //   temp.groupUser = item;
+      //   test.push(temp);
+      // }
+
       const hideContent = document.querySelector('.search-drop');
       hideContent.classList.toggle('show');
       const inputValue = document.querySelector('#search-input');
