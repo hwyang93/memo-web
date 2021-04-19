@@ -84,25 +84,6 @@
                           required
                         ></b-form-select>
                       </b-form-group> -->
-
-                      <p class="label-sub">멤버 추가:</p>
-
-                      <ul class="user-list-area">
-                        <li class="user-list">
-                          <a href="#" class="user-pic">
-                            <img src="../../images/friends/user-sample.jpg" alt="" />
-                          </a>
-                          <a href="#" class="user-name">charm_bbong</a>
-                          <button class="btn btn-info" id="btn-add-group">Add</button>
-                        </li>
-                        <li class="user-list">
-                          <a href="#" class="user-pic">
-                            <img src="../../images/friends/user-sample.jpg" alt="" />
-                          </a>
-                          <a href="#" class="user-name">charm_bbong</a>
-                          <button class="btn btn-info" id="btn-add-group">Add</button>
-                        </li>
-                      </ul>
                       <div class="button-area">
                         <b-button type="submit" variant="primary">Submit</b-button>
                         <b-button type="reset" variant="danger">Reset</b-button>
@@ -112,27 +93,25 @@
 
                   </b-modal>
                 <div class="group-list-area">
-                  <router-link :to="'/myPage/group/groupDetail/'" class="shadow-wrap-1">
-                    <div class="group-item" style="">
+                  <ul class="group-list">
+                    <li v-b-modal.modal-center1 class="group-item shadow-wrap-1">
                       <h4>그룹이름</h4>
                       <p>info : 그룹정보</p>
-                    </div>
-                  </router-link>
+                    </li>
 
-                  <router-link :to="'/myPage/group/groupDetail'" class="shadow-wrap-1">
-                    <div class="group-item" style="">
+                    <li v-b-modal.modal-center1 class="group-item shadow-wrap-1">
                       <h4>그룹이름</h4>
                       <p>info : 그룹정보</p>
-                    </div>
-                  </router-link>
+                    </li>
 
-                </div>
-                <h3 class="title-type-2">그룹원 추가</h3>
-                <div class="add-member-area">
-                  <b-button v-b-modal.modal-center1>멤버 추가 하기</b-button>
-                  <b-modal id="modal-center1" centered title="그룹에 친구 추가">
+                    <li v-b-modal.modal-center1 class="group-item shadow-wrap-1">
+                      <h4>그룹이름</h4>
+                      <p>info : 그룹정보</p>
+                    </li>
+                  </ul>
+                  <b-modal id="modal-center1" centered title="그룹 정보">
                     <ul class="user-list-area">
-                      <li class="user-list">
+                      <!-- <li class="user-list">
                         <a href="#" class="user-pic">
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
@@ -145,7 +124,12 @@
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
                         <button class="btn btn-info" id="btn-add-group">Add</button>
-                      </li>
+                      </li> -->
+                      <h4>그룹 이름</h4>
+                      <p>info : 그룹정보</p>
+                      <!-- <p>참여 멤버</p> -->
+                      <label for="tags-basic">참여 멤버</label>
+                      <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
                     </ul>
                   </b-modal>
                 </div>
@@ -214,16 +198,22 @@ export default {
   },
   data() {
     return {
-      // userScheduleList: [],
       userList: [],
+      groupList: [],
+      groupInfo: [],
+      memberValue: [],
       form: {
         groupName: '',
         groupInfo: '',
         show: true
       },
       friend:{
-        keyword :''
+        keyword : ''
+      },
+      groupId:{
+        groupIdx : ''
       }
+
     };
   },
   watch: {
@@ -236,12 +226,6 @@ export default {
     }
   },
   methods: {
-    // getSchedule() {
-    //   axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
-    //     this.userScheduleList = result.data.userScheduleList;
-    //     console.log(this.userScheduleList);
-    //   });
-    // },
     openDrop() {
       // var test = [];
       // var temp;
@@ -287,9 +271,25 @@ export default {
         console.log(this.userList);
       });
     },
+    // getGroupInfo() {
+    //   var params = {
+    //     groupIdx : this.groupId.groupIdx
+    //   }
+    //   axiosUtil.get('/api/myGroup/getGroupInfo.do', {params}, result => {
+    //     this.groupId = result.data.groupId;
+    //     console.log(this.groupId);
+    //   });
+    // },
+    getGroupList() {
+      axiosUtil.get('/api/myGroup/getGroupList.do', {}, result => {
+        this.groupList = result.data.groupList;
+        console.log('group list : ', this.groupList);
+      });
+    },
     onSubmit(event) {
       event.preventDefault()
-      alert(JSON.stringify(this.form))
+      // alert(JSON.stringify(this.form))
+
     },
     onReset(event) {
       event.preventDefault()
@@ -303,9 +303,10 @@ export default {
 
   },
   beforeMount() {
-    // this.getSchedule();
     // this.getFriendsList();
     // this.getUserList();
+    this.getGroupList();
+    // this.getGroupInfo();
   }
 };
 </script>
