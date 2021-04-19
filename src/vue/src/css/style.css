@@ -3155,8 +3155,34 @@ nav .no-arrow.dropdown-toggle::after {
 }
 /* friends list end */
 
+/* group list start */
+/* .group-list-area {
+
+}
+.group-list-area a {
+  display: block;
+  width: 30%;
+  height: 150px;
+  margin-top: 20px;
+  margin-right: 3%;
+  border: 1px solid #ccc;
+  background: aliceblue;
+} */
+
+.group-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: 4%;
+}
 .group-item {
+  width: 30%;
   height: 100%;
+  margin-top: 20px;
+  margin-right: 3%;
+  border: 1px solid #ccc;
+  background: aliceblue;
+  cursor: pointer;
 }
 
 .group-item h4 {
@@ -3170,21 +3196,11 @@ nav .no-arrow.dropdown-toggle::after {
   text-align: center
 }
 
-.group-list-area {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-left: 1%;
+.b-form-tag {
+  margin-right: .25rem;
 }
-.group-list-area a {
-  display: block;
-  width: 30%;
-  height: 150px;
-  margin-top: 20px;
-  margin-right: 3%;
-  border: 1px solid #ccc;
-  background: aliceblue;
-}
+
+/* group list end */
 
 .add-member-area {
   /* margin: 20px 0; */
