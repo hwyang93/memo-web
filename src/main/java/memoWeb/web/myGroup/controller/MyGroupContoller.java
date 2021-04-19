@@ -1,7 +1,9 @@
 package memoWeb.web.myGroup.controller;
 
+import com.querydsl.core.Tuple;
 import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
 import memoWeb.web.myGroup.domain.GroupMemberVO;
 import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.myGroup.domain.UserRelationVO;
@@ -56,11 +58,22 @@ public class MyGroupContoller {
         return "jsonView";
     }
 
+//    @GetMapping("getGroupList.do")
+//    public String getGroupList (Model model, HttpSession session) {
+//        UserVO user = new UserVO();
+////        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+//        user.setUserId("test");
+//        List<GroupsVO> result = myGroupService.getGroupList(user);
+//        model.addAttribute("groupList", result);
+//        return "jsonView";
+//    }
+
     @GetMapping("getGroupList.do")
     public String getGroupList (Model model, HttpSession session) {
         UserVO user = new UserVO();
-        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
-        List<GroupsVO> result = myGroupService.getGroupList(user);
+//        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        user.setUserId("test");
+        List<GroupDTO> result = myGroupService.getGroupList(user);
         model.addAttribute("groupList", result);
         return "jsonView";
     }
