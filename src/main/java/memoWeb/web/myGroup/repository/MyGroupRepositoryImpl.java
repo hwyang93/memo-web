@@ -1,7 +1,7 @@
 package memoWeb.web.myGroup.repository;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserVO;
@@ -89,9 +89,11 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     }
 
     @Override
-    public List<GroupsVO> getGroupList(UserVO user) {
-        return queryFactory.select(qGroups)
-                .from(qGroups, qGroupMember)
+    public List<GroupDTO> getGroupList(UserVO user) {
+        return queryFactory.select(Projections.fields(GroupDTO.class, qGroups.groupIdx, qGroups.groupTitle, qGroups.regDate, qGroupMember.memberAuth, qGroupMember.approvalStatus))
+                .from(qGroups)
+                .innerJoin(qGroupMember)
+                .on(qGroups.groupIdx.eq(qGroupMember.groupIdx))
                 .where(qGroupMember.groupUser.eq(user.getUserId()))
                 .fetch();
     }
