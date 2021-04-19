@@ -1,6 +1,8 @@
 package memoWeb.web.myGroup.repository;
 
+import com.querydsl.core.Tuple;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
 import memoWeb.web.myGroup.domain.GroupMemberVO;
 import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.myGroup.domain.UserRelationVO;
@@ -16,7 +18,8 @@ public interface MyGroupRepository {
     public int getGroupIdx();
     public void createGroup(GroupsVO group);
     public void joinGroupMember(GroupMemberVO groupMember);
-    public List<GroupsVO> getGroupList(UserVO user);
+//    public List<GroupsVO> getGroupList(UserVO user);
+    public List<GroupDTO> getGroupList(UserVO user);
     public GroupsVO getGroupInfo(GroupsVO group);
 
 }

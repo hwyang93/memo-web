@@ -1,6 +1,8 @@
 package memoWeb.web.myGroup.service;
 
+import com.querydsl.core.Tuple;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
 import memoWeb.web.myGroup.domain.GroupMemberVO;
 import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.myGroup.domain.UserRelationVO;
@@ -37,9 +39,11 @@ public class MyGroupService {
         return myGroupRepository.getFriendList(userRelation);
     }
 
-    public List<GroupsVO> getGroupList (UserVO user) {
-        return myGroupRepository.getGroupList(user);
-    }
+//    public List<GroupsVO> getGroupList (UserVO user) {
+//        return myGroupRepository.getGroupList(user);
+//    }
+
+    public List<GroupDTO> getGroupList(UserVO user) { return myGroupRepository.getGroupList(user); }
 
     public GroupsVO getGroupInfo (GroupsVO group) {
         return myGroupRepository.getGroupInfo(group);

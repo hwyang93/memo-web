@@ -1,17 +1,7 @@
 package memoWeb.web.myGroup.repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserVO;
@@ -25,16 +15,6 @@ import javax.persistence.PersistenceContext;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-
-import memoWeb.web.main.domain.QUserVO;
-import memoWeb.web.main.domain.UserVO;
-import memoWeb.web.myGroup.domain.GroupMemberVO;
-import memoWeb.web.myGroup.domain.GroupsVO;
-import memoWeb.web.myGroup.domain.QGroupMemberVO;
-import memoWeb.web.myGroup.domain.QGroupsVO;
-import memoWeb.web.myGroup.domain.QUserRelationVO;
-import memoWeb.web.myGroup.domain.UserGroupVO;
-import memoWeb.web.myGroup.domain.UserRelationVO;
 
 @Repository
 @Transactional
@@ -109,9 +89,11 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     }
 
     @Override
-    public List<GroupsVO> getGroupList(UserVO user) {
-        return queryFactory.select(qGroups)
-                .from(qGroups, qGroupMember)
+    public List<GroupDTO> getGroupList(UserVO user) {
+        return queryFactory.select(Projections.fields(GroupDTO.class, qGroups.groupIdx, qGroups.groupTitle, qGroups.regDate, qGroupMember.memberAuth, qGroupMember.approvalStatus))
+                .from(qGroups)
+                .innerJoin(qGroupMember)
+                .on(qGroups.groupIdx.eq(qGroupMember.groupIdx))
                 .where(qGroupMember.groupUser.eq(user.getUserId()))
                 .fetch();
     }
