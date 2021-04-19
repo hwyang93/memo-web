@@ -5,8 +5,30 @@
         <div class="row home-banner-row shadow-wrap-1">
           <!-- kakao map -->
           <div class="col-lg-8 col-sm-12">
-            <div class="content-center">
+            <div class="map_wrap">
               <div id="map" class="map" style="width: 100%; height: 550px"></div>
+              <div id="menu_wrap" class="bg_white">
+                <div class="option">
+                  <div>
+                    <div>
+                      검색 : <input type="text" value="" id="keyword" size="15">
+                      <button @click="searchPlaces()" type="submit">검색하기</button>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <ul id="placesList">
+                  <li v-for="item in searchPlaceList" :key="item.id">
+                    <div class="info" @click="setFormInfo(item)">
+                      <h5>{{item.place_name}}</h5>
+                      <span>{{ item.road_address_name }}</span>
+                      <span class="jibun gray"> {{ item.address_name }}</span>
+                      <span class="tel">{{ item.phone }}</span>
+                    </div>
+                  </li>
+                </ul>
+                <div id="pagination"></div>
+              </div>
             </div>
           </div>
           <!-- 위치 정보 입력 -->
@@ -77,6 +99,7 @@ export default {
       map: null,
       clusterer: null,
       infowindow: null,
+      ps : null,
       form: {
         title: '제목입력',
         startDate: '2021-04-01',
@@ -87,7 +110,8 @@ export default {
         lat: '',
         latLng: {}
       },
-      userScheduleList: []
+      userScheduleList: [],
+      searchPlaceList: []
     };
   },
   watch: {
@@ -104,6 +128,7 @@ export default {
       };
 
       this.map = new kakao.maps.Map(container, options);
+      this.ps = new kakao.maps.services.Places();
       // 마커가 표시될 위치입니다
       const markerPosition = new kakao.maps.LatLng(this.localLat, this.localLng);
       // 마커를 생성합니다
@@ -221,6 +246,47 @@ export default {
           this.infowindow.close();
         });
       });
+    },
+    searchPlaces() {
+      const keyword = document.getElementById('keyword').value;
+
+      if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+      }
+
+      // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+      this.ps.keywordSearch( keyword, this.placesSearchCB);
+    },
+    placesSearchCB(data, status, pagination) {
+      if (status === kakao.maps.services.Status.OK) {
+        console.log(data);
+        this.searchPlaceList = data;
+
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        this.displayPlaces(data);
+        // 페이지 번호를 표출합니다
+        // displayPagination(pagination);
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+      } else if (status === kakao.maps.services.Status.ERROR) {
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+      }
+    },
+    displayPlaces(data) {
+      data.forEach(item => {
+        console.log(item);
+      })
+    },
+    setFormInfo(data) {
+      console.log(data);
+      this.form.promisePlace = !!data.road_address_name ? data.road_address_name: data.address.address_name;
+      this.form.lon = data.x;
+      this.form.lat = data.y;
     }
   },
   beforeMount() {
@@ -229,3 +295,43 @@ export default {
   mounted() {}
 };
 </script>
+
+<style>
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+</style>

@@ -90,7 +90,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 
     @Override
     public List<GroupDTO> getGroupList(UserVO user) {
-        return queryFactory.select(Projections.fields(GroupDTO.class, qGroups.groupIdx, qGroups.groupTitle, qGroups.regDate, qGroupMember.memberAuth, qGroupMember.approvalStatus))
+        return queryFactory.select(Projections.fields(GroupDTO.class, qGroups.groupIdx, qGroups.groupTitle, qGroups.groupComment, qGroups.regDate, qGroupMember.memberAuth, qGroupMember.approvalStatus))
                 .from(qGroups)
                 .innerJoin(qGroupMember)
                 .on(qGroups.groupIdx.eq(qGroupMember.groupIdx))

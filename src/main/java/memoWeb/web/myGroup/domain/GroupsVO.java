@@ -20,4 +20,6 @@ public class GroupsVO {
     private String groupTitle;
     @Column(name = "REG_DATE", insertable = false, updatable = false, columnDefinition = "Date default sysdate")
     private String regDate;
+    @Column(name = "GROUP_COMMENT")
+    private String groupComment;
 }

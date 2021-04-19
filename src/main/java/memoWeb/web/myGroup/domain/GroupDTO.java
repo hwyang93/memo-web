@@ -7,6 +7,7 @@ public class GroupDTO {
     private int groupIdx;
     private String groupMasterUser;
     private String groupTitle;
+    private String groupComment;
     private String groupRegDate;
     private String groupUser;
     private String memberRegDate;
