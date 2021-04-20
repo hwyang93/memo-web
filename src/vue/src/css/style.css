@@ -3180,18 +3180,28 @@ nav .no-arrow.dropdown-toggle::after {
   height: 100%;
   margin-top: 20px;
   margin-right: 3%;
-  border: 1px solid #ccc;
-  background: aliceblue;
+  /* border: 1px solid #ccc; */
+  background: #00adb5;
   cursor: pointer;
+}
+.group-item.master {
+  background: #00adb5;
+}
+.group-item.member {
+  background: #ff9a00;
+}
+.group-item.pending {
+  background: #e7ffff;
 }
 
 .group-item h4 {
   padding: 5px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
   text-align: center
 }
 
 .group-item p {
+  margin-bottom: 0;
   padding: 5px;
   text-align: center
 }

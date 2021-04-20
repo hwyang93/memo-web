@@ -76,60 +76,31 @@
                         ></b-form-input>
                       </b-form-group>
 
-                      <!-- <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-                        <b-form-select
-                          id="input-3"
-                          v-model="form.food"
-                          :options="foods"
-                          required
-                        ></b-form-select>
-                      </b-form-group> -->
-                      <div class="button-area">
+                      <label for="tags-basic">멤버 추가</label>
+                      <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
+
+                      <div class="button-area mt-3">
                         <b-button type="submit" variant="primary">Submit</b-button>
                         <b-button type="reset" variant="danger">Reset</b-button>
                       </div>
                     </b-form>
-
-
                   </b-modal>
                 <div class="group-list-area">
                   <ul class="group-list">
-                    <li v-b-modal.modal-center1 class="group-item shadow-wrap-1">
-                      <h4>그룹이름</h4>
-                      <p>info : 그룹정보</p>
-                    </li>
-
-                    <li v-b-modal.modal-center1 class="group-item shadow-wrap-1">
-                      <h4>그룹이름</h4>
-                      <p>info : 그룹정보</p>
-                    </li>
-
-                    <li v-b-modal.modal-center1 class="group-item shadow-wrap-1">
-                      <h4>그룹이름</h4>
+                    <li v-for="(item, index) in groupList" :key="index" v-b-modal.modal-center1 class="group-item shadow-wrap-1" :class="{ item.memberAuth == master ? master : member }">
+                      <h4>{{item.groupTitle}}</h4>
                       <p>info : 그룹정보</p>
                     </li>
                   </ul>
                   <b-modal id="modal-center1" centered title="그룹 정보">
                     <ul class="user-list-area">
-                      <!-- <li class="user-list">
-                        <a href="#" class="user-pic">
-                          <img src="../../images/friends/user-sample.jpg" alt="" />
-                        </a>
-                        <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-info" id="btn-add-group">Add</button>
-                      </li>
-                      <li class="user-list">
-                        <a href="#" class="user-pic">
-                          <img src="../../images/friends/user-sample.jpg" alt="" />
-                        </a>
-                        <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-info" id="btn-add-group">Add</button>
-                      </li> -->
-                      <h4>그룹 이름</h4>
+                      <h4>{{groupList.groupTitle}}</h4>
+                      <h4>test</h4>
                       <p>info : 그룹정보</p>
                       <!-- <p>참여 멤버</p> -->
                       <label for="tags-basic">참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
+                      <b-button variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -224,6 +195,14 @@ export default {
         this.userList = [];
       }
     }
+  },
+  computed: {
+    // classChange: function() {
+    //   return {
+    //     master: this.groupList.memberAuth === master,
+    //     member: this.groupList.memberAuth === member,
+    //   }
+    // }
   },
   methods: {
     openDrop() {
