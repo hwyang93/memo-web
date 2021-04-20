@@ -105,5 +105,13 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
                 .fetchOne();
     }
 
+    @Override
+    public List<GroupMemberDTO> getGroupMemberList(GroupDTO group) {
+        return queryFactory.select(Projections.fields(GroupMemberDTO.class, qGroupMember.groupIdx, qGroupMember.groupUser, qGroupMember.regDate, qGroupMember.memberAuth, qGroupMember.approvalStatus))
+                .from(qGroupMember)
+                .where(qGroupMember.groupIdx.eq(group.getGroupIdx()))
+                .fetch();
+    }
+
 
 }

@@ -14,6 +14,8 @@ public class GroupDTO {
     private String memberAuth;
     private String approvalStatus;
 
+//    private GroupMemberDTO groupMember;
+
 //    public GroupDTO(int groupIdx, String groupTitle, String groupRegDate, String memberAuth, String approvalStatus) {
 //        this.groupIdx = groupIdx;
 //        this.groupTitle = groupTitle;

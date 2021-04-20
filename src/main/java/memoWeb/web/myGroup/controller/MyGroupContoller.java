@@ -3,10 +3,7 @@ package memoWeb.web.myGroup.controller;
 import com.querydsl.core.Tuple;
 import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.domain.UserVO;
-import memoWeb.web.myGroup.domain.GroupDTO;
-import memoWeb.web.myGroup.domain.GroupMemberVO;
-import memoWeb.web.myGroup.domain.GroupsVO;
-import memoWeb.web.myGroup.domain.UserRelationVO;
+import memoWeb.web.myGroup.domain.*;
 import memoWeb.web.myGroup.service.MyGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,9 +76,11 @@ public class MyGroupContoller {
     }
 
     @GetMapping("getGroupInfo.do")
-    public String getGroupInfo (Model model, @ModelAttribute GroupsVO group) {
+    public String getGroupInfo (Model model, @ModelAttribute GroupsVO group, @ModelAttribute GroupDTO group2) {
         GroupsVO result = myGroupService.getGroupInfo(group);
+        List<GroupMemberDTO> result2 = myGroupService.getGroupMemberList(group2);
         model.addAttribute("groupInfo", result);
+        model.addAttribute("groupMemberList", result2);
         return "jsonView";
     }
 
