@@ -87,17 +87,15 @@
                   </b-modal>
                 <div class="group-list-area">
                   <ul class="group-list">
-                    <li v-for="(item, index) in groupList" :key="index" v-b-modal.modal-center1 class="group-item shadow-wrap-1" :class="{ item.memberAuth == master ? master : member }">
+                    <li v-for="(item, index) in groupList" :key="index" @click="showModal(item)" class="group-item shadow-wrap-1" :class="[item.memberAuth == 'member' ? 'member':item.approvalStatus=='N' ? 'pending':'']">
                       <h4>{{item.groupTitle}}</h4>
-                      <p>info : 그룹정보</p>
+                      <p>info : {{item.groupComment}}</p>
                     </li>
                   </ul>
-                  <b-modal id="modal-center1" centered title="그룹 정보">
+                  <b-modal ref="group-modal" centered title="그룹 정보">
                     <ul class="user-list-area">
-                      <h4>{{groupList.groupTitle}}</h4>
-                      <h4>test</h4>
-                      <p>info : 그룹정보</p>
-                      <!-- <p>참여 멤버</p> -->
+                      <h4>{{this.groupDetail.groupTitle}}</h4>
+                      <p>info : <br>{{this.groupDetail.groupComment}}</p>
                       <label for="tags-basic">참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
                       <b-button variant="danger mt-3">그룹 삭제</b-button>
@@ -183,6 +181,11 @@ export default {
       },
       groupId:{
         groupIdx : ''
+      },
+      groupDetail: {
+        groupTitle: '',
+        groupComment: ''
+
       }
 
     };
@@ -205,6 +208,13 @@ export default {
     // }
   },
   methods: {
+    showModal(item) {
+      console.log('item',item);
+      this.groupDetail.groupTitle = item.groupTitle;
+      this.groupDetail.groupComment = item.groupComment;
+      console.log(this.groupDetail.groupTitle);
+      this.$refs['group-modal'].show();
+    },
     openDrop() {
       // var test = [];
       // var temp;
@@ -267,7 +277,6 @@ export default {
     },
     onSubmit(event) {
       event.preventDefault()
-      // alert(JSON.stringify(this.form))
 
     },
     onReset(event) {
