@@ -2,10 +2,7 @@ package memoWeb.web.myGroup.service;
 
 import com.querydsl.core.Tuple;
 import memoWeb.web.main.domain.UserVO;
-import memoWeb.web.myGroup.domain.GroupDTO;
-import memoWeb.web.myGroup.domain.GroupMemberVO;
-import memoWeb.web.myGroup.domain.GroupsVO;
-import memoWeb.web.myGroup.domain.UserRelationVO;
+import memoWeb.web.myGroup.domain.*;
 import memoWeb.web.myGroup.repository.MyGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +44,10 @@ public class MyGroupService {
 
     public GroupsVO getGroupInfo (GroupsVO group) {
         return myGroupRepository.getGroupInfo(group);
+    }
+
+    public List<GroupMemberDTO> getGroupMemberList(GroupDTO group) {
+        return myGroupRepository.getGroupMemberList(group);
     }
 
     public int getGroupIdx() {
