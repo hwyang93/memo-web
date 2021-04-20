@@ -3139,6 +3139,13 @@ nav .no-arrow.dropdown-toggle::after {
   display: flex;
   flex-direction: column;
 }
+
+.user-list-area h4,
+.user-list-area p,
+.user-list-area label {
+  margin-bottom: 1rem;
+}
+
 .user-list {
   display: flex;
   align-items: center;
@@ -3184,14 +3191,22 @@ nav .no-arrow.dropdown-toggle::after {
   background: #00adb5;
   cursor: pointer;
 }
-.group-item.master {
-  background: #00adb5;
+
+.group-item:hover {
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 20%) !important;
+  -ms-transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
 }
+/* .group-item.master {
+  background: #00adb5;
+} */
 .group-item.member {
   background: #ff9a00;
 }
 .group-item.pending {
-  background: #e7ffff;
+  background: #b3bfbf;
 }
 
 .group-item h4 {
