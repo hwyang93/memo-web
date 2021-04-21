@@ -3185,7 +3185,6 @@ nav .no-arrow.dropdown-toggle::after {
 .group-item {
   width: 30%;
   height: 100%;
-  margin-top: 20px;
   margin-right: 3%;
   /* border: 1px solid #ccc; */
   background: #00adb5;
@@ -3258,7 +3257,7 @@ nav .no-arrow.dropdown-toggle::after {
   height: auto;
 }
 .search-drop {
-  display: none;
+  /* display: none; */
   position: absolute;
   top: 40px;
   left: 0;

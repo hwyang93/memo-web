@@ -85,6 +85,7 @@
                       </div>
                     </b-form>
                   </b-modal>
+                <h3 class="title-type-2">참여중인 그룹</h3>
                 <div class="group-list-area">
                   <ul class="group-list">
                     <li v-for="(item, index) in groupList" :key="index" @click="showModal(item)" class="group-item shadow-wrap-1" :class="[item.memberAuth == 'member' ? 'member':item.approvalStatus=='N' ? 'pending':'']">
@@ -109,9 +110,9 @@
                 <p>친구 찾기: </p>
                 <b-form inline>
                   <div class="search-friend-area">
-                    <b-form-input v-model="friend.keyword" id="inline-form-input-name search-input" class="mb-2 mr-sm-2 mb-sm-0" placeholder="enter user name" @change="openDrop" autocomplete="off"></b-form-input>
+                    <b-form-input v-model="friend.keyword" id="inline-form-input-name search-input" class="mb-2 mr-sm-2 mb-sm-0" placeholder="enter user name" @keyup="openDrop" autocomplete="off"></b-form-input>
                     <!-- <b-button variant="primary" @click="getUserList">Search</b-button> -->
-                    <div class="search-drop shadow-wrap-1">
+                    <div class="search-drop shadow-wrap-1" v-if="this.friend.flag">
                       <ul class="search-result-box">
                         <li v-for="(item, index) in userList" :key="index" class="search-result-list">
                           <div class="search-result">
@@ -177,7 +178,8 @@ export default {
         show: true
       },
       friend:{
-        keyword : ''
+        keyword : '',
+        flag : false,
       },
       groupId:{
         groupIdx : ''
@@ -186,18 +188,18 @@ export default {
         groupTitle: '',
         groupComment: ''
 
-      }
+      },
 
     };
   },
   watch: {
-    'friend.keyword': function(val) {
-      if (val.length > 0) {
-        this.getUserList();
-      } else {
-        this.userList = [];
-      }
-    }
+    // 'friend.keyword': function(val) {
+    //   if (val.length > 0) {
+    //     this.getUserList();
+    //   } else {
+    //     this.userList = [];
+    //   }
+    // }
   },
   computed: {
     // classChange: function() {
@@ -224,23 +226,35 @@ export default {
       //   temp.groupUser = item;
       //   test.push(temp);
       // }
-
-      const hideContent = document.querySelector('.search-drop');
-      hideContent.classList.toggle('show');
-      const inputValue = document.querySelector('#search-input');
-      let keywordFilter = inputValue.value.toUpperCase();
-      let matchList = document.querySelector('.search-result-list');
-
-      for ( i = 0; i < matchList.length; i++) {
-        txtValue = matchList[i].textContent || matchList[i].innerText;
-        if(txtValue.toUpperCase().indexOf(keywordFilter) > -1) {
-          // hideContent.style.display = '';
-          matchList[i].style.display = '';
-        } else {
-          // hideContent.style.display = 'none';
-          matchList[i].style.display = 'none';
-        }
+      console.log("event")
+      if (this.friend.keyword.length > 0) {
+        this.getUserList();
+      } else {
+        this.userList = [];
       }
+      console.log(this.userList);
+      // debugger;
+      if(this.userList.length > 0) {
+        this.friend.flag = true;
+      } else {
+        this.friend.flag = false;
+      }
+      // const hideContent = document.querySelector('.search-drop');
+      // hideContent.classList.toggle('show');
+      // const inputValue = document.querySelector('#search-input');
+      // let keywordFilter = inputValue.value.toUpperCase();
+      // let matchList = document.querySelector('.search-result-list');
+
+      // for ( i = 0; i < matchList.length; i++) {
+      //   txtValue = matchList[i].textContent || matchList[i].innerText;
+      //   if(txtValue.toUpperCase().indexOf(keywordFilter) > -1) {
+      //     // hideContent.style.display = '';
+      //     matchList[i].style.display = '';
+      //   } else {
+      //     // hideContent.style.display = 'none';
+      //     matchList[i].style.display = 'none';
+      //   }
+      // }
     },
     // getFriendsList() {
     //   var params =  {
@@ -257,7 +271,7 @@ export default {
       console.log(this.friend.keyword);
       axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
         this.userList = result.data.userList;
-        console.log(this.userList);
+        // console.log(this.userList);
       });
     },
     // getGroupInfo() {
