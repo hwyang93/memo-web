@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     auth: {
       userInfo: {},
@@ -19,6 +21,7 @@ export default new Vuex.Store({
     LOGIN(state, userInfo) {
       state.auth.isLogin = true;
       if (userInfo) {
+        debugger
         state.auth.userInfo = userInfo;
       }
     }

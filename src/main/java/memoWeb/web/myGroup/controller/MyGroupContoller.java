@@ -55,18 +55,8 @@ public class MyGroupContoller {
         return "jsonView";
     }
 
-//    @GetMapping("getGroupList.do")
-//    public String getGroupList (Model model, HttpSession session) {
-//        UserVO user = new UserVO();
-////        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
-//        user.setUserId("test");
-//        List<GroupsVO> result = myGroupService.getGroupList(user);
-//        model.addAttribute("groupList", result);
-//        return "jsonView";
-//    }
-
     @GetMapping("getGroupList.do")
-    public String getGroupList (Model model, HttpSession session) {
+    public String getGroupList(Model model, HttpSession session) {
         UserVO user = new UserVO();
 //        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         user.setUserId("test");
@@ -76,7 +66,7 @@ public class MyGroupContoller {
     }
 
     @GetMapping("getGroupInfo.do")
-    public String getGroupInfo (Model model, @ModelAttribute GroupsVO group, @ModelAttribute GroupDTO group2) {
+    public String getGroupInfo(Model model, @ModelAttribute GroupsVO group, @ModelAttribute GroupDTO group2) {
         GroupsVO result = myGroupService.getGroupInfo(group);
         List<GroupMemberDTO> result2 = myGroupService.getGroupMemberList(group2);
         model.addAttribute("groupInfo", result);
@@ -85,7 +75,7 @@ public class MyGroupContoller {
     }
 
     @PostMapping("createGroup.do")
-    public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group){
+    public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group) {
         int groupIdx = myGroupService.getGroupIdx();
 
         group.setGroupMasterUser(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
@@ -99,7 +89,7 @@ public class MyGroupContoller {
         masterUser.setMemberAuth("M");
 
         groupMemberList.add(masterUser);
-        groupMemberList.forEach(groupMember-> {
+        groupMemberList.forEach(groupMember -> {
             groupMember.setGroupIdx(groupIdx);
             groupMember.setMemberAuth("N");
             groupMember.setApprovalStatus("N");
@@ -112,8 +102,8 @@ public class MyGroupContoller {
     }
 
     @PostMapping("joinGroup.do")
-    public String joinGroup (Model model, @RequestBody List<GroupMemberVO> groupMemberList) {
-        groupMemberList.forEach(groupMemeber ->{
+    public String joinGroup(Model model, @RequestBody List<GroupMemberVO> groupMemberList) {
+        groupMemberList.forEach(groupMemeber -> {
             groupMemeber.setMemberAuth("N");
             groupMemeber.setApprovalStatus("N");
         });
@@ -121,5 +111,9 @@ public class MyGroupContoller {
         return "jsonView";
     }
 
-
+    @PostMapping("deleteGroup.do")
+    public String deleteGroup(Model model, @RequestBody GroupDTO group) {
+        myGroupService.deleteGroup(group);
+        return "jsonView";
+    }
 }

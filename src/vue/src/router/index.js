@@ -40,7 +40,7 @@ const routes = [
     path: '/myPage/group/groupDetail/:id?',
     name: 'groupDetail',
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/groupDetail.vue')
-  }
+  },
 ];
 
 const router = new VueRouter({

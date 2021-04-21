@@ -5,31 +5,7 @@
         <div class="row home-banner-row shadow-wrap-1">
           <!-- kakao map -->
           <div class="col-lg-8 col-sm-12">
-            <div class="map_wrap">
-              <div id="map" class="map" style="width: 100%; height: 550px"></div>
-              <div id="menu_wrap" class="bg_white">
-                <div class="option">
-                  <div>
-                    <div>
-                      검색 : <input type="text" value="" id="keyword" size="15">
-                      <button @click="searchPlaces()" type="submit">검색하기</button>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <ul id="placesList">
-                  <li v-for="item in searchPlaceList" :key="item.id">
-                    <div class="info" @click="setFormInfo(item)">
-                      <h5>{{item.place_name}}</h5>
-                      <span>{{ item.road_address_name }}</span>
-                      <span class="jibun gray"> {{ item.address_name }}</span>
-                      <span class="tel">{{ item.phone }}</span>
-                    </div>
-                  </li>
-                </ul>
-                <div id="pagination"></div>
-              </div>
-            </div>
+            <kakao-map :userScheduleList="userScheduleList"/>
           </div>
           <!-- 위치 정보 입력 -->
           <div class="col-lg-4">
@@ -58,12 +34,12 @@
                         </div>
                         <div class="form-group col-lg-12">
                           <div class="input-group">
-                            <input v-model="form.startDate" type="text" class="form-control" placeholder="First Name" />
+                            <input v-model="form.startDate" type="date" class="form-control" placeholder="First Name" />
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
                           <div class="input-group">
-                            <input v-model="form.endDate" type="text" class="form-control" placeholder="Last Name" />
+                            <input v-model="form.endDate" type="date" class="form-control" placeholder="Last Name" />
                           </div>
                         </div>
                       </div>
@@ -89,9 +65,10 @@
 
 <script>
 import axiosUtil from '../utils/axios-util.js';
+import KakaoMap from "../components/KakaoMap";
 export default {
   name: 'Main',
-  components: {},
+  components: {KakaoMap},
   data() {
     return {
       localLat: 0,
@@ -103,7 +80,7 @@ export default {
       form: {
         title: '제목입력',
         startDate: '2021-04-01',
-        endDate: '2021-04-15',
+        endDate: '2021-04-30',
         promisePlace: '',
         memo: '일정',
         lon: '',
@@ -120,93 +97,6 @@ export default {
     }
   },
   methods: {
-    initMap() {
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(this.localLat, this.localLng),
-        level: 3
-      };
-
-      this.map = new kakao.maps.Map(container, options);
-      this.ps = new kakao.maps.services.Places();
-      // 마커가 표시될 위치입니다
-      const markerPosition = new kakao.maps.LatLng(this.localLat, this.localLng);
-      // 마커를 생성합니다
-      const marker = new kakao.maps.Marker({
-        position: markerPosition
-      });
-      // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(this.map);
-
-      this.clusterer = new kakao.maps.MarkerClusterer({
-        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 7 // 클러스터 할 최소 지도 레벨
-      });
-
-      // 주소-좌표 변환 객체를 생성합니다
-      const geocoder = new kakao.maps.services.Geocoder();
-      this.infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
-      // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(this.map, 'click', mouseEvent => {
-        this.form.latLng = mouseEvent.latLng;
-        geocoder.coord2Address(mouseEvent.latLng.La, mouseEvent.latLng.Ma, (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-
-            var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
-            this.form.promisePlace = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
-            this.form.lon = mouseEvent.latLng.La;
-            this.form.lat = mouseEvent.latLng.Ma;
-            // 마커를 클릭한 위치에 표시합니다
-            marker.setPosition(mouseEvent.latLng);
-            marker.setMap(this.map);
-
-            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-            this.infowindow.setContent(content);
-            this.infowindow.open(this.map, marker);
-          }
-        });
-      });
-      if (this.userScheduleList.length > 0) {
-        this.setMarkers();
-      }
-    },
-    addScript() {
-      let script = document.createElement('script');
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=233fb509b41527eb6530cb8ca5b635c5&libraries=services,clusterer,drawing';
-      document.head.appendChild(script);
-    },
-    showPosition(position) {
-      this.localLat = position.coords.latitude;
-      this.localLng = position.coords.longitude;
-    },
-    getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.showPosition);
-      }
-      // if (navigator.geolocation) {
-      //   navigator.geolocation.getCurrentPosition(
-      //     function (position) {
-      //       this.latitude = position.coords.latitude;
-      //       this.longitude = position.coords.longitude;
-      //     },
-      //     function (error) {
-      //       console.error(error);
-      //     },
-      // {
-      //   enableHighAccuracy: false,
-      //   maximumAge: 0,
-      //   timeout: Infinity,
-      // }
-      //   );
-      //   console.log(this);
-      // } else {
-      //   alert("GPS를 지원하지 않습니다");
-      // }
-    },
     onSave() {
       axiosUtil.post('/api/main/saveUserSchedule.do', this.form, result => {
         alert('저장되었습니다.');
@@ -216,71 +106,8 @@ export default {
     getSchedule() {
       axiosUtil.get('/api/main/getUserSchedule.do', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
-        this.getLocation();
+
       });
-    },
-    setMarkers() {
-      let markers = this.userScheduleList.map(item => {
-        return new kakao.maps.Marker({
-          position: new kakao.maps.LatLng(item.lat, item.lon)
-        });
-      });
-      this.clusterer.addMarkers(markers);
-
-      markers.map((marker, index) => {
-        let content = '<div>장소 : ' + this.userScheduleList[index].promisePlace + '</div>';
-        content += '<div>일정 : ' + this.userScheduleList[index].startDate + ' ~ ' + this.userScheduleList[index].endDate + '</div>';
-        content += '<div>일정 : ' + this.userScheduleList[index].memo + '</div>';
-        // let infowindow = new kakao.maps.InfoWindow({
-        //   content : content
-        // });
-
-        // 마커에 마우스오버 이벤트를 등록합니다
-        kakao.maps.event.addListener(marker, 'mouseover', () => {
-          this.infowindow.setContent(content);
-          this.infowindow.open(this.map, marker);
-        });
-
-        // 마커에 마우스오버 이벤트를 등록합니다
-        kakao.maps.event.addListener(marker, 'mouseout', () => {
-          this.infowindow.close();
-        });
-      });
-    },
-    searchPlaces() {
-      const keyword = document.getElementById('keyword').value;
-
-      if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-      }
-
-      // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-      this.ps.keywordSearch( keyword, this.placesSearchCB);
-    },
-    placesSearchCB(data, status, pagination) {
-      if (status === kakao.maps.services.Status.OK) {
-        console.log(data);
-        this.searchPlaceList = data;
-
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        this.displayPlaces(data);
-        // 페이지 번호를 표출합니다
-        // displayPagination(pagination);
-      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-      } else if (status === kakao.maps.services.Status.ERROR) {
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-
-      }
-    },
-    displayPlaces(data) {
-      data.forEach(item => {
-        console.log(item);
-      })
     },
     setFormInfo(data) {
       console.log(data);
@@ -290,9 +117,14 @@ export default {
     }
   },
   beforeMount() {
-    this.getSchedule();
+    // this.getSchedule();
   },
-  mounted() {}
+  mounted() {
+    this.$nextTick(() => {
+      console.log("부모 mounted 시작");
+      this.getSchedule();
+    });
+  }
 };
 </script>
 
