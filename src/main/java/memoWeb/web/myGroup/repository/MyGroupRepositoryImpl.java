@@ -113,5 +113,15 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
                 .fetch();
     }
 
+    @Override
+    public void deleteGroupMembers(GroupDTO group) {
+        queryFactory.delete(qGroupMember).where(qGroupMember.groupIdx.eq(group.getGroupIdx()));
+    }
+
+    @Override
+    public void deleteGroup(GroupDTO group) {
+        queryFactory.delete(qGroups).where(qGroups.groupIdx.eq(group.getGroupIdx()));
+    }
+
 
 }

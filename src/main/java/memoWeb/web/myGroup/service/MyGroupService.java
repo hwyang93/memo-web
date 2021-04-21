@@ -36,10 +36,6 @@ public class MyGroupService {
         return myGroupRepository.getFriendList(userRelation);
     }
 
-//    public List<GroupsVO> getGroupList (UserVO user) {
-//        return myGroupRepository.getGroupList(user);
-//    }
-
     public List<GroupDTO> getGroupList(UserVO user) { return myGroupRepository.getGroupList(user); }
 
     public GroupsVO getGroupInfo (GroupsVO group) {
@@ -62,5 +58,9 @@ public class MyGroupService {
         groupMemberList.forEach(myGroupRepository::joinGroupMember);
     }
 
+    public void deleteGroup(GroupDTO group) {
+        myGroupRepository.deleteGroupMembers(group);
+        myGroupRepository.deleteGroup(group);
+    }
 
 }

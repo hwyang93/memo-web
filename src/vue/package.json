@@ -25,7 +25,8 @@
     "vue-moment": "^4.1.0",
     "vue-owl-carousel": "^2.0.3",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -58,7 +59,6 @@
     "globals": {
       "kakao": false
     }
-
   },
   "browserslist": [
     "> 1%",

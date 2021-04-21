@@ -22,11 +22,14 @@ public interface MyGroupRepository {
 
     public void joinGroupMember(GroupMemberVO groupMember);
 
-    //    public List<GroupsVO> getGroupList(UserVO user);
     public List<GroupDTO> getGroupList(UserVO user);
 
     public GroupsVO getGroupInfo(GroupsVO group);
 
     public List<GroupMemberDTO> getGroupMemberList(GroupDTO group);
+
+    public void deleteGroupMembers (GroupDTO group);
+
+    public void deleteGroup(GroupDTO group);
 
 }
