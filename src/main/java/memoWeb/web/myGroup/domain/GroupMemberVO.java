@@ -9,14 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "GROUP_MEMBER")
 public class GroupMemberVO {
+
     @Id
     @Column(name = "GROUP_IDX")
     private int groupIdx;
+
     @Column(name = "GROUP_USER")
     private String groupUser;
     @Column(name = "REG_DATE", insertable = false, updatable = false,

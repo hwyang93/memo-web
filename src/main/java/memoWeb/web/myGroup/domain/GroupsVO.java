@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "GROUPS")
@@ -16,9 +16,10 @@ public class GroupsVO {
     private int groupIdx;
     @Column(name = "GROUP_MASTER_USER")
     private String groupMasterUser;
-    @Column(name = "GRUOUP_TITLE")
+    @Column(name = "GROUP_TITLE")
     private String groupTitle;
-    @Column(name = "REG_DATE", insertable = false, updatable = false,
-            columnDefinition = "Date default sysdate")
+    @Column(name = "REG_DATE", insertable = false, updatable = false, columnDefinition = "Date default sysdate")
     private String regDate;
+    @Column(name = "GROUP_COMMENT")
+    private String groupComment;
 }

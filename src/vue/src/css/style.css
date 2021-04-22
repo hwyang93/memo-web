@@ -1849,6 +1849,25 @@ ul.about-plannings.nav li {
   border-radius: 50% 0% 0 50%;
   height: 50px;
 }
+
+@media (max-width:992px) {
+  .widgets-title:after {
+    right: 34%;
+  }
+}
+
+@media (max-width:768px) {
+  .widgets-title:after {
+    right: 32%;
+  }
+}
+
+@media (max-width:500px) {
+  .widgets-title:after {
+    right: 31%;
+  }
+}
+
 .blog-sidebar-widgets li:last-child a {
   border-bottom: 0 !important;
   padding-bottom: 0;
@@ -3120,6 +3139,13 @@ nav .no-arrow.dropdown-toggle::after {
   display: flex;
   flex-direction: column;
 }
+
+.user-list-area h4,
+.user-list-area p,
+.user-list-area label {
+  margin-bottom: 1rem;
+}
+
 .user-list {
   display: flex;
   align-items: center;
@@ -3136,26 +3162,9 @@ nav .no-arrow.dropdown-toggle::after {
 }
 /* friends list end */
 
-.group-item {
-  height: 100%;
-}
+/* group list start */
+/* .group-list-area {
 
-.group-item h4 {
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
-  text-align: center
-}
-
-.group-item p {
-  padding: 5px;
-  text-align: center
-}
-
-.group-list-area {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-left: 1%;
 }
 .group-list-area a {
   display: block;
@@ -3165,7 +3174,57 @@ nav .no-arrow.dropdown-toggle::after {
   margin-right: 3%;
   border: 1px solid #ccc;
   background: aliceblue;
+} */
+
+.group-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: 4%;
 }
+.group-item {
+  width: 30%;
+  height: 100%;
+  margin-right: 3%;
+  /* border: 1px solid #ccc; */
+  background: #00adb5;
+  cursor: pointer;
+}
+
+.group-item:hover {
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 20%) !important;
+  -ms-transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+/* .group-item.master {
+  background: #00adb5;
+} */
+.group-item.member {
+  background: #ff9a00;
+}
+.group-item.pending {
+  background: #b3bfbf;
+}
+
+.group-item h4 {
+  padding: 5px;
+  border-bottom: 1px solid #fff;
+  text-align: center
+}
+
+.group-item p {
+  margin-bottom: 0;
+  padding: 5px;
+  text-align: center
+}
+
+.b-form-tag {
+  margin-right: .25rem;
+}
+
+/* group list end */
 
 .add-member-area {
   /* margin: 20px 0; */
@@ -3189,6 +3248,55 @@ nav .no-arrow.dropdown-toggle::after {
   color: #585858;
   font-size: 16px;
 }
+
+/* search friend area start */
+
+.search-friend-area {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.search-drop {
+  /* display: none; */
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 50%;
+  padding: 15px;
+  border: 1px solid #eee;
+  background: #fff;
+}
+.search-drop.show {
+  display: block;
+}
+.search-result-box {
+  margin-bottom: 0;
+}
+.search-result-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.search-result-list:last-child {
+  margin-bottom: 0;
+}
+.search-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.user-box span {
+  margin-left: 15px;
+}
+
+/* search friend area end */
 
 /* mySchedule css 추가 */
 .modal-overlay {

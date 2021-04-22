@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity

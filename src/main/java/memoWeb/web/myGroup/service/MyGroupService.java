@@ -1,10 +1,8 @@
 package memoWeb.web.myGroup.service;
 
+import com.querydsl.core.Tuple;
 import memoWeb.web.main.domain.UserVO;
-import memoWeb.web.myGroup.domain.GroupMemberVO;
-import memoWeb.web.myGroup.domain.GroupsVO;
-import memoWeb.web.myGroup.domain.UserGroupVO;
-import memoWeb.web.myGroup.domain.UserRelationVO;
+import memoWeb.web.myGroup.domain.*;
 import memoWeb.web.myGroup.repository.MyGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,10 @@ import java.util.List;
 
 @Service
 public class MyGroupService {
-    private final MyGroupRepository myGroupRepository;
 
     @Autowired
+    private final MyGroupRepository myGroupRepository;
+
     public MyGroupService(MyGroupRepository myGroupRepository) {
         this.myGroupRepository = myGroupRepository;
     }
@@ -37,12 +36,14 @@ public class MyGroupService {
         return myGroupRepository.getFriendList(userRelation);
     }
 
-    public List<GroupsVO> getGroupList (UserVO user) {
-        return myGroupRepository.getGroupList(user);
-    }
+    public List<GroupDTO> getGroupList(UserVO user) { return myGroupRepository.getGroupList(user); }
 
     public GroupsVO getGroupInfo (GroupsVO group) {
         return myGroupRepository.getGroupInfo(group);
+    }
+
+    public List<GroupMemberDTO> getGroupMemberList(GroupDTO group) {
+        return myGroupRepository.getGroupMemberList(group);
     }
 
     public int getGroupIdx() {
@@ -57,5 +58,9 @@ public class MyGroupService {
         groupMemberList.forEach(myGroupRepository::joinGroupMember);
     }
 
+    public void deleteGroup(GroupDTO group) {
+        myGroupRepository.deleteGroupMembers(group);
+        myGroupRepository.deleteGroup(group);
+    }
 
 }
