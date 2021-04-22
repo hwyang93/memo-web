@@ -52,5 +52,4 @@ public class UserScheduleVO {
 
 	@Column(name = "MEMO")
 	private String memo;
-
 }

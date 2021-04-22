@@ -12,16 +12,6 @@
       </div>
       <hr>
       <ul id="placesList"></ul>
-      <!--      <ul id="placesList">-->
-<!--        <li v-for="item in searchPlaceList" @click="onClickSearchItem(item)" :key="item.id">-->
-<!--          <div class="info" @click="setFormInfo(item)">-->
-<!--            <h5>{{item.place_name}}</h5>-->
-<!--            <span>{{ item.road_address_name }}</span>-->
-<!--            <span class="jibun gray"> {{ item.address_name }}</span>-->
-<!--            <span class="tel">{{ item.phone }}</span>-->
-<!--          </div>-->
-<!--        </li>-->
-<!--      </ul>-->
       <div id="pagination"></div>
     </div>
   </div>
@@ -31,7 +21,7 @@
 export default {
   name: "KakaoMap",
   props: {
-    userScheduleList : Array
+    scheduleList : Array
   },
   data() {
     return {
@@ -52,26 +42,25 @@ export default {
     };
   },
   watch: {
-    userScheduleList : function() {
-      console.log("자식 watch");
-      this.setScheduleMarkers();
+    scheduleList : function() {
+      setTimeout(()=>{
+        this.setScheduleMarkers();
+      },500)
     }
   },
   beforeMount() {
   },
   mounted() {
-    console.log("자식 mounted 시작");
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
       const script = document.createElement("script");
+      script.async = false;
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
           "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=233fb509b41527eb6530cb8ca5b635c5&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     }
-    console.log("자식 mounted 끝");
-    console.log(window.kakao);
   },
   methods: {
     initMap() {
@@ -107,11 +96,26 @@ export default {
 
               infowindow.setContent(content);
               infowindow.open(this.map.map, clickMarker);
+              let sendData = {};
+              if (!result[0].road_address) {
+                sendData = result[0].address
+
+              } else {
+                sendData = result[0].road_address
+              }
+              sendData.x  = mouseEvent.latLng.La;
+              sendData.y  = mouseEvent.latLng.Ma;
+              this.setMarkerInfo(sendData);
             }
           });
         });
 
         this.map.searchClusterer = new kakao.maps.MarkerClusterer({
+          map: this.map.map,
+          averageCenter: true,
+          minLevel: 7
+        });
+        this.map.scheduleClusterer = new kakao.maps.MarkerClusterer({
           map: this.map.map,
           averageCenter: true,
           minLevel: 7
@@ -174,13 +178,13 @@ export default {
       if (status === kakao.maps.services.Status.OK) {
         this.searchPlaceList = data;
         this.displayPlaces(data);
+        this.displayPagination(pagination);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert('검색 결과가 존재하지 않습니다.');
         return false;
       } else if (status === kakao.maps.services.Status.ERROR) {
         alert('검색 결과 중 오류가 발생했습니다.');
         return false;
-
       }
     },
     displayPlaces(data) {
@@ -210,15 +214,18 @@ export default {
         bounds.extend(searchMarkerPosition);
 
         kakao.maps.event.addListener(searchMarker, 'mouseover', () => {
-          const content = this.displayInfowindow(searchMarker, item.place_name);
+          let content = '<div style="padding:5px;z-index:1;">' + item.place_name + '</div>';
           searchInfowindow.setContent(content);
           searchInfowindow.open(this.map.map, searchMarker);
         });
         kakao.maps.event.addListener(searchMarker, 'mouseout', () => {
           searchInfowindow.close();
         });
+        kakao.maps.event.addListener(searchMarker, 'click', () => {
+          this.setMarkerInfo(item);
+        })
         itemEl.onmouseover = () => {
-          const content = this.displayInfowindow(searchMarker, item.place_name);
+          let content = '<div style="padding:5px;z-index:1;">' + item.place_name + '</div>';
           searchInfowindow.setContent(content);
           searchInfowindow.open(this.map.map, searchMarker);
         }
@@ -226,6 +233,7 @@ export default {
           searchInfowindow.close();
         }
         itemEl.onclick = () => {
+          this.setMarkerInfo(item);
           this.map.map.setCenter(new kakao.maps.LatLng(item.y, item.x));
         }
 
@@ -234,8 +242,37 @@ export default {
       listEl.appendChild(fragment);
       this.map.searchClusterer.addMarkers(markers);
       this.map.map.setBounds(bounds);
+
     },
-    setFormInfo(data) {
+    displayPagination(pagination) {
+      const paginationEl = document.getElementById('pagination');
+      const fragment = document.createDocumentFragment();
+
+      while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+      }
+
+      for (let i=1; i<=pagination.last; i++) {
+        const el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i===pagination.current) {
+          el.className = 'on';
+        } else {
+          el.onclick = (function(i) {
+            return function() {
+              pagination.gotoPage(i);
+            }
+          })(i);
+        }
+
+        fragment.appendChild(el);
+      }
+      paginationEl.appendChild(fragment);
+    },
+    setMarkerInfo(data) {
+      this.$emit("setMarkerInfo", data);
     },
     getListItem(index, places) {
 
@@ -258,26 +295,22 @@ export default {
 
       return el;
     },
-    displayInfowindow(marker, title) {
-      return '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-      // searchInfowindow.setContent(content);
-      // searchInfowindow.open(map, marker);}
-    },
     onClickSearchItem(item) {
 
     },
     setScheduleMarkers() {
-      console.log(this.userScheduleList);
-      let markers = [];
+      const scheduleMarkers = [];
+      this.map.scheduleClusterer.clear();
       const scheduleInfowindow = new kakao.maps.InfoWindow({zindex: 1});
-      this.userScheduleList.forEach(item => {
-        const scheduleMarkerPosition = new kakao.maps.LatLng(item.y, item.x);
+      this.scheduleList.forEach(item => {
+        const scheduleMarkerPosition = new kakao.maps.LatLng(item.lat, item.lon);
         const scheduleMarker = new kakao.maps.Marker({position: scheduleMarkerPosition});
-        markers.push(scheduleMarker);
+        scheduleMarkers.push(scheduleMarker);
 
         kakao.maps.event.addListener(scheduleMarker, 'mouseover', () => {
-          const content = this.displayInfowindow(scheduleMarker, item.place_name);
+          let content = '<div>장소 : ' + item.promisePlace + '</div>';
+          content += '<div>일정 : ' + item.startDate + ' ~ ' + item.endDate + '</div>';
+          content += '<div>일정 : ' + item.memo + '</div>';
           scheduleInfowindow.setContent(content);
           scheduleInfowindow.open(this.map.map, scheduleMarker);
         });
@@ -285,7 +318,7 @@ export default {
           scheduleInfowindow.close();
         });
       })
-      this.map.searchClusterer.addMarkers(markers);
+      this.map.scheduleClusterer.addMarkers(scheduleMarkers);
     }
   }
 };

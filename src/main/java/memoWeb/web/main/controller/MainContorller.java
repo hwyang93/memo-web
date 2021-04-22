@@ -2,7 +2,7 @@ package memoWeb.web.main.controller;
 
 import javax.servlet.http.HttpSession;
 
-import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.main.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.service.MainService;
-import memoWeb.web.main.domain.UserScheduleVO;
 
 import java.util.List;
 
@@ -60,13 +59,33 @@ public class MainContorller {
 		return "jsonView";
 	}
 
-	@GetMapping("getUserSchedule.do")
-	public String getUserSchedule (Model model, HttpSession session) {
+	@PostMapping("saveGroupSchedule.do")
+	public String saveGroupSchedule(Model model, @RequestBody GroupSchedule groupSchedule, HttpSession session) {
 		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		List<UserScheduleVO> userScheduleList = null;
-		userScheduleList = mainService.getScheduleList(member);
-		model.addAttribute("userScheduleList", userScheduleList);
+		groupSchedule.setRegUser(member.getUserId());
+		GroupSchedule result = mainService.saveGroupSchedule(groupSchedule);
+
+		model.addAttribute("result", result);
 		return "jsonView";
 	}
 
+	@PostMapping("saveUserMemo.do")
+	public String saveUserMemo(Model model, @RequestBody UserMemo userMemo, HttpSession session) {
+		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
+		userMemo.setUserId(member.getUserId());
+		UserMemo result = mainService.saveUserMemo(userMemo);
+
+		model.addAttribute("result", result);
+		return "jsonView";
+	}
+
+	@GetMapping("getSchedule.do")
+	public String getSchedule (Model model, HttpSession session) {
+		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
+		List<UserScheduleVO> userScheduleList = mainService.getUserScheduleList(member);
+		List<GroupScheduleDTO> groupScheduleList = mainService.getGroupScheduleList(member);
+		model.addAttribute("userScheduleList", userScheduleList);
+		model.addAttribute("groupScheduleList", groupScheduleList);
+		return "jsonView";
+	}
 }
