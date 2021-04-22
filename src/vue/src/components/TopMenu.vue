@@ -40,10 +40,6 @@
           <li class="nav-item">
             <a @click="goMenu('/myPage/schedule')" class="nav-link">myPage</a>
           </li>
-          <li class="nav-item">
-            <a @click="goMenu('/test')" class="nav-link">test</a>
-          </li>
-
         </ul>
         <!-- //navbar-collapse -->
         <div class="user-area d-flex">

@@ -58,8 +58,7 @@ public class MyGroupContoller {
     @GetMapping("getGroupList.do")
     public String getGroupList(Model model, HttpSession session) {
         UserVO user = new UserVO();
-//        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
-        user.setUserId("test");
+        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         List<GroupDTO> result = myGroupService.getGroupList(user);
         model.addAttribute("groupList", result);
         return "jsonView";
