@@ -24,18 +24,18 @@
             <h3 class="widgets-title"><span>Tags</span></h3>
             <div class="blog-sidebar-widgets-inner">
               <div class="tagcloud">
-                <a href="index.html" class="tag-cloud-link"> Marketing </a>
-                <a href="index.html" class="tag-cloud-link"> Font </a>
-                <a href="index.html" class="tag-cloud-link"> Design </a>
-                <a href="index.html" class="tag-cloud-link"> Networking </a>
-                <a href="index.html" class="tag-cloud-link"> I Interior </a>
-                <a href="index.html" class="tag-cloud-link"> Seo </a>
-                <a href="index.html" class="tag-cloud-link"> theme </a>
-                <a href="index.html" class="tag-cloud-link">Web design </a>
-                <a href="index.html" class="tag-cloud-link"> Post </a>
-                <a href="index.html" class="tag-cloud-link"> Developing </a>
-                <a href="index.html" class="tag-cloud-link"> Socail </a>
-                <a href="index.html" class="tag-cloud-link"> html </a>
+                <a href="index.html" class="tag-cloud-link">Marketing</a>
+                <a href="index.html" class="tag-cloud-link">Font</a>
+                <a href="index.html" class="tag-cloud-link">Design</a>
+                <a href="index.html" class="tag-cloud-link">Networking</a>
+                <a href="index.html" class="tag-cloud-link">I Interior</a>
+                <a href="index.html" class="tag-cloud-link">Seo</a>
+                <a href="index.html" class="tag-cloud-link">theme</a>
+                <a href="index.html" class="tag-cloud-link">Web design</a>
+                <a href="index.html" class="tag-cloud-link">Post</a>
+                <a href="index.html" class="tag-cloud-link">Developing</a>
+                <a href="index.html" class="tag-cloud-link">Socail</a>
+                <a href="index.html" class="tag-cloud-link">html</a>
               </div>
             </div>
           </div>
@@ -99,7 +99,7 @@
                       <p>info : <br>{{this.groupDetail.groupComment}}</p>
                       <label for="tags-basic">참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
-                      <b-button variant="danger mt-3">그룹 삭제</b-button>
+                      <b-button variant="danger mt-3" @click="deleteGroup">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -186,8 +186,8 @@ export default {
       },
       groupDetail: {
         groupTitle: '',
-        groupComment: ''
-
+        groupComment: '',
+        groupMembers: []
       },
 
     };
@@ -272,6 +272,12 @@ export default {
       axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
         this.userList = result.data.userList;
         // console.log(this.userList);
+      });
+    },
+    deleteGroup() {
+      axiosUtil.post('/api/myGroup/deleteGroup.do', {}, result => {
+        this.groupList = result.data.groupList;
+        // console.log('group list : ', this.groupList);
       });
     },
     // getGroupInfo() {
