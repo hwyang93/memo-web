@@ -200,10 +200,13 @@ export default {
       });
     },
     saveMemo() {
-
+      axiosUtil.post('/api/main/memo', this.form, () => {
+        alert('저장되었습니다.')
+        this.getSchedule();
+      });
     },
     getSchedule() {
-      axiosUtil.get('/api/main/getSchedule.do', {}, result => {
+      axiosUtil.get('/api/main/schedule', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
         this.groupScheduleList = result.data.groupScheduleList;
         if (this.tabIdx === 0) {
@@ -214,6 +217,17 @@ export default {
           this.scheduleList = this.memoList;
         }
       });
+      // axiosUtil.get('/api/main/getSchedule.do', {}, result => {
+      //   this.userScheduleList = result.data.userScheduleList;
+      //   this.groupScheduleList = result.data.groupScheduleList;
+      //   if (this.tabIdx === 0) {
+      //     this.scheduleList = this.userScheduleList;
+      //   } else if (this.tabIdx === 1) {
+      //     this.scheduleList = this.groupScheduleList;
+      //   } else {
+      //     this.scheduleList = this.memoList;
+      //   }
+      // });
     },
     setMarkerInfo(data) {
       this.form.promisePlace = !!data.road_address_name ? data.road_address_name: data.address_name;

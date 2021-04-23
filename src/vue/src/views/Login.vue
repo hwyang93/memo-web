@@ -57,18 +57,18 @@ export default {
   data() {
     return {
       form: {
-        userId: "aaa",
-        userPassword: "aaa",
+        userId: "test",
+        userPassword: "test",
       },
     };
   },
   methods: {
     goLogin: function () {
       axiosUtil.post("/api/main/login.do", this.form, (result) => {
-        if (result.data.result == null) {
+        if (!result.data) {
           alert("일치하는 회원이 없습니다.");
         } else {
-          this.$store.commit("LOGIN", result.data.result);
+          this.$store.commit("LOGIN", result.data);
           this.$router.push("/");
         }
       });
