@@ -28,9 +28,9 @@ public class MainContorller {
 	}
 
 	@PostMapping("login.do")
-	public ResponseEntity login(Model model, @RequestBody UserVO member, HttpSession session) {
-		UserVO result = null;
-		result = mainService.login(member);
+	public ResponseEntity login(Model model, @RequestBody UserDTO user, HttpSession session) {
+		UserDTO result = null;
+		result = mainService.login(user);
 		if (result != null) {
 			session.setAttribute(CommonConstants.SESSION, result);
 		}
@@ -55,8 +55,8 @@ public class MainContorller {
 	
 	@PostMapping("saveUserSchedule.do")
 	public String saveUserSchedule(Model model, @RequestBody UserScheduleVO userSchedule, HttpSession session) {
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		userSchedule.setUserId(member.getUserId());
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		userSchedule.setUserId(user.getUserId());
 		UserScheduleVO result = mainService.saveUserSchedule(userSchedule);
 		
 		model.addAttribute("result", result);
@@ -65,18 +65,18 @@ public class MainContorller {
 
 	@PostMapping("saveGroupSchedule.do")
 	public String saveGroupSchedule(Model model, @RequestBody GroupSchedule groupSchedule, HttpSession session) {
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		groupSchedule.setRegUser(member.getUserId());
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		groupSchedule.setRegUser(user.getUserId());
 		GroupSchedule result = mainService.saveGroupSchedule(groupSchedule);
 
 		model.addAttribute("result", result);
 		return "jsonView";
 	}
 
-	@PostMapping(value = "/userMemo")
+	@PostMapping(value = "/memo")
 	public String saveUserMemo(Model model, @RequestBody UserMemo userMemo, HttpSession session) {
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		userMemo.setUserId(member.getUserId());
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		userMemo.setUserId(user.getUserId());
 		UserMemo result = mainService.saveUserMemo(userMemo);
 
 		model.addAttribute("result", result);
@@ -85,8 +85,8 @@ public class MainContorller {
 
 	@PutMapping(value = "/userMemo/{idx}")
 	public String updateUserMemo(Model model, @RequestBody UserMemo userMemo, HttpSession session) {
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		userMemo.setUserId(member.getUserId());
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		userMemo.setUserId(user.getUserId());
 		UserMemo result = mainService.saveUserMemo(userMemo);
 
 		model.addAttribute("result", result);
@@ -104,14 +104,16 @@ public class MainContorller {
 //	}
 
 	@GetMapping("/schedule")
-	public ResponseEntity<Map<String,Object>> getSchedule (HttpSession session) {
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
+	public Map<String,Object> getSchedule (HttpSession session) {
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
 		Map<String, Object> resultMap = new HashMap<>();
-		List<UserScheduleVO> userScheduleList = mainService.getUserScheduleList(member);
-		List<GroupScheduleDTO> groupScheduleList = mainService.getGroupScheduleList(member);
+		List<UserScheduleVO> userScheduleList = mainService.getUserScheduleList(user);
+		List<GroupScheduleDTO> groupScheduleList = mainService.getGroupScheduleList(user);
+		List<UserMemoDTO> userMemoList = mainService.getUserMemoList(user);
 		resultMap.put("userScheduleList", userScheduleList);
 		resultMap.put("groupScheduleList", groupScheduleList);
+		resultMap.put("userMemoList", userMemoList);
 
-		return ResponseEntity.ok(resultMap);
+		return resultMap;
 	}
 }

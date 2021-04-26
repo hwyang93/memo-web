@@ -37,7 +37,8 @@ public class GroupSchedule implements Serializable {
     @Column(name = "REG_USER")
     private String regUser;
 
-    @Column(name = "REG_DATE")
+    @Column(name = "REG_DATE", insertable = false, updatable = false,
+            columnDefinition = "Date default sysdate")
     private String regDate;
 
     @Column(name = "START_DATE")

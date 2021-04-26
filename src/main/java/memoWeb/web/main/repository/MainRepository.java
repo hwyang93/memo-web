@@ -5,11 +5,12 @@ import memoWeb.web.main.domain.*;
 import java.util.List;
 
 public interface MainRepository{
-	UserVO getMember(UserVO member);
+	UserDTO getMember(UserDTO user);
 	UserVO signUp(UserVO member);
 	UserScheduleVO saveUserSchedule(UserScheduleVO userSchedule);
-	List<UserScheduleVO> getUserScheduleList(UserVO member);
-	List<GroupScheduleDTO> getGroupScheduleList(UserVO user);
+	List<UserScheduleVO> getUserScheduleList(UserDTO user);
+	List<GroupScheduleDTO> getGroupScheduleList(UserDTO user);
 	GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule);
 	UserMemo saveUserMemo(UserMemo userMemo);
+	List<UserMemoDTO> getUserMemoList(UserDTO user);
 }

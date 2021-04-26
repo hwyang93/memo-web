@@ -12,13 +12,13 @@ public class UserDTO {
     private String regDate;
     private String openFlag;
 
-    @QueryProjection
-    public UserDTO(String userId, String userPassword, String userEmail, String userName, String regDate, String openFlag) {
-        this.userId = userId;
-        this.userPassword = userPassword;
-        this.userEmail = userEmail;
-        this.userName = userName;
-        this.regDate = regDate;
-        this.openFlag = openFlag;
-    }
+//    @QueryProjection
+//    public UserDTO(String userId, String userPassword, String userEmail, String userName, String regDate, String openFlag) {
+//        this.userId = userId;
+//        this.userPassword = userPassword;
+//        this.userEmail = userEmail;
+//        this.userName = userName;
+//        this.regDate = regDate;
+//        this.openFlag = openFlag;
+//    }
 }

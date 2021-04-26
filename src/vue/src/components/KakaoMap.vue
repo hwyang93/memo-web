@@ -99,7 +99,6 @@ export default {
               let sendData = {};
               if (!result[0].road_address) {
                 sendData = result[0].address
-
               } else {
                 sendData = result[0].road_address
               }
@@ -308,9 +307,15 @@ export default {
         scheduleMarkers.push(scheduleMarker);
 
         kakao.maps.event.addListener(scheduleMarker, 'mouseover', () => {
-          let content = '<div>장소 : ' + item.promisePlace + '</div>';
-          content += '<div>일정 : ' + item.startDate + ' ~ ' + item.endDate + '</div>';
-          content += '<div>일정 : ' + item.memo + '</div>';
+          let content = '';
+          if (typeof item.startDate != 'undefined') {
+            content = '<div>장소 : ' + item.promisePlace + '</div>';
+            content += '<div>일정 : ' + item.startDate + ' ~ ' + item.endDate + '</div>';
+            content += '<div>메모 : ' + item.memo + '</div>';
+          } else {
+            content = '<div>장소 : ' + item.memoPlace + '</div>';
+            content += '<div>메모 : ' + item.memo + '</div>';
+          }
           scheduleInfowindow.setContent(content);
           scheduleInfowindow.open(this.map.map, scheduleMarker);
         });
@@ -319,6 +324,9 @@ export default {
         });
       })
       this.map.scheduleClusterer.addMarkers(scheduleMarkers);
+    },
+    setCenter(y, x) {
+      this.map.map.setCenter(new kakao.maps.LatLng(y, x));
     }
   }
 };
