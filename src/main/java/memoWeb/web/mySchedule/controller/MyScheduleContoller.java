@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import memoWeb.web.main.domain.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +30,8 @@ public class MyScheduleContoller {
 
 	@GetMapping("getUserScheduleListAll.do")
 	public String getUserScheduleListAll(Model model, HttpSession session) {
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(user);
 		model.addAttribute("userScheduleList", userScheduleList);
 		return "jsonView";
 	}

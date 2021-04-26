@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class MainService {
-	
+
 	private final MainRepository mainRepository;
 
 	@Autowired
@@ -18,8 +18,8 @@ public class MainService {
 		this.mainRepository = mainRepository;
 	}
 
-	public UserVO login (UserVO member) {
-		return mainRepository.getMember(member);
+	public UserDTO login (UserDTO user) {
+		return mainRepository.getMember(user);
 	}
 
 	public UserVO signUp (UserVO member) {
@@ -30,11 +30,11 @@ public class MainService {
 		return mainRepository.saveUserSchedule(userSchedule);
 	}
 
-	public List<UserScheduleVO> getUserScheduleList (UserVO member) {
-		return mainRepository.getUserScheduleList(member);
+	public List<UserScheduleVO> getUserScheduleList (UserDTO user) {
+		return mainRepository.getUserScheduleList(user);
 	}
 
-	public List<GroupScheduleDTO> getGroupScheduleList (UserVO user) { return mainRepository.getGroupScheduleList(user); }
+	public List<GroupScheduleDTO> getGroupScheduleList (UserDTO user) { return mainRepository.getGroupScheduleList(user); }
 
 	public GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule) {
 		return mainRepository.saveGroupSchedule(groupSchedule);
@@ -44,4 +44,7 @@ public class MainService {
 		return mainRepository.saveUserMemo(userMemo);
 	}
 
+	public List<UserMemoDTO> getUserMemoList(UserDTO user) {
+		return mainRepository.getUserMemoList(user);
+	}
 }

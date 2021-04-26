@@ -33,11 +33,12 @@ public class UserMemo implements Serializable {
     @Column(name = "USER_ID")
     private String userId;
 
-    @Column(name = "REG_DATE")
+    @Column(name = "REG_DATE", insertable = false, updatable = false,
+            columnDefinition = "Date default sysdate")
     private String regDate;
 
-    @Column(name = "PROMISE_PLACE")
-    private String promisePlace;
+    @Column(name = "MEMO_PLACE")
+    private String memoPlace;
 
     @Column(name = "LON")
     private String lon;

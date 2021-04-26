@@ -32,14 +32,16 @@ public class MainRepositoryImpl implements MainRepository {
     QGroupSchedule qGroupSchedule = QGroupSchedule.groupSchedule;
     QGroupsVO qGroups = QGroupsVO.groupsVO;
     QGroupMemberVO qGroupMember = QGroupMemberVO.groupMemberVO;
+    QUserMemo qUserMemo = QUserMemo.userMemo;
 
     @Override
-    public UserVO getMember(UserVO member) {
-        final JPAQuery<UserVO> query = new JPAQuery<>(em);
-
-        return query.from(qUser)
-                .where(qUser.userId.eq(member.getUserId())
-                        .and(qUser.userPassword.eq(member.getUserPassword())))
+    public UserDTO getMember(UserDTO user) {
+        final JPAQuery<UserDTO> query = new JPAQuery<>(em);
+        return queryFactory.select(Projections.fields(UserDTO.class,
+                qUser.userId, qUser.userEmail, qUser.userName))
+                .from(qUser)
+                .where(qUser.userId.eq(user.getUserId())
+                .and(qUser.userPassword.eq(user.getUserPassword())))
                 .fetchOne();
     }
 
@@ -56,18 +58,18 @@ public class MainRepositoryImpl implements MainRepository {
     }
 
     @Override
-    public List<UserScheduleVO> getUserScheduleList(UserVO member) {
+    public List<UserScheduleVO> getUserScheduleList(UserDTO user) {
         final JPAQuery<UserScheduleVO> query = new JPAQuery<>(em);
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         return query.from(qUserSchedule)
-                .where(qUserSchedule.userId.eq(member.getUserId())
+                .where(qUserSchedule.userId.eq(user.getUserId())
                 .and(qUserSchedule.startDate.loe(today))
                 .and(qUserSchedule.endDate.goe(today)))
                 .fetch();
     }
 
     @Override
-    public List<GroupScheduleDTO> getGroupScheduleList(UserVO user) {
+    public List<GroupScheduleDTO> getGroupScheduleList(UserDTO user) {
         return queryFactory.select(Projections.fields(GroupScheduleDTO.class,
                 qGroupSchedule.idx, qGroupSchedule.groupIdx, qGroupSchedule.title, qGroupSchedule.startDate, qGroupSchedule.endDate, qGroupSchedule.promisePlace, qGroupSchedule.lon, qGroupSchedule.lat,
                 qGroupSchedule.memo))
@@ -90,5 +92,13 @@ public class MainRepositoryImpl implements MainRepository {
     public UserMemo saveUserMemo(UserMemo userMemo) {
         em.persist(userMemo);
         return userMemo;
+    }
+
+    @Override
+    public List<UserMemoDTO> getUserMemoList(UserDTO userDTO) {
+        return queryFactory.select(Projections.fields(UserMemoDTO.class, qUserMemo.title, qUserMemo.memoPlace, qUserMemo.lon, qUserMemo.lat, qUserMemo.regDate, qUserMemo.memo))
+                .from(qUserMemo)
+                .where(qUserMemo.userId.eq(userDTO.getUserId()))
+                .fetch();
     }
 }

@@ -106,7 +106,7 @@
                             </div>
                             <div class="form-group col-lg-12">
                               <div class="input-group">
-                                <input v-model="form.promisePlace" type="text" class="form-control" placeholder="위치" readonly />
+                                <input v-model="form.memoPlace" type="text" class="form-control" placeholder="위치" readonly />
                               </div>
                             </div>
                           </div>
@@ -154,6 +154,7 @@ export default {
         startDate: '2021-04-01',
         endDate: '2021-04-30',
         promisePlace: '',
+        memoPlace: '',
         memo: '일정',
         lon: '',
         lat: '',
@@ -163,7 +164,7 @@ export default {
       userGroupList: [],
       userScheduleList: [],
       groupScheduleList: [],
-      memoList: []
+      userMemoList: []
     };
   },
   watch: {
@@ -173,7 +174,7 @@ export default {
       } else if (val === 1) {
         this.scheduleList = this.groupScheduleList;
       } else {
-        this.scheduleList = this.memoList;
+        this.scheduleList = this.userMemoList;
       }
     }
   },
@@ -209,12 +210,13 @@ export default {
       axiosUtil.get('/api/main/schedule', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
         this.groupScheduleList = result.data.groupScheduleList;
+        this.userMemoList = result.data.userMemoList;
         if (this.tabIdx === 0) {
           this.scheduleList = this.userScheduleList;
         } else if (this.tabIdx === 1) {
           this.scheduleList = this.groupScheduleList;
         } else {
-          this.scheduleList = this.memoList;
+          this.scheduleList = this.userMemoList;
         }
       });
       // axiosUtil.get('/api/main/getSchedule.do', {}, result => {
@@ -230,7 +232,11 @@ export default {
       // });
     },
     setMarkerInfo(data) {
-      this.form.promisePlace = !!data.road_address_name ? data.road_address_name: data.address_name;
+      if (this.tabIdx === 2) {
+        this.form.memoPlace = !!data.road_address_name ? data.road_address_name: data.address_name;
+      } else {
+        this.form.promisePlace = !!data.road_address_name ? data.road_address_name: data.address_name;
+      }
       this.form.lon = data.x;
       this.form.lat = data.y;
     }

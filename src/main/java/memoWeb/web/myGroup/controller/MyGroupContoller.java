@@ -1,7 +1,7 @@
 package memoWeb.web.myGroup.controller;
 
-import com.querydsl.core.Tuple;
 import memoWeb.common.constant.CommonConstants;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.*;
 import memoWeb.web.myGroup.service.MyGroupService;
@@ -40,7 +40,7 @@ public class MyGroupContoller {
 
     @PostMapping("joinUserRelation.do")
     public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationVO userRelation) {
-        userRelation.setFollowUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        userRelation.setFollowUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         userRelation.setRelationStatus("W");
         UserRelationVO result = myGroupService.joinUserRelation(userRelation);
         model.addAttribute("joinUser", result);
@@ -49,7 +49,7 @@ public class MyGroupContoller {
 
     @GetMapping("getFriendList.do")
     public String getFriendList(Model model, HttpSession session, @ModelAttribute UserRelationVO userRelation) {
-        userRelation.setFollowUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        userRelation.setFollowUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         List<UserRelationVO> result = myGroupService.getFriendList(userRelation);
         model.addAttribute("friendList", result);
         return "jsonView";
@@ -58,7 +58,7 @@ public class MyGroupContoller {
     @GetMapping("getGroupList.do")
     public String getGroupList(Model model, HttpSession session) {
         UserVO user = new UserVO();
-        user.setUserId(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        user.setUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         List<GroupDTO> result = myGroupService.getGroupList(user);
         model.addAttribute("groupList", result);
         return "jsonView";
@@ -77,7 +77,7 @@ public class MyGroupContoller {
     public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group) {
         int groupIdx = myGroupService.getGroupIdx();
 
-        group.setGroupMasterUser(((UserVO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        group.setGroupMasterUser(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         group.setGroupIdx(groupIdx);
 
 

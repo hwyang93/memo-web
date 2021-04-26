@@ -1,5 +1,6 @@
 package memoWeb.web.mySchedule.service;
 
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserScheduleVO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.mySchedule.repository.MyScheduleRepository;
@@ -17,8 +18,8 @@ public class MyScheduleService {
         this.myScheduleRepository = myScheduleRepository;
     }
 
-    public List<UserScheduleVO> getUserScheduleListAll(UserVO member) {
-        return myScheduleRepository.getUserScheduleListAll(member);
+    public List<UserScheduleVO> getUserScheduleListAll(UserDTO user) {
+        return myScheduleRepository.getUserScheduleListAll(user);
     }
 
 	public UserScheduleVO getScheduleDetail(int idx) {

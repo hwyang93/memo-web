@@ -8,7 +8,7 @@ public class UserMemoDTO {
     private String title;
     private String userId;
     private String regDate;
-    private String promisePlace;
+    private String memoPlace;
     private String lon;
     private String lat;
     private String memo;
