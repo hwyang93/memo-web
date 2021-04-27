@@ -60,7 +60,7 @@
         </div>
       </div>
       <router-view :key="$router.fullpath" />
-      <schedule-modal v-if="isStatusOn" :send="this.params"> </schedule-modal>
+      <schedule-modal v-if="isStatusOn" @close="isStatusOn = false" :send="this.params"> </schedule-modal>
     </div>
   </section>
 </template>

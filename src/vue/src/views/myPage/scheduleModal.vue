@@ -34,7 +34,7 @@
         <div class="modal-footer">
           <footer class="foo-default" v-if="isdefault">
             <button class="ModifyBtn md-btn" @click="modify">Modify</button>
-            <button class="closeBtn md-btn" @click="close">Close</button>
+            <button class="closeBtn md-btn" @click="$emit('close')">Close</button>
           </footer>
           <footer class="foo-modify" v-else-if="isModify">
             <button class="saveBtn md-btn" @click="save">Save</button>
@@ -192,8 +192,10 @@ export default {
     deleteBtn() {
       axiosUtil.get('/api/mySchedule/deleteSchedule.do/' + this.scheduleDetail.idx, {}, result => {
         alert('삭제되었습니다.');
-        this.close();
         this.isStatusOn = false;
+        if ((this.isStatusOn = false)) {
+          window.location.reload();
+        }
         this.isdefault = true;
         this.isModify = false;
       });
@@ -205,12 +207,6 @@ export default {
       this.scheduleDetail.lon = this.backlon;
       this.scheduleDetail.lat = this.backlat;
       this.initMap();
-    },
-    close: function () {
-      this.isStatusOn = false;
-      if (this.isStatusOn == false) {
-        window.location.reload();
-      }
     }
   },
   beforeMount() {
