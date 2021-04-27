@@ -1,13 +1,16 @@
 package memoWeb.web.main.repository;
 
-import memoWeb.web.main.domain.UserScheduleVO;
-import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.main.domain.*;
 
 import java.util.List;
 
 public interface MainRepository{
-	UserVO getMember(UserVO member);
+	UserDTO getMember(UserDTO user);
 	UserVO signUp(UserVO member);
 	UserScheduleVO saveUserSchedule(UserScheduleVO userSchedule);
-	List<UserScheduleVO> getScheduleList(UserVO member);
+	List<UserScheduleVO> getUserScheduleList(UserDTO user);
+	List<GroupScheduleDTO> getGroupScheduleList(UserDTO user);
+	GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule);
+	UserMemo saveUserMemo(UserMemo userMemo);
+	List<UserMemoDTO> getUserMemoList(UserDTO user);
 }

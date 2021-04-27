@@ -32,7 +32,8 @@ public class UserScheduleVO {
 	@Column(name = "USER_ID")
 	private String userId;
 
-	@Column(name = "REG_DATE")
+	@Column(name = "REG_DATE", insertable = false, updatable = false,
+			columnDefinition = "Date default sysdate")
 	private String regDate;
 
 	@Column(name = "START_DATE")
@@ -52,5 +53,4 @@ public class UserScheduleVO {
 
 	@Column(name = "MEMO")
 	private String memo;
-
 }

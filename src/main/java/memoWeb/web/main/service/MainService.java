@@ -1,7 +1,6 @@
 package memoWeb.web.main.service;
 
-import memoWeb.web.main.domain.UserScheduleVO;
-import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.main.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Service
 public class MainService {
-	
+
 	private final MainRepository mainRepository;
 
 	@Autowired
@@ -19,8 +18,8 @@ public class MainService {
 		this.mainRepository = mainRepository;
 	}
 
-	public UserVO login (UserVO member) {
-		return mainRepository.getMember(member);
+	public UserDTO login (UserDTO user) {
+		return mainRepository.getMember(user);
 	}
 
 	public UserVO signUp (UserVO member) {
@@ -31,10 +30,21 @@ public class MainService {
 		return mainRepository.saveUserSchedule(userSchedule);
 	}
 
-	public List<UserScheduleVO> getScheduleList (UserVO member) {
-		return mainRepository.getScheduleList(member);
+	public List<UserScheduleVO> getUserScheduleList (UserDTO user) {
+		return mainRepository.getUserScheduleList(user);
 	}
 
+	public List<GroupScheduleDTO> getGroupScheduleList (UserDTO user) { return mainRepository.getGroupScheduleList(user); }
 
+	public GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule) {
+		return mainRepository.saveGroupSchedule(groupSchedule);
+	}
 
+	public UserMemo saveUserMemo(UserMemo userMemo) {
+		return mainRepository.saveUserMemo(userMemo);
+	}
+
+	public List<UserMemoDTO> getUserMemoList(UserDTO user) {
+		return mainRepository.getUserMemoList(user);
+	}
 }
