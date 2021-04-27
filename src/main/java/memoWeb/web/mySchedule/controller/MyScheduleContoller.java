@@ -1,23 +1,26 @@
 package memoWeb.web.mySchedule.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.domain.UserScheduleVO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.mySchedule.service.MyScheduleService;
 
-@Controller
+@RestController
 @RequestMapping("/api/mySchedule")
 public class MyScheduleContoller {
 	private static MyScheduleService myScheduleService;
@@ -28,31 +31,36 @@ public class MyScheduleContoller {
 	}
 
 	@GetMapping("getUserScheduleListAll.do")
-	public String getUserScheduleListAll(Model model, HttpSession session) {
+	public Map<String, Object> getUserScheduleListAll(Model model, UserScheduleVO userScheduleVo, HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
 		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
 		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
-		model.addAttribute("userScheduleList", userScheduleList);
-		return "jsonView";
+		map.put("userScheduleList", userScheduleList);
+		return map;
 	}
 	
-	@GetMapping("getScheduleDetail.do")
-	public String getScheduleDetail(Model model, HttpSession session, int idx) {
+	@GetMapping("getScheduleDetail.do/{idx}")
+	public Map<String, Object> getScheduleDetail(@PathVariable("idx") int idx, Model model, HttpSession session) {
+		System.out.println(idx);
+		Map<String, Object> map = new HashMap<>();
 		UserScheduleVO scheduleDetail = myScheduleService.getScheduleDetail(idx);
-		model.addAttribute("scheduleDetail", scheduleDetail);
-		return "jsonView";
+		map.put("scheduleDetail", scheduleDetail);
+		return map;
 	}
 	
 	@PostMapping("updateSchedule.do")
-	public String updateSchedule(Model model, @RequestBody UserScheduleVO userScheduleVO, HttpSession session) {
+	public Map<String, Object> updateSchedule(@RequestBody UserScheduleVO userScheduleVO, HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
 		long result = myScheduleService.updateSchedule(userScheduleVO);
-		model.addAttribute("result",result);
-		return "jsonView";
+		map.put("result",result);
+		return map;
 	}
 	
-	@GetMapping("deleteSchedule.do")
-	public String deleteSchedule(Model model, HttpSession session, int idx) {
+	@GetMapping("deleteSchedule.do/{idx}")
+	public Map<String, Object> deleteSchedule(Model model, HttpSession session, @PathVariable("idx") int idx) {
+		Map<String, Object> map = new HashMap<>();
 		long result = myScheduleService.deleteSchedule(idx);
-		model.addAttribute("result", result);
-		return "jsonView";
+		map.put("result", result);
+		return map;
 	}
 }

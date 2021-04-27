@@ -59,8 +59,8 @@
           </div>
         </div>
       </div>
-
-      <schedule-modal v-if="isStatusOn" @close="isStatusOn = false" :send="this.params"> </schedule-modal>
+      <router-view :key="$router.fullpath" />
+      <schedule-modal v-if="isStatusOn" :send="this.params"> </schedule-modal>
     </div>
   </section>
 </template>
@@ -87,6 +87,7 @@ export default {
     getSchedule: function () {
       axiosUtil.get('/api/mySchedule/getUserScheduleListAll.do', {}, result => {
         this.userScheduleList = result.data.userScheduleList;
+        console.log(this.userScheduleList);
       });
     },
     showModal(idx) {
