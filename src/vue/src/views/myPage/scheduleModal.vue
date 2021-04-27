@@ -19,15 +19,15 @@
           </div>
           <div class="md-modify" v-else-if="isModify">
             <input type="hidden" v-model="this.scheduleDetail.idx" />
-            <div class="md-header"><input type="text" class="md-header" v-model="this.scheduleDetail.title" /></div>
+            <div class="md-header"><input type="text" id="title" name="title" class="md-header" v-model="this.scheduleDetail.title" /></div>
             <div class="md-body">
               <h5 class="md-title">주소</h5>
-              <input type="text" class="md-text" v-model="this.scheduleDetail.promisePlace" />
+              <input type="text" class="md-text" id="promisePlace" name="promisePlace" v-model="this.scheduleDetail.promisePlace" />
               <h5 class="md-title">일정</h5>
-              시작 : <input type="date" class="md-text" id="startDate" :value="$moment(scheduleDetail.startDate).format('YYYY-MM-DD')" /><br />
-              종료 : <input type="date" class="md-text" id="endDate" :value="$moment(scheduleDetail.endDate).format('YYYY-MM-DD')" />
+              시작 : <input type="date" class="md-text" id="startDate" name="startDate" :value="$moment(scheduleDetail.startDate).format('YYYY-MM-DD')" /><br />
+              종료 : <input type="date" class="md-text" id="endDate" name="endDate" :value="$moment(scheduleDetail.endDate).format('YYYY-MM-DD')" />
               <h5 class="md-title">메모</h5>
-              <textarea class="md-text" style="" v-model="this.scheduleDetail.memo"></textarea>
+              <textarea class="md-text" id="memo" name="memo" v-model="this.scheduleDetail.memo"></textarea>
             </div>
           </div>
         </div>
@@ -49,6 +49,7 @@
 
 <script>
 import axiosUtil from '@/utils/axios-util';
+
 export default {
   name: 'scheduleModal',
   props: ['send'],
@@ -60,7 +61,7 @@ export default {
       infowindow: null,
       isStatusOn: true,
       isdefault: false,
-      isModity: false,
+      isModify: false,
       backPromisePlace: null,
       backlon: '',
       backlat: '',
@@ -73,8 +74,8 @@ export default {
     }
   },
   methods: {
-    getSchedule(idx) {
-      axiosUtil.get('/api/mySchedule/getScheduleDetail.do', { params: { idx: idx } }, result => {
+    getScheduleOne(idx) {
+      axiosUtil.get('/api/mySchedule/getScheduleDetail.do/' + idx, {}, result => {
         this.scheduleDetail = result.data.scheduleDetail;
         this.isdefault = true;
         this.backPromisePlace = this.scheduleDetail.promisePlace;
@@ -178,21 +179,25 @@ export default {
     save: function () {
       this.scheduleDetail.startDate = document.getElementById('startDate').value;
       this.scheduleDetail.endDate = document.getElementById('endDate').value;
+      this.scheduleDetail.title = document.getElementById('title').value;
+      this.scheduleDetail.promisePlace = document.getElementById('promisePlace').value;
+      this.scheduleDetail.memo = document.getElementById('memo').value;
       axiosUtil.post('/api/mySchedule/updateSchedule.do', this.scheduleDetail, result => {
         alert('수정되었습니다.');
-        this.isStatusOn = false;
+        this.isStatusOn = true;
         this.isdefault = true;
         this.isModify = false;
-        this.getSchedule();
       });
     },
     deleteBtn() {
-      axiosUtil.get('/api/mySchedule/deleteSchedule.do', { params: { idx: this.scheduleDetail.idx } }, result => {
+      axiosUtil.get('/api/mySchedule/deleteSchedule.do/' + this.scheduleDetail.idx, {}, result => {
         alert('삭제되었습니다.');
         this.isStatusOn = false;
+        if ((this.isStatusOn = false)) {
+          window.location.reload();
+        }
         this.isdefault = true;
         this.isModify = false;
-        this.getSchedule();
       });
     },
     cancel: function () {
@@ -206,7 +211,7 @@ export default {
   },
   beforeMount() {
     this.idx = this.$props.send;
-    this.getSchedule(this.idx);
+    this.getScheduleOne(this.idx);
   }
 };
 </script>
