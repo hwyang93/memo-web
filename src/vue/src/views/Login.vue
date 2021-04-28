@@ -6,11 +6,7 @@
         <div class="col-lg-6 col-md-12">
           <div class="contcat_info">
             <div class="section-heading ml-0">
-              <img
-                src="../images/all-img/logo.png"
-                alt="logo_img"
-                class="img-fluid"
-              />
+              <img src="../images/all-img/logo.png" alt="logo_img" class="img-fluid" />
             </div>
           </div>
         </div>
@@ -19,30 +15,18 @@
           <div class="row">
             <div class="form-group col-md-12">
               <div class="input-group">
-                <input
-                  v-model="form.userId"
-                  type="text"
-                  class="form-control"
-                  placeholder="아이디"
-                />
+                <input v-model="form.userId" type="text" class="form-control" placeholder="아이디" />
               </div>
             </div>
             <div class="form-group col-md-12">
               <div class="input-group">
-                <input
-                  v-model="form.userPassword"
-                  type="password"
-                  class="form-control"
-                  placeholder="비밀번호"
-                />
+                <input v-model="form.userPassword" type="password" class="form-control" placeholder="비밀번호" />
               </div>
             </div>
           </div>
           <div class="d-flex justify-content-around">
             <button class="btn large-btn" @click="goLogin()">로그인</button>
-            <button class="btn large-btn" @click="goSignUp()">
-              회원가입
-            </button>
+            <button class="btn large-btn" @click="goSignUp()">회원가입</button>
           </div>
         </div>
       </div>
@@ -51,45 +35,45 @@
 </template>
 
 <script>
-import axiosUtil from "../utils/axios-util.js";
+import axiosUtil from '../utils/axios-util.js';
+
 export default {
-  name: "login",
+  name: 'login',
   data() {
     return {
       form: {
-        userId: "test",
-        userPassword: "test",
-      },
+        userId: 'test',
+        userPassword: 'test'
+      }
     };
   },
   methods: {
     goLogin: function () {
-      axiosUtil.post("/api/main/login.do", this.form, (result) => {
+      axiosUtil.post('/api/main/login.do', this.form, result => {
         if (!result.data) {
-          alert("일치하는 회원이 없습니다.");
+          alert('일치하는 회원이 없습니다.');
         } else {
-          this.$store.commit("LOGIN", result.data);
-          this.$router.push("/");
+          this.$store.commit('LOGIN', result.data);
+          this.$router.push('/');
         }
       });
     },
     goSignUp: function () {
-      this.$router.push("/signUp");
-    },
-  },
+      this.$router.push('/signUp');
+    }
+  }
 };
 </script>
 
 <style scoped>
-  .login-area {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(4deg, rgba(255, 255, 255, 0.85) 17%, rgba(255, 255, 255, 0.85) 69%), url(/img/bg-img-1.804e211c.png);
-    background-size: cover;
-    background-position: center;
-  }
+.login-area {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(4deg, rgba(255, 255, 255, 0.85) 17%, rgba(255, 255, 255, 0.85) 69%), url(/img/bg-img-1.804e211c.png);
+  background-size: cover;
+  background-position: center;
+}
 </style>
-

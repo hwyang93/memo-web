@@ -8,7 +8,7 @@ module.exports = {
   trailingComma: 'none',
   printWidth: 200,
   // proseWrap: "never",
-  // bracketSpacing: true,
+  bracketSpacing: true,
   arrowParens: 'avoid',
   endOfLine: 'auto'
 };

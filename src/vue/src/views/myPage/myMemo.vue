@@ -1,8 +1,8 @@
 <template>
-  <section class=" container space blog_page">
+  <section class="container space blog_page">
     <div class="row">
       <!--blog-sidbar-->
-      <div class="col-lg-4 col-md-12 ">
+      <div class="col-lg-4 col-md-12">
         <div class="sidebar sidbar_left bg-gray">
           <!--search-->
           <left-search />
@@ -36,13 +36,14 @@
 </template>
 
 <script>
-import axiosUtil from "@/utils/axios-util";
-import leftMenu from "@/views/myPage/leftMenu";
-import leftSearch from "@/views/myPage/leftSearch";
-import leftTag from "@/views/myPage/leftTag";
-import memoDetail from "@/views/myPage/memoDetail.vue";
+import axiosUtil from '@/utils/axios-util';
+import leftMenu from '@/views/myPage/leftMenu';
+import leftSearch from '@/views/myPage/leftSearch';
+import leftTag from '@/views/myPage/leftTag';
+import memoDetail from '@/views/myPage/memoDetail.vue';
+
 export default {
-  name: "memo",
+  name: 'memo',
   components: {
     leftMenu,
     leftSearch,
@@ -53,14 +54,14 @@ export default {
     return {
       detailFlag: false,
       idx: '',
-      memoList : {}
-    }
+      memoList: {}
+    };
   },
   methods: {
     getMemo() {
-      axiosUtil.get('/api/myMemo/myMemo', {}, (result) =>{
+      axiosUtil.get('/api/myMemo/myMemo', {}, result => {
         this.memoList = result.data.result;
-      })
+      });
     },
     shoeDetail(idx) {
       this.idx = idx;
@@ -73,5 +74,5 @@ export default {
   beforeMount() {
     this.getMemo();
   }
-}
+};
 </script>
