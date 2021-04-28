@@ -51,6 +51,7 @@
 
 <script>
 import axiosUtil from '../utils/axios-util.js';
+
 export default {
   name: 'signUp',
   data() {
@@ -76,11 +77,11 @@ export default {
 </script>
 
 <style scoped>
-  section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-  }
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
 </style>
