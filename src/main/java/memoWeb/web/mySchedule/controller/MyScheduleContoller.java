@@ -34,8 +34,8 @@ public class MyScheduleContoller {
 	@GetMapping("getUserScheduleListAll.do")
 	public Map<String, Object> getUserScheduleListAll(Model model, UserScheduleVO userScheduleVo, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
-		UserVO member = (UserVO) session.getAttribute(CommonConstants.SESSION);
-		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(member);
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		List<UserScheduleVO> userScheduleList = myScheduleService.getUserScheduleListAll(user);
 		map.put("userScheduleList", userScheduleList);
 		return map;
 	}
