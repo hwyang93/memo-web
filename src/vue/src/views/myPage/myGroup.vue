@@ -24,18 +24,18 @@
             <h3 class="widgets-title"><span>Tags</span></h3>
             <div class="blog-sidebar-widgets-inner">
               <div class="tagcloud">
-                <a href="index.html" class="tag-cloud-link"> Marketing </a>
-                <a href="index.html" class="tag-cloud-link"> Font </a>
-                <a href="index.html" class="tag-cloud-link"> Design </a>
-                <a href="index.html" class="tag-cloud-link"> Networking </a>
-                <a href="index.html" class="tag-cloud-link"> I Interior </a>
-                <a href="index.html" class="tag-cloud-link"> Seo </a>
-                <a href="index.html" class="tag-cloud-link"> theme </a>
-                <a href="index.html" class="tag-cloud-link">Web design </a>
-                <a href="index.html" class="tag-cloud-link"> Post </a>
-                <a href="index.html" class="tag-cloud-link"> Developing </a>
-                <a href="index.html" class="tag-cloud-link"> Socail </a>
-                <a href="index.html" class="tag-cloud-link"> html </a>
+                <a href="index.html" class="tag-cloud-link">Marketing</a>
+                <a href="index.html" class="tag-cloud-link">Font</a>
+                <a href="index.html" class="tag-cloud-link">Design</a>
+                <a href="index.html" class="tag-cloud-link">Networking</a>
+                <a href="index.html" class="tag-cloud-link">I Interior</a>
+                <a href="index.html" class="tag-cloud-link">Seo</a>
+                <a href="index.html" class="tag-cloud-link">theme</a>
+                <a href="index.html" class="tag-cloud-link">Web design</a>
+                <a href="index.html" class="tag-cloud-link">Post</a>
+                <a href="index.html" class="tag-cloud-link">Developing</a>
+                <a href="index.html" class="tag-cloud-link">Socail</a>
+                <a href="index.html" class="tag-cloud-link">html</a>
               </div>
             </div>
           </div>
@@ -138,14 +138,14 @@
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                        <button class="btn btn-danger" id="">Delete</button>
                       </li>
                       <li class="user-list">
                         <a href="#" class="user-pic">
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                        <button class="btn btn-danger" id="">Delete</button>
                       </li>
                     </ul>
               </b-tab>
@@ -265,7 +265,7 @@ export default {
     //   });
     // },
     getUserList() {
-      var params =  {
+      let params =  {
         keyword : this.friend.keyword
       }
       console.log(this.friend.keyword);
