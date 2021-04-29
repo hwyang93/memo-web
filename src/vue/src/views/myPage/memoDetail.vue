@@ -6,7 +6,7 @@
           <kakao-map ref="kakaoMap" :scheduleList="scheduleList" />
         </div>
         <div class="md-content">
-          <div class="md-modify" >
+          <div class="md-modify">
             <div class="md-header"><input type="text" class="md-header" v-model="form.title" /></div>
             <div class="md-body">
               <h5 class="md-title">주소</h5>
@@ -29,30 +29,31 @@
 </template>
 
 <script>
-import axiosUtil from "@/utils/axios-util";
-import KakaoMap from "../../components/KakaoMap";
+import axiosUtil from '@/utils/axios-util';
+import KakaoMap from '../../components/KakaoMap';
+
 export default {
-  name: "memoDetail",
+  name: 'memoDetail',
   props: {
     idx: Number
   },
-  components: {KakaoMap},
+  components: { KakaoMap },
   data() {
     return {
       form: {
         title: '',
         memoPlace: '',
         regDate: '',
-        memo:'',
+        memo: '',
         lon: 0,
         lat: 0
       },
       scheduleList: []
-    }
+    };
   },
   methods: {
     getMemoInfo() {
-      axiosUtil.get('/api/myMemo/myMemo/'+this.idx, {}, (result)=>{
+      axiosUtil.get('/api/myMemo/myMemo/' + this.idx, {}, result => {
         this.form.title = result.data.result.title;
         this.form.memoPlace = result.data.result.memoPlace;
         this.form.regDate = this.$moment(result.data.result.regDate).format('YYYY-MM-DD');
@@ -61,7 +62,7 @@ export default {
         this.form.lat = result.data.result.lat;
         this.scheduleList.push(result.data.result);
         this.$refs.kakaoMap.setCenter(this.form.lat, this.form.lon);
-      })
+      });
     },
     closeModal() {
       this.$emit('closeModal');
@@ -70,9 +71,7 @@ export default {
   beforeMount() {
     this.getMemoInfo();
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

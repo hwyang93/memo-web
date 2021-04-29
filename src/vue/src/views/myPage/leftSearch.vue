@@ -5,7 +5,7 @@
       <form class="searchform">
         <div class="form-group search_2 p-0">
           <input type="text" class="form-control" placeholder="키워드 검색" id="s" />
-          <button type="button" class="btn"><i class="fas fa-search"></i></button>
+          <button type="button" class="btn"><i class="fas fa-comment-dots"></i></button>
         </div>
       </form>
     </div>
@@ -14,10 +14,8 @@
 
 <script>
 export default {
-  name: "leftSearch"
-}
+  name: 'leftSearch'
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

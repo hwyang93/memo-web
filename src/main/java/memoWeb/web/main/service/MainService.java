@@ -18,23 +18,25 @@ public class MainService {
 		this.mainRepository = mainRepository;
 	}
 
-	public UserDTO login (UserDTO user) {
+	public UserDTO login(UserDTO user) {
 		return mainRepository.getMember(user);
 	}
 
-	public UserVO signUp (UserVO member) {
+	public UserVO signUp(UserVO member) {
 		return mainRepository.signUp(member);
 	}
 
-	public UserScheduleVO saveUserSchedule (UserScheduleVO userSchedule) {
+	public UserScheduleVO saveUserSchedule(UserScheduleVO userSchedule) {
 		return mainRepository.saveUserSchedule(userSchedule);
 	}
 
-	public List<UserScheduleVO> getUserScheduleList (UserDTO user) {
+	public List<UserScheduleVO> getUserScheduleList(UserDTO user) {
 		return mainRepository.getUserScheduleList(user);
 	}
 
-	public List<GroupScheduleDTO> getGroupScheduleList (UserDTO user) { return mainRepository.getGroupScheduleList(user); }
+	public List<GroupScheduleDTO> getGroupScheduleList(UserDTO user) {
+		return mainRepository.getGroupScheduleList(user);
+	}
 
 	public GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule) {
 		return mainRepository.saveGroupSchedule(groupSchedule);
@@ -47,4 +49,9 @@ public class MainService {
 	public List<UserMemoDTO> getUserMemoList(UserDTO user) {
 		return mainRepository.getUserMemoList(user);
 	}
+
+	public List<UserDTO> getFriendList(UserDTO user) {
+		return mainRepository.getFriendList(user);
+	}
+
 }

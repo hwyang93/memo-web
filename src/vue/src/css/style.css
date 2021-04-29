@@ -3422,4 +3422,45 @@ nav .no-arrow.dropdown-toggle::after {
   text-align: center;
   color: #fff;
 }
+.chat-list {
+  float: left;
+  width: 30%;
+  height: 500px;
+}
+.chat-content {
+  width: 70%;
+  float: left;
+  height: 500px;
+}
 
+.search-box {
+  margin: 8px;
+}
+.search-box input {
+  outline:none;
+}
+.list .list-group-item {
+  cursor: pointer;
+}
+.search-box .search-drop {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #eee;
+  background: #fff;
+  z-index: 20;
+}
+.search-box .search-drop.show {
+  display: block;
+}
+.search-box .search-result-list {
+  cursor: pointer;
+}
+.search-box .search-back {
+  cursor: pointer;
+  margin: 6px;
+  margin-top: 7px;
+  padding-right: 8px;
+}

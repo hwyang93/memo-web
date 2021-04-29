@@ -3,7 +3,7 @@
     <h1 class="title-type-1">My Group</h1>
     <div class="row">
       <!--blog-sidbar-->
-      <div class="col-lg-4 col-md-12 ">
+      <div class="col-lg-4 col-md-12">
         <div class="sidebar sidebar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
@@ -24,18 +24,18 @@
             <h3 class="widgets-title"><span>Tags</span></h3>
             <div class="blog-sidebar-widgets-inner">
               <div class="tagcloud">
-                <a href="index.html" class="tag-cloud-link"> Marketing </a>
-                <a href="index.html" class="tag-cloud-link"> Font </a>
-                <a href="index.html" class="tag-cloud-link"> Design </a>
-                <a href="index.html" class="tag-cloud-link"> Networking </a>
-                <a href="index.html" class="tag-cloud-link"> I Interior </a>
-                <a href="index.html" class="tag-cloud-link"> Seo </a>
-                <a href="index.html" class="tag-cloud-link"> theme </a>
-                <a href="index.html" class="tag-cloud-link">Web design </a>
-                <a href="index.html" class="tag-cloud-link"> Post </a>
-                <a href="index.html" class="tag-cloud-link"> Developing </a>
-                <a href="index.html" class="tag-cloud-link"> Socail </a>
-                <a href="index.html" class="tag-cloud-link"> html </a>
+                <a href="index.html" class="tag-cloud-link">Marketing</a>
+                <a href="index.html" class="tag-cloud-link">Font</a>
+                <a href="index.html" class="tag-cloud-link">Design</a>
+                <a href="index.html" class="tag-cloud-link">Networking</a>
+                <a href="index.html" class="tag-cloud-link">I Interior</a>
+                <a href="index.html" class="tag-cloud-link">Seo</a>
+                <a href="index.html" class="tag-cloud-link">theme</a>
+                <a href="index.html" class="tag-cloud-link">Web design</a>
+                <a href="index.html" class="tag-cloud-link">Post</a>
+                <a href="index.html" class="tag-cloud-link">Developing</a>
+                <a href="index.html" class="tag-cloud-link">Socail</a>
+                <a href="index.html" class="tag-cloud-link">html</a>
               </div>
             </div>
           </div>
@@ -186,8 +186,8 @@ export default {
       },
       groupDetail: {
         groupTitle: '',
-        groupComment: ''
-
+        groupComment: '',
+        groupMembers: []
       },
 
     };
@@ -272,6 +272,12 @@ export default {
       axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
         this.userList = result.data.userList;
         // console.log(this.userList);
+      });
+    },
+    deleteGroup() {
+      axiosUtil.post('/api/myGroup/deleteGroup.do', {}, result => {
+        this.groupList = result.data.groupList;
+        // console.log('group list : ', this.groupList);
       });
     },
     // getGroupInfo() {

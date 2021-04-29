@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.*;
 import memoWeb.web.myGroup.domain.QGroupMemberVO;
 import memoWeb.web.myGroup.domain.QGroupsVO;
+import memoWeb.web.myGroup.domain.QUserRelationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,6 +34,7 @@ public class MainRepositoryImpl implements MainRepository {
     QGroupsVO qGroups = QGroupsVO.groupsVO;
     QGroupMemberVO qGroupMember = QGroupMemberVO.groupMemberVO;
     QUserMemo qUserMemo = QUserMemo.userMemo;
+    QUserRelationVO qUserRelation = QUserRelationVO.userRelationVO;
 
     @Override
     public UserDTO getMember(UserDTO user) {
@@ -99,6 +101,20 @@ public class MainRepositoryImpl implements MainRepository {
         return queryFactory.select(Projections.fields(UserMemoDTO.class, qUserMemo.title, qUserMemo.memoPlace, qUserMemo.lon, qUserMemo.lat, qUserMemo.regDate, qUserMemo.memo))
                 .from(qUserMemo)
                 .where(qUserMemo.userId.eq(userDTO.getUserId()))
+                .fetch();
+    }
+
+    @Override
+    public List<UserDTO> getFriendList(UserDTO user) {
+        return queryFactory.select(Projections.fields(UserDTO.class, qUser.userId, qUser.userName))
+                .from(qUser)
+                .innerJoin(qUserRelation)
+                .on(qUserRelation.followUserId.eq(user.getUserId()))
+                .where(qUser.userId.eq(qUserRelation.followingUserId)
+                .and(qUserRelation.relationStatus.eq("I"))
+                .and((qUser.userId.contains(user.getKeyword())
+                .or(qUser.userName.contains(user.getKeyword())
+                .or(qUser.userEmail.contains(user.getKeyword()))))))
                 .fetch();
     }
 }

@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/main")
 public class MainContorller {
-	
+
 	private static MainService mainService;
 	private static final Logger logger = LoggerFactory.getLogger(MainContorller.class);
 	@Autowired
@@ -52,13 +52,13 @@ public class MainContorller {
 //		model.addAttribute("result", result);
 //		return "jsonView";
 //	}
-	
+
 	@PostMapping("saveUserSchedule.do")
 	public String saveUserSchedule(Model model, @RequestBody UserScheduleVO userSchedule, HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
 		userSchedule.setUserId(user.getUserId());
 		UserScheduleVO result = mainService.saveUserSchedule(userSchedule);
-		
+
 		model.addAttribute("result", result);
 		return "jsonView";
 	}
@@ -113,6 +113,17 @@ public class MainContorller {
 		resultMap.put("userScheduleList", userScheduleList);
 		resultMap.put("groupScheduleList", groupScheduleList);
 		resultMap.put("userMemoList", userMemoList);
+
+		return resultMap;
+	}
+
+	@GetMapping("/friend")
+	public Map<String, Object> getFriendList(HttpSession session, @RequestParam HashMap<String, Object> params) {
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		user.setKeyword((String) params.get("keyword"));
+		Map<String, Object> resultMap = new HashMap<>();
+		List<UserDTO> friendList = mainService.getFriendList(user);
+		resultMap.put("friendList", friendList);
 
 		return resultMap;
 	}

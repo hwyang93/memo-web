@@ -12,6 +12,8 @@ public class UserDTO {
     private String regDate;
     private String openFlag;
 
+    private String keyword;
+
 //    @QueryProjection
 //    public UserDTO(String userId, String userPassword, String userEmail, String userName, String regDate, String openFlag) {
 //        this.userId = userId;
