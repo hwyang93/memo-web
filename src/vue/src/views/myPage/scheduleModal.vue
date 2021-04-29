@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     getScheduleOne(idx) {
-      axiosUtil.get('/api/mySchedule/getScheduleDetail.do/' + idx, {}, result => {
+      axiosUtil.get('/api/mySchedule/getScheduleDetail/' + idx, {}, result => {
         this.scheduleDetail = result.data.scheduleDetail;
         this.isdefault = true;
         this.backPromisePlace = this.scheduleDetail.promisePlace;
@@ -182,7 +182,7 @@ export default {
       this.scheduleDetail.title = document.getElementById('title').value;
       this.scheduleDetail.promisePlace = document.getElementById('promisePlace').value;
       this.scheduleDetail.memo = document.getElementById('memo').value;
-      axiosUtil.post('/api/mySchedule/updateSchedule.do', this.scheduleDetail, result => {
+      axiosUtil.post('/api/mySchedule/updateSchedule', this.scheduleDetail, result => {
         alert('수정되었습니다.');
         this.isStatusOn = true;
         this.isdefault = true;
@@ -190,7 +190,7 @@ export default {
       });
     },
     deleteBtn() {
-      axiosUtil.get('/api/mySchedule/deleteSchedule.do/' + this.scheduleDetail.idx, {}, result => {
+      axiosUtil.get('/api/mySchedule/deleteSchedule/' + this.scheduleDetail.idx, {}, result => {
         alert('삭제되었습니다.');
         this.isStatusOn = false;
         if ((this.isStatusOn = false)) {

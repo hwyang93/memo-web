@@ -54,7 +54,11 @@ export default {
           alert('일치하는 회원이 없습니다.');
         } else {
           this.$store.commit('LOGIN', result.data);
-          this.$router.push('/');
+          if (result.data.userId == 'admin') {
+            this.$router.push('/adminPage/admin');
+          } else {
+            this.$router.push('/');
+          }
         }
       });
     },

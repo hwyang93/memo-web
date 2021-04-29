@@ -31,7 +31,7 @@ public class MyScheduleContoller {
 		this.myScheduleService = myScheduleService;
 	}
 
-	@GetMapping("getUserScheduleListAll.do")
+	@GetMapping("getUserScheduleListAll")
 	public Map<String, Object> getUserScheduleListAll(Model model, UserScheduleVO userScheduleVo, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
@@ -40,7 +40,7 @@ public class MyScheduleContoller {
 		return map;
 	}
 	
-	@GetMapping("getScheduleDetail.do/{idx}")
+	@GetMapping("getScheduleDetail/{idx}")
 	public Map<String, Object> getScheduleDetail(@PathVariable("idx") int idx, Model model, HttpSession session) {
 		System.out.println(idx);
 		Map<String, Object> map = new HashMap<>();
@@ -49,7 +49,7 @@ public class MyScheduleContoller {
 		return map;
 	}
 	
-	@PostMapping("updateSchedule.do")
+	@PostMapping("updateSchedule")
 	public Map<String, Object> updateSchedule(@RequestBody UserScheduleVO userScheduleVO, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		long result = myScheduleService.updateSchedule(userScheduleVO);
@@ -57,7 +57,7 @@ public class MyScheduleContoller {
 		return map;
 	}
 	
-	@GetMapping("deleteSchedule.do/{idx}")
+	@GetMapping("deleteSchedule/{idx}")
 	public Map<String, Object> deleteSchedule(Model model, HttpSession session, @PathVariable("idx") int idx) {
 		Map<String, Object> map = new HashMap<>();
 		long result = myScheduleService.deleteSchedule(idx);
