@@ -8,30 +8,8 @@
         <span><i class="fas fa-times"></i></span>
       </div>
     </div>
-    <div class="search-box">
-      <b-input-group>
-        <span class="search-back" v-if="mode === 'search'" @click="goBack"><i class="fas fa-chevron-left"></i></span>
-        <b-input-group-prepend>
-          <span class="input-group-text"><i class="fas fa-search"></i></span>
-        </b-input-group-prepend>
-        <b-form-input @keyup="searchFriend" @click="searchFocus" v-model="keyword" autocomplete="off" placeholder="입력...."> </b-form-input>
-      </b-input-group>
-    </div>
+    <div class="search-box"></div>
     <div class="list">
-      <div v-if="mode === 'search'">
-        <b-list-group>
-          <b-list-group-item v-for="item in userList" :key="item.userId">
-            <div class="d-flex align-items-center list" @click="showChatRoom(item)">
-              <div class="user-pic">
-                <img src="../images/friends/user-sample.jpg" alt="" />
-              </div>
-              <span style="padding-left: 10px">
-                {{ item.userName }}
-              </span>
-            </div>
-          </b-list-group-item>
-        </b-list-group>
-      </div>
       <div v-if="mode === 'chat'">
         <b-list-group>
           <b-list-group-item class="d-flex justify-content-between align-items-center">
@@ -90,7 +68,6 @@ export default {
       this.mode = 'chat';
     },
     showChatRoom(data) {
-      this.$emit('showChatRoom', data);
       console.log(data);
     },
     searchFocus() {

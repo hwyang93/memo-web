@@ -2,10 +2,13 @@
   <div>
     <button type="button" class="message" :class="[this.$store.state.auth.isLogin ? 'show' : '']" @click="showChat()"><i class="fas fa-comments"></i></button>
     <div v-if="modalFlag">
-      <!--      <div style="position: absolute; right: 0px; bottom: 0px">fasdfsfsdfsd</div>-->
-
-      <div class="message-box">
-        <chat-list />
+      <div class="list-box">
+        <chat-list @closeChat="closeChat" @showChatRoom="showChatRoom" />
+      </div>
+    </div>
+    <div v-if="chatRoomFlag">
+      <div class="chat-box">
+        <chat-room />
       </div>
     </div>
   </div>
@@ -13,17 +16,26 @@
 
 <script>
 import ChatList from './ChatList';
+import ChatRoom from './ChatRoom';
 export default {
   name: 'ChatComponent',
-  components: { ChatList },
+  components: { ChatList, ChatRoom },
   data() {
     return {
-      modalFlag: false
+      modalFlag: false,
+      chatRoomFlag: false
     };
   },
   methods: {
     showChat() {
       this.modalFlag = true;
+    },
+    closeChat() {
+      this.modalFlag = false;
+    },
+    showChatRoom() {
+      this.modalFlag = false;
+      this.chatRoomFlag = true;
     }
   }
 };
@@ -83,15 +95,26 @@ button.message.show:active {
   -webkit-box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
 }
-.message-box {
+.list-box {
   box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
   right: 10px;
   bottom: 10px;
-  width: 15%;
-  height: 50%;
+  width: 18%;
+  height: 55%;
   background: white;
   position: fixed;
   z-index: 15;
-  border-radius: 30px;
+  border-radius: 10px;
+}
+.chat-box {
+  box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
+  right: 10px;
+  bottom: 10px;
+  width: 18%;
+  height: 92%;
+  background: white;
+  position: fixed;
+  z-index: 15;
+  border-radius: 10px;
 }
 </style>
