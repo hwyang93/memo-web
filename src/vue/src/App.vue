@@ -9,16 +9,17 @@
       <ContentLoader />
     </div>
     <!-- Main-end -->
+    <chat-component />
   </div>
 </template>
 
 <script>
-import TopMenu from '@/components/TopMenu.vue';
-import ContentLoader from '@/components/ContentLoader.vue';
-
+import TopMenu from './components/TopMenu.vue';
+import ContentLoader from './components/ContentLoader.vue';
+import ChatComponent from './components/ChatComponent';
 export default {
   name: 'App',
-  components: { TopMenu, ContentLoader },
+  components: { TopMenu, ContentLoader, ChatComponent },
   methods: {
     loginGo: function () {
       this.$router.push('/login');

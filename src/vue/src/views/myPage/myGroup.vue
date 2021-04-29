@@ -3,7 +3,7 @@
     <h1 class="title-type-1">My Group</h1>
     <div class="row">
       <!--blog-sidbar-->
-      <div class="col-lg-4 col-md-12 ">
+      <div class="col-lg-4 col-md-12">
         <div class="sidebar sidebar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
@@ -50,53 +50,43 @@
               <b-tab title="Group" active>
                 <h3 class="title-type-2">그룹 관리</h3>
                 <b-button v-b-modal.modal-center>그룹 만들기</b-button>
-                  <b-modal id="modal-center" centered title="그룹 만들기">
+                <b-modal id="modal-center" centered title="그룹 만들기">
+                  <b-form @submit="onSubmit" @reset="onReset" v-if="form.show">
+                    <b-form-group id="input-group-1" label="Group Name:" label-for="input-1">
+                      <b-form-input id="input-1" v-model="form.groupName" type="text" placeholder="Group Name" required></b-form-input>
+                    </b-form-group>
 
-                    <b-form @submit="onSubmit" @reset="onReset" v-if="form.show">
-                      <b-form-group
-                        id="input-group-1"
-                        label="Group Name:"
-                        label-for="input-1"
-                      >
-                        <b-form-input
-                          id="input-1"
-                          v-model="form.groupName"
-                          type="text"
-                          placeholder="Group Name"
-                          required
-                        ></b-form-input>
-                      </b-form-group>
+                    <b-form-group id="input-group-2" label="Group Information:" label-for="input-2">
+                      <b-form-input id="input-2" v-model="form.groupInfo" placeholder="Enter Information" required></b-form-input>
+                    </b-form-group>
 
-                      <b-form-group id="input-group-2" label="Group Information:" label-for="input-2">
-                        <b-form-input
-                          id="input-2"
-                          v-model="form.groupInfo"
-                          placeholder="Enter Information"
-                          required
-                        ></b-form-input>
-                      </b-form-group>
+                    <label for="tags-basic">멤버 추가</label>
+                    <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
 
-                      <label for="tags-basic">멤버 추가</label>
-                      <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
-
-                      <div class="button-area mt-3">
-                        <b-button type="submit" variant="primary">Submit</b-button>
-                        <b-button type="reset" variant="danger">Reset</b-button>
-                      </div>
-                    </b-form>
-                  </b-modal>
+                    <div class="button-area mt-3">
+                      <b-button type="submit" variant="primary">Submit</b-button>
+                      <b-button type="reset" variant="danger">Reset</b-button>
+                    </div>
+                  </b-form>
+                </b-modal>
                 <h3 class="title-type-2">참여중인 그룹</h3>
                 <div class="group-list-area">
                   <ul class="group-list">
-                    <li v-for="(item, index) in groupList" :key="index" @click="showModal(item)" class="group-item shadow-wrap-1" :class="[item.memberAuth == 'member' ? 'member':item.approvalStatus=='N' ? 'pending':'']">
-                      <h4>{{item.groupTitle}}</h4>
-                      <p>info : {{item.groupComment}}</p>
+                    <li
+                      v-for="(item, index) in groupList"
+                      :key="index"
+                      @click="showModal(item)"
+                      class="group-item shadow-wrap-1"
+                      :class="[item.memberAuth == 'member' ? 'member' : item.approvalStatus == 'N' ? 'pending' : '']"
+                    >
+                      <h4>{{ item.groupTitle }}</h4>
+                      <p>info : {{ item.groupComment }}</p>
                     </li>
                   </ul>
                   <b-modal ref="group-modal" centered title="그룹 정보">
                     <ul class="user-list-area">
-                      <h4>{{this.groupDetail.groupTitle}}</h4>
-                      <p>info : <br>{{this.groupDetail.groupComment}}</p>
+                      <h4>{{ this.groupDetail.groupTitle }}</h4>
+                      <p>info : <br />{{ this.groupDetail.groupComment }}</p>
                       <label for="tags-basic">참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
                       <b-button variant="danger mt-3">그룹 삭제</b-button>
@@ -107,10 +97,17 @@
 
               <b-tab title="Friends">
                 <h3 class="title-type-2">친구 관리</h3>
-                <p>친구 찾기: </p>
+                <p>친구 찾기:</p>
                 <b-form inline>
                   <div class="search-friend-area">
-                    <b-form-input v-model="friend.keyword" id="inline-form-input-name search-input" class="mb-2 mr-sm-2 mb-sm-0" placeholder="enter user name" @keyup="openDrop" autocomplete="off"></b-form-input>
+                    <b-form-input
+                      v-model="friend.keyword"
+                      id="inline-form-input-name search-input"
+                      class="mb-2 mr-sm-2 mb-sm-0"
+                      placeholder="enter user name"
+                      @keyup="openDrop"
+                      autocomplete="off"
+                    ></b-form-input>
                     <!-- <b-button variant="primary" @click="getUserList">Search</b-button> -->
                     <div class="search-drop shadow-wrap-1" v-if="this.friend.flag">
                       <ul class="search-result-box">
@@ -120,7 +117,7 @@
                               <div class="user-pic">
                                 <img src="../../images/friends/user-sample.jpg" alt="" />
                               </div>
-                              <span>{{item.userName}}</span>
+                              <span>{{ item.userName }}</span>
                             </a>
                           </div>
                           <button class="btn btn-info" id="btn-add-group">Add</button>
@@ -128,31 +125,29 @@
                       </ul>
                     </div>
                   </div>
-
                 </b-form>
 
                 <h3 class="title-type-2">친구 목록</h3>
                 <ul class="user-list-area">
-                      <li class="user-list">
-                        <a href="#" class="user-pic">
-                          <img src="../../images/friends/user-sample.jpg" alt="" />
-                        </a>
-                        <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
-                      </li>
-                      <li class="user-list">
-                        <a href="#" class="user-pic">
-                          <img src="../../images/friends/user-sample.jpg" alt="" />
-                        </a>
-                        <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
-                      </li>
-                    </ul>
+                  <li class="user-list">
+                    <a href="#" class="user-pic">
+                      <img src="../../images/friends/user-sample.jpg" alt="" />
+                    </a>
+                    <a href="#" class="user-name">charm_bbong</a>
+                    <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                  </li>
+                  <li class="user-list">
+                    <a href="#" class="user-pic">
+                      <img src="../../images/friends/user-sample.jpg" alt="" />
+                    </a>
+                    <a href="#" class="user-name">charm_bbong</a>
+                    <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                  </li>
+                </ul>
               </b-tab>
             </b-tabs>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -177,19 +172,17 @@ export default {
         groupInfo: '',
         show: true
       },
-      friend:{
-        keyword : '',
-        flag : false,
+      friend: {
+        keyword: '',
+        flag: false
       },
-      groupId:{
-        groupIdx : ''
+      groupId: {
+        groupIdx: ''
       },
       groupDetail: {
         groupTitle: '',
         groupComment: ''
-
-      },
-
+      }
     };
   },
   watch: {
@@ -211,7 +204,7 @@ export default {
   },
   methods: {
     showModal(item) {
-      console.log('item',item);
+      console.log('item', item);
       this.groupDetail.groupTitle = item.groupTitle;
       this.groupDetail.groupComment = item.groupComment;
       console.log(this.groupDetail.groupTitle);
@@ -226,7 +219,7 @@ export default {
       //   temp.groupUser = item;
       //   test.push(temp);
       // }
-      console.log("event")
+      console.log('event');
       if (this.friend.keyword.length > 0) {
         this.getUserList();
       } else {
@@ -234,7 +227,7 @@ export default {
       }
       console.log(this.userList);
       // debugger;
-      if(this.userList.length > 0) {
+      if (this.userList.length > 0) {
         this.friend.flag = true;
       } else {
         this.friend.flag = false;
@@ -265,11 +258,11 @@ export default {
     //   });
     // },
     getUserList() {
-      var params =  {
-        keyword : this.friend.keyword
-      }
+      var params = {
+        keyword: this.friend.keyword
+      };
       console.log(this.friend.keyword);
-      axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
+      axiosUtil.get('/api/myGroup/getUserList.do', params, result => {
         this.userList = result.data.userList;
         // console.log(this.userList);
       });
@@ -290,19 +283,17 @@ export default {
       });
     },
     onSubmit(event) {
-      event.preventDefault()
-
+      event.preventDefault();
     },
     onReset(event) {
-      event.preventDefault()
-      this.form.groupName = ''
-      this.form.groupInfo = ''
-      this.form.show = false
+      event.preventDefault();
+      this.form.groupName = '';
+      this.form.groupInfo = '';
+      this.form.show = false;
       this.$nextTick(() => {
-        this.form.show = true
-      })
+        this.form.show = true;
+      });
     }
-
   },
   beforeMount() {
     // this.getFriendsList();
@@ -313,6 +304,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
