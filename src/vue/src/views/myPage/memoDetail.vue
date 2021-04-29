@@ -31,6 +31,7 @@
 <script>
 import axiosUtil from '@/utils/axios-util';
 import KakaoMap from '../../components/KakaoMap';
+
 export default {
   name: 'memoDetail',
   props: {

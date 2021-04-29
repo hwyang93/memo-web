@@ -3,7 +3,7 @@
     <h1 class="title-type-1">My Group</h1>
     <div class="row">
       <!--blog-sidbar-->
-      <div class="col-lg-4 col-md-12 ">
+      <div class="col-lg-4 col-md-12">
         <div class="sidebar sidebar_left shadow-wrap-1">
           <!--search-->
           <div class="blog-sidebar-widgets">
@@ -99,7 +99,7 @@
                       <p>info : <br>{{this.groupDetail.groupComment}}</p>
                       <label for="tags-basic">참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
-                      <b-button variant="danger mt-3" @click="deleteGroup">그룹 삭제</b-button>
+                      <b-button variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -138,14 +138,14 @@
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="">Delete</button>
+                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
                       </li>
                       <li class="user-list">
                         <a href="#" class="user-pic">
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="">Delete</button>
+                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
                       </li>
                     </ul>
               </b-tab>
@@ -265,7 +265,7 @@ export default {
     //   });
     // },
     getUserList() {
-      let params =  {
+      var params =  {
         keyword : this.friend.keyword
       }
       console.log(this.friend.keyword);
