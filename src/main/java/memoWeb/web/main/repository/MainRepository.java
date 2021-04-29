@@ -13,4 +13,6 @@ public interface MainRepository{
 	GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule);
 	UserMemo saveUserMemo(UserMemo userMemo);
 	List<UserMemoDTO> getUserMemoList(UserDTO user);
+	List<UserDTO> getFriendList(UserDTO user);
+
 }
