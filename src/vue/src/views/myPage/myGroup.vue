@@ -99,7 +99,7 @@
                       <p>info : <br>{{this.groupDetail.groupComment}}</p>
                       <label for="tags-basic">참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
-                      <b-button variant="danger mt-3">그룹 삭제</b-button>
+                      <b-button variant="danger mt-3" @click="deleteGroup">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -186,8 +186,8 @@ export default {
       },
       groupDetail: {
         groupTitle: '',
-        groupComment: ''
-
+        groupComment: '',
+        groupMembers: []
       },
 
     };
@@ -272,6 +272,12 @@ export default {
       axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
         this.userList = result.data.userList;
         // console.log(this.userList);
+      });
+    },
+    deleteGroup() {
+      axiosUtil.post('/api/myGroup/deleteGroup.do', {}, result => {
+        this.groupList = result.data.groupList;
+        // console.log('group list : ', this.groupList);
       });
     },
     // getGroupInfo() {
