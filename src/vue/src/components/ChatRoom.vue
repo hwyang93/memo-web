@@ -1,22 +1,49 @@
 <template>
-  <div class="main">
+  <div class="main d-flex flex-column">
     <div class="d-flex justify-content-between align-items-center">
       <div class="header">
-        <h3>message</h3>
+        <h3>{{ title }}</h3>
       </div>
       <div class="close_icon" @click="closeChat">
         <span><i class="fas fa-times"></i></span>
       </div>
     </div>
-    <div class="search-box"></div>
-    <div class="list">
-      <div v-if="mode === 'chat'">
-        <b-list-group>
-          <b-list-group-item class="d-flex justify-content-between align-items-center">
-            채팅목록
-            <b-badge variant="primary" pill>가능하다면 읽지않은갯수</b-badge>
-          </b-list-group-item>
-        </b-list-group>
+    <div class="content">
+      <div class="d-flex justify-content-start">
+        <div class="user-pic">
+          <img src="../images/friends/user-sample.jpg" alt="" />
+        </div>
+        <div>
+          <div class="user-info">
+            {{ '사용자 이름' }}
+          </div>
+          <div class="message-recieve">
+            {{ '내용' }}
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="message-send">
+          {{ '내용' }}
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="message-send">
+          {{ '내용' }}
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="message-send">
+          {{ '내용' }}
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center send">
+      <div class="message-area">
+        <b-form-textarea ref="textarea" v-model="message" placeholder="Enter something..." rows="1" max-rows="4" @keydown.enter="onEnter"></b-form-textarea>
+      </div>
+      <div class="icon" @click="sendMessage">
+        <i class="far fa-paper-plane"></i>
       </div>
     </div>
   </div>
@@ -24,68 +51,92 @@
 
 <script>
 import axiosUtil from '../utils/axios-util';
+import SockJS from 'sockjs-client';
+import Stomp from 'webstomp-client';
 export default {
-  name: 'memoDetail',
+  name: 'chatRoom',
   props: {
-    idx: Number
+    roomInfo: Object
   },
   components: {},
   data() {
     return {
       mode: 'chat',
-      keyword: '',
+      title: '',
       searchFlag: false,
-      userList: []
+      message: '',
+      userList: [],
+      stompClient: null,
+      roomIdx: ''
     };
   },
   watch: {
-    keyword: function () {
-      if (this.keyword.length === 0) {
-        this.userList = [];
-      }
-    },
-    userList: function () {
-      this.searchFlag = this.userList.length > 0;
+    roomInfo: function () {
+      this.initRoom();
     }
   },
   methods: {
-    searchFriend() {
-      if (this.keyword === '') {
-        this.userList = [];
-        return;
+    initRoom() {
+      if (!this.roomInfo.chatRoomInfo) {
+        this.title = this.roomInfo.chatUserInfo.userName;
+      } else {
+        this.title = this.roomInfo.chatRoomInfo.chatRoomTitle;
+        this.roomIdx = this.roomInfo.chatRoomInfo.chatRoomIdx;
       }
-      const params = {
-        keyword: this.keyword,
-        relationStatus: 'I'
-      };
-      axiosUtil.get('/api/main/friend', params, result => {
-        this.userList = result.data.friendList;
-      });
-    },
-    outfocus() {
-      this.keyword = '';
-      this.userList = [];
-      this.mode = 'chat';
-    },
-    showChatRoom(data) {
-      console.log(data);
-    },
-    searchFocus() {
-      this.mode = 'search';
-    },
-    goBack() {
-      this.mode = 'chat';
-      this.keyword = '';
     },
     closeChat() {
       this.$emit('closeChat');
+    },
+    onEnter(e) {
+      e.preventDefault();
+      if (this.message.length > 1) {
+        if (e.ctrlKey) {
+          this.message += '\n';
+        } else {
+          this.sendMessage();
+        }
+      }
+      this.$refs.textarea.focus();
+    },
+    sendMessage() {
+      if (!this.roomInfo.chatRoomInfo) {
+        this.createChatRoom();
+      }
+      alert(this.message);
+    },
+    createChatRoom() {},
+    connect() {
+      const serverURL = 'http://localhost:8099/ws';
+
+      let socket = new SockJS(serverURL);
+      this.stompClient = Stomp.over(socket);
+      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`);
+      this.stompClient.connect(
+        {},
+        frame => {
+          this.connected = true;
+          console.log('소켓 연결 성공', frame);
+          this.stompClient.subscribe('/send/1', res => {
+            console.log('구독으로 받은 메시지 입니다.', res.body);
+            this.recvList.push(JSON.parse(res.body));
+          });
+        },
+        error => {
+          console.log('소켓 연결 실패', error);
+          this.connected = false;
+        }
+      );
     }
   },
-  beforeMount() {}
+  beforeMount() {},
+  mounted() {}
 };
 </script>
 
 <style scoped>
+.main {
+  height: 100%;
+}
 .main h3 {
   margin: 8px;
 }
@@ -93,5 +144,45 @@ export default {
   margin: 8px;
   padding-right: 10px;
   cursor: pointer;
+}
+.main .content {
+  flex-basis: 80%;
+  flex-shrink: 1;
+  background-color: blanchedalmond;
+  padding: 20px;
+}
+.main .send {
+  flex: auto;
+}
+.send .message-area {
+  flex-grow: 1;
+  margin: 10px;
+}
+.send .message-area textarea {
+  overflow-y: unset !important;
+}
+.send .icon {
+  background-color: #1fbbff87;
+  padding: 15px;
+  border-radius: 15px;
+  margin-right: 10px;
+}
+.content > * {
+  margin-bottom: 10px;
+}
+.content .user-info {
+  margin-left: 15px;
+  color: black;
+}
+.content .message-recieve {
+  background-color: lavender;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px 0px;
+  margin-left: 15px;
+}
+.content .message-send {
+  background-color: lightskyblue;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px 0px;
 }
 </style>
