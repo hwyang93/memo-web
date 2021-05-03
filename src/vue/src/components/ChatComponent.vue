@@ -8,7 +8,7 @@
     </div>
     <div v-if="chatRoomFlag">
       <div class="chat-box">
-        <chat-room />
+        <chat-room :room-info="roomInfo" />
       </div>
     </div>
   </div>
@@ -17,13 +17,15 @@
 <script>
 import ChatList from './ChatList';
 import ChatRoom from './ChatRoom';
+import axiosUtil from '../utils/axios-util';
 export default {
   name: 'ChatComponent',
   components: { ChatList, ChatRoom },
   data() {
     return {
       modalFlag: false,
-      chatRoomFlag: false
+      chatRoomFlag: false,
+      roomInfo: {}
     };
   },
   methods: {
@@ -33,7 +35,14 @@ export default {
     closeChat() {
       this.modalFlag = false;
     },
-    showChatRoom() {
+    showChatRoom(data) {
+      const params = {
+        user2: data.userId
+      };
+      axiosUtil.get('/api/chat/chatRoom/' + data.userId, params, result => {
+        console.log(result);
+        this.roomInfo = result.data;
+      });
       this.modalFlag = false;
       this.chatRoomFlag = true;
     }
@@ -111,7 +120,7 @@ button.message.show:active {
   right: 10px;
   bottom: 10px;
   width: 18%;
-  height: 92%;
+  height: 60%;
   background: white;
   position: fixed;
   z-index: 15;

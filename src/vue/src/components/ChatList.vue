@@ -34,8 +34,8 @@
       </div>
       <div v-if="mode === 'chat'">
         <b-list-group>
-          <b-list-group-item class="d-flex justify-content-between align-items-center">
-            채팅목록
+          <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="(item, idx) in chatRoomList" :key="idx">
+            {{ item.chatRoomTitle }}
             <b-badge variant="primary" pill>가능하다면 읽지않은갯수</b-badge>
           </b-list-group-item>
         </b-list-group>
@@ -47,7 +47,7 @@
 <script>
 import axiosUtil from '../utils/axios-util';
 export default {
-  name: 'memoDetail',
+  name: 'chatList',
   props: {
     idx: Number
   },
@@ -57,6 +57,7 @@ export default {
       mode: 'chat',
       keyword: '',
       searchFlag: false,
+      chatRoomList: [],
       userList: []
     };
   },
@@ -71,6 +72,11 @@ export default {
     }
   },
   methods: {
+    getChatRoomList() {
+      axiosUtil.get('/api/chat/chat', {}, result => {
+        this.chatRoomList = result.data.chatList;
+      });
+    },
     searchFriend() {
       if (this.keyword === '') {
         this.userList = [];
@@ -104,7 +110,10 @@ export default {
       this.$emit('closeChat');
     }
   },
-  beforeMount() {}
+  beforeMount() {},
+  created() {
+    this.getChatRoomList();
+  }
 };
 </script>
 
