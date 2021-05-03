@@ -20,4 +20,12 @@ public class AdminService {
 	public List<UserVO> getUserList() {
 		return adminRepository.getUserList();
 	}
+
+	public long getUserCount() {
+		return adminRepository.getUserCount();
+	}
+
+	public int deleteUser(String id) {
+		return adminRepository.deleteUser(id);
+	}
 }
