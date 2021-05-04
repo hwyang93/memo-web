@@ -10,11 +10,11 @@
     </div>
     <div class="search-box">
       <b-input-group>
-        <span class="search-back" v-if="mode === 'search'" @click="goBack"><i class="fas fa-chevron-left"></i></span>
+        <span v-if="mode === 'search'" class="search-back" @click="goBack"><i class="fas fa-chevron-left"></i></span>
         <b-input-group-prepend>
           <span class="input-group-text"><i class="fas fa-search"></i></span>
         </b-input-group-prepend>
-        <b-form-input @keyup="searchFriend" @click="searchFocus" v-model="keyword" autocomplete="off" placeholder="입력...."> </b-form-input>
+        <b-form-input v-model="keyword" autocomplete="off" placeholder="입력...." @click="searchFocus" @keyup="searchFriend"></b-form-input>
       </b-input-group>
     </div>
     <div class="list">
@@ -23,7 +23,7 @@
           <b-list-group-item v-for="item in userList" :key="item.userId">
             <div class="d-flex align-items-center list" @click="showChatRoom(item)">
               <div class="user-pic">
-                <img src="../images/friends/user-sample.jpg" alt="" />
+                <img alt="" src="../images/friends/user-sample.jpg" />
               </div>
               <span style="padding-left: 10px">
                 {{ item.userName }}
@@ -33,12 +33,25 @@
         </b-list-group>
       </div>
       <div v-if="mode === 'chat'">
-        <b-list-group>
-          <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="(item, idx) in chatRoomList" :key="idx">
-            {{ item.chatRoomTitle }}
-            <b-badge variant="primary" pill>가능하다면 읽지않은갯수</b-badge>
-          </b-list-group-item>
-        </b-list-group>
+        <b-tabs v-model="tabIdx" content-class="mt-3" fill>
+          <!-- 개인일정 TAB start -->
+          <b-tab title="개인">
+            <b-list-group>
+              <b-list-group-item v-for="(item, idx) in chatRoomList" :key="idx" class="d-flex justify-content-between align-items-center">
+                {{ item.chatRoomTitle }}
+                <b-badge pill variant="primary">가능하다면 읽지않은갯수</b-badge>
+              </b-list-group-item>
+            </b-list-group>
+          </b-tab>
+          <b-tab title="그룹">
+            <b-list-group>
+              <b-list-group-item v-for="(item, idx) in chatRoomList" :key="idx" class="d-flex justify-content-between align-items-center">
+                {{ item.chatRoomTitle }}
+                <b-badge pill variant="primary">가능하다면 읽지않은갯수</b-badge>
+              </b-list-group-item>
+            </b-list-group>
+          </b-tab>
+        </b-tabs>
       </div>
     </div>
   </div>
@@ -46,6 +59,7 @@
 
 <script>
 import axiosUtil from '../utils/axios-util';
+
 export default {
   name: 'chatList',
   props: {
@@ -55,6 +69,8 @@ export default {
   data() {
     return {
       mode: 'chat',
+      tabIdx: 0,
+      gubun: 'I',
       keyword: '',
       searchFlag: false,
       chatRoomList: [],
@@ -69,10 +85,18 @@ export default {
     },
     userList: function () {
       this.searchFlag = this.userList.length > 0;
+    },
+    tabIdx(val) {
+      if (val === 0) {
+        this.gubun = 'I';
+      } else {
+        this.gubun = 'G';
+      }
     }
   },
   methods: {
     getChatRoomList() {
+      const params = {};
       axiosUtil.get('/api/chat/chat', {}, result => {
         this.chatRoomList = result.data.chatList;
       });
@@ -121,6 +145,7 @@ export default {
 .main h3 {
   margin: 8px;
 }
+
 .main .close_icon {
   margin: 8px;
   padding-right: 10px;
