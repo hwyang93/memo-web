@@ -16,7 +16,7 @@
           <th scope="col">이름</th>
           <th scope="col">이메일</th>
           <th scope="col">가입일</th>
-          <th scope="col">관리</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -105,6 +105,8 @@ export default {
 .userListTbl thead {
   background: rgb(230, 230, 230);
   width: 100%;
+  border-top: 1px solid #939597;
+  border-bottom: 1px solid #939597;
 }
 .userListTbl tbody {
   width: 100%;
@@ -118,12 +120,12 @@ export default {
   border-bottom: 1px solid #ccc;
 }
 .userListTbl th {
-  padding: 0.5rem;
+  padding: 0.4rem;
   font-weight: 200;
 }
 .delBtn {
   background: #eee;
-  padding: 4px;
+  padding: 3px 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -133,10 +135,11 @@ export default {
   text-align: center;
 }
 .btn-cover .page-btn {
-  width: 5rem;
+  width: 4rem;
   height: 2rem;
   letter-spacing: 0.5px;
   border: 1px solid #ccc;
+  border-radius: 10px;
 }
 .btn-cover .page-count {
   padding: 0 1rem;
