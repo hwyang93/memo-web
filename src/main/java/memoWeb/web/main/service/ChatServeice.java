@@ -13,23 +13,23 @@ import java.util.List;
 @Service
 public class ChatServeice {
 
-    private final ChatRepository chatRepository;
+	private final ChatRepository chatRepository;
 
-    @Autowired
-    public ChatServeice(ChatRepository chatRepository) {
-        this.chatRepository = chatRepository;
-    }
+	@Autowired
+	public ChatServeice(ChatRepository chatRepository) {
+		this.chatRepository = chatRepository;
+	}
 
-    public List<ChatRoomDTO> getChatList(UserDTO user) {
-        return chatRepository.getChatList(user);
-    }
+	public List<ChatRoomDTO> getChatList(UserDTO user) {
+		return chatRepository.getChatList(user);
+	}
 
-    public ChatRoomUserDTO getChatRoom(HashMap<String, Object> params) {
-        return chatRepository.getChatRoomUser(params);
-    }
+	public ChatRoomUserDTO getChatRoom(HashMap<String, Object> params) {
+		return chatRepository.getChatRoomUser(params);
+	}
 
-    public UserDTO getUserInfo(String userId) {
-        return chatRepository.getUserInfo(userId);
-    }
+	public UserDTO getUserInfo(String userId) {
+		return chatRepository.getUserInfo(userId);
+	}
 
 }
