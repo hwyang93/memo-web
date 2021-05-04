@@ -37,6 +37,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myGroup.vue')
   },
   {
+    path: '/myPage/profile',
+    name: 'Profile',
+    component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myProfile.vue')
+  },
+  {
     path: '/myPage/group/groupDetail/:id?',
     name: 'groupDetail',
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/groupDetail.vue')
