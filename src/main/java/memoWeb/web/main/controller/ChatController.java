@@ -1,18 +1,12 @@
 package memoWeb.web.main.controller;
 
 import memoWeb.common.constant.CommonConstants;
-import memoWeb.web.main.domain.ChatRoomDTO;
-import memoWeb.web.main.domain.ChatRoomUserDTO;
-import memoWeb.web.main.domain.ChatVO;
-import memoWeb.web.main.domain.UserDTO;
-import memoWeb.web.main.service.ChatServeice;
+import memoWeb.web.main.domain.*;
+import memoWeb.web.main.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -23,10 +17,10 @@ import java.util.Map;
 @RequestMapping("/api/chat")
 public class ChatController {
 
-	private final ChatServeice chatServeice;
+	private final ChatService chatServeice;
 
 	@Autowired
-	public ChatController(ChatServeice chatServeice) {
+	public ChatController(ChatService chatServeice) {
 		this.chatServeice = chatServeice;
 	}
 
@@ -40,12 +34,26 @@ public class ChatController {
 //		return result;
 //	}
 
+	@MessageMapping("/receive/{chatRoomIdx}")
+	@SendTo("/send/{chatRoomIdx}")
+	public ChatRoomMessageDTO SocketHandler(ChatRoomMessageDTO chatRoomMessage) {
+		int chatRoomIdx = chatRoomMessage.getChatRoomIdx();
+		String userName = chatRoomMessage.getSendUserId();
+		String sendDate = chatRoomMessage.getSendDate();
+		String content = chatRoomMessage.getSendMessage();
+
+		ChatRoomMessageDTO result = new ChatRoomMessageDTO(chatRoomIdx, userName, sendDate, content);
+		return result;
+	}
+
 	@GetMapping("/chat")
 	public Map<String, Object> getChatList(HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<>();
 		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
-		List<ChatRoomDTO> chatRoomList = chatServeice.getChatList(user);
-		resultMap.put("chatList", chatRoomList);
+		List<ChatRoomUserDTO> chatListI = chatServeice.getChatRoomListI(user);
+		List<ChatRoomDTO> chatListG = chatServeice.getChatRoomListG(user);
+		resultMap.put("chatListI", chatListI);
+		resultMap.put("chatListG", chatListG);
 		return resultMap;
 	}
 
@@ -61,6 +69,17 @@ public class ChatController {
 
 		resultMap.put("chatRoomInfo", chatRoomInfo);
 		resultMap.put("chatUserInfo", chatUserInfo);
+		return resultMap;
+	}
+
+	@PostMapping("/chat/{userId}")
+	public Map<String, Object> createChatRoom(HttpSession session, @PathVariable String userId) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HashMap<String, Object> params = new HashMap<>();
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		params.put("user1", user.getUserId());
+		params.put("user2", userId);
+		resultMap.put("result", chatServeice.createChatRoom(params));
 		return resultMap;
 	}
 }

@@ -8,7 +8,8 @@ import javax.persistence.*;
 
 @Data
 public class ChatRoomDTO {
-    private int chatRoomIdx;
-    private String chatRoodType;
-    private String chatRoomTitle;
+	private int chatRoomIdx;
+	private String chatRoodType;
+	private int groupIdx;
+	private String chatRoomTitle;
 }

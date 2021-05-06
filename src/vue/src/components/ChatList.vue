@@ -4,7 +4,7 @@
       <div class="header">
         <h3>message</h3>
       </div>
-      <div class="close_icon" @click="closeChat">
+      <div class="close_icon" @click="closeList">
         <span><i class="fas fa-times"></i></span>
       </div>
     </div>
@@ -37,7 +37,7 @@
           <!-- 개인일정 TAB start -->
           <b-tab title="개인">
             <b-list-group>
-              <b-list-group-item v-for="(item, idx) in chatRoomList" :key="idx" class="d-flex justify-content-between align-items-center">
+              <b-list-group-item v-for="(item, idx) in chatRoomListI" :key="idx" class="d-flex justify-content-between align-items-center" @click="showChatRoom(item)">
                 {{ item.chatRoomTitle }}
                 <b-badge pill variant="primary">가능하다면 읽지않은갯수</b-badge>
               </b-list-group-item>
@@ -45,7 +45,7 @@
           </b-tab>
           <b-tab title="그룹">
             <b-list-group>
-              <b-list-group-item v-for="(item, idx) in chatRoomList" :key="idx" class="d-flex justify-content-between align-items-center">
+              <b-list-group-item v-for="(item, idx) in chatRoomListG" :key="idx" class="d-flex justify-content-between align-items-center" @click="showChatRoom(item)">
                 {{ item.chatRoomTitle }}
                 <b-badge pill variant="primary">가능하다면 읽지않은갯수</b-badge>
               </b-list-group-item>
@@ -73,7 +73,8 @@ export default {
       gubun: 'I',
       keyword: '',
       searchFlag: false,
-      chatRoomList: [],
+      chatRoomListI: [],
+      chatRoomListG: [],
       userList: []
     };
   },
@@ -96,9 +97,9 @@ export default {
   },
   methods: {
     getChatRoomList() {
-      const params = {};
       axiosUtil.get('/api/chat/chat', {}, result => {
-        this.chatRoomList = result.data.chatList;
+        this.chatRoomListI = result.data.chatListI;
+        this.chatRoomListG = result.data.chatListG;
       });
     },
     searchFriend() {
@@ -130,8 +131,8 @@ export default {
       this.mode = 'chat';
       this.keyword = '';
     },
-    closeChat() {
-      this.$emit('closeChat');
+    closeList() {
+      this.$emit('closeList');
     }
   },
   beforeMount() {},
