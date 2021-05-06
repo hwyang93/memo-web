@@ -27,6 +27,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	public List<UserVO> getUserList() {
 		final JPAQuery<UserVO> query = new JPAQuery<>(em);
 		return query.from(quser)
+				.where(quser.userId.notLike("admin"))
 				.orderBy(quser.regDate.desc())
 				.fetch();
 	}

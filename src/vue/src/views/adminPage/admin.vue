@@ -23,6 +23,7 @@ export default {
   created() {
     axiosUtil.get('/api/admin/userList', {}, result => {
       this.userList = result.data.userList;
+      console.log(this.userList);
     });
   }
 };
