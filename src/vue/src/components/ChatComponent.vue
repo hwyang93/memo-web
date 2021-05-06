@@ -1,14 +1,14 @@
 <template>
   <div>
-    <button type="button" class="message" :class="[this.$store.state.auth.isLogin ? 'show' : '']" @click="showChat()"><i class="fas fa-comments"></i></button>
-    <div v-if="modalFlag">
+    <button :class="[this.$store.state.auth.isLogin ? 'show' : '']" class="message" type="button" @click="showChat()"><i class="fas fa-comments"></i></button>
+    <div v-if="listModalFlag">
       <div class="list-box">
-        <chat-list @closeChat="closeChat" @showChatRoom="showChatRoom" />
+        <chat-list @closeList="closeList" @showChatRoom="showChatRoom" />
       </div>
     </div>
     <div v-if="chatRoomFlag">
       <div class="chat-box">
-        <chat-room :room-info="roomInfo" />
+        <chat-room :room-info="roomInfo" @closeRoom="closeRoom" />
       </div>
     </div>
   </div>
@@ -18,22 +18,26 @@
 import ChatList from './ChatList';
 import ChatRoom from './ChatRoom';
 import axiosUtil from '../utils/axios-util';
+
 export default {
   name: 'ChatComponent',
   components: { ChatList, ChatRoom },
   data() {
     return {
-      modalFlag: false,
+      listModalFlag: false,
       chatRoomFlag: false,
       roomInfo: {}
     };
   },
   methods: {
     showChat() {
-      this.modalFlag = true;
+      this.listModalFlag = true;
     },
-    closeChat() {
-      this.modalFlag = false;
+    closeList() {
+      this.listModalFlag = false;
+    },
+    closeRoom() {
+      this.chatRoomFlag = false;
     },
     showChatRoom(data) {
       const params = {
@@ -43,7 +47,7 @@ export default {
         console.log(result);
         this.roomInfo = result.data;
       });
-      this.modalFlag = false;
+      this.listModalFlag = false;
       this.chatRoomFlag = true;
     }
   }
@@ -75,16 +79,19 @@ button.message {
   z-index: 10;
   transition: all 0.3s ease-in-out;
 }
+
 button.message:hover,
 button.message:active,
 button.message:focus {
   outline: 0 !important;
 }
+
 button.message::before {
   display: block;
   vertical-align: middle;
   margin: -5px 0 auto;
 }
+
 button.message.show {
   display: block;
   background: #fff;
@@ -99,11 +106,13 @@ button.message.show {
   -webkit-box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.25);
 }
+
 button.message.show:active {
   box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
   -webkit-box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
 }
+
 .list-box {
   box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
   right: 10px;
@@ -115,6 +124,7 @@ button.message.show:active {
   z-index: 15;
   border-radius: 10px;
 }
+
 .chat-box {
   box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
   right: 10px;

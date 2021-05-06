@@ -5,15 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "CHAT_ROOM_USER")
-public class ChatRoomUser {
-    @Id
-    @Column(name = "CHAT_ROOM_IDX")
-    private int chatRoomIdx;
-    @Column(name = "USER_ID")
-    private String userId;
+public class ChatRoomUser implements Serializable {
+	@Id
+	@Column(name = "CHAT_ROOM_IDX")
+	private int chatRoomIdx;
+	@Id
+	@Column(name = "USER_ID")
+	private String userId;
 }
