@@ -1,7 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
     id 'war'
 }
@@ -24,12 +23,22 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    annotationProcessor("org.projectlombok:lombok")
-    compileOnly("org.projectlombok:lombok")
     implementation(enforcedPlatform("com.oracle.database.jdbc:ojdbc-bom:21.1.0.0"))
     implementation("com.oracle.database.jdbc:ojdbc8")
+
+    // Query DSL
+    implementation 'com.querydsl:querydsl-core'
     implementation 'com.querydsl:querydsl-jpa'
-    implementation 'com.querydsl:querydsl-apt'
+    // querydsl JPAAnnotationProcessor 사용 지정
+    annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa")
+    // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+    // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
+    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -37,22 +46,16 @@ dependencies {
 }
 
 def querydslDir = "build/generated-sources/java"
-
-querydsl {
-    jpa = true
-    querydslSourcesDir = querydslDir
-}
-
 sourceSets {
-    main.java.srcDir += [querydslDir]
+    main.java.srcDirs += [querydslDir]
 }
 
-configurations {
-    querydsl.extendsFrom compileClasspath
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
 }
 
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
+clean.doLast {
+    file(querydslDir).deleteDir()
 }
 
 test {
