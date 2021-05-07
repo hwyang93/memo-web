@@ -9,32 +9,24 @@
       </div>
     </div>
     <div class="content">
-      <div class="d-flex justify-content-start">
-        <div class="user-pic">
-          <img alt="" src="../images/friends/user-sample.jpg" />
-        </div>
-        <div>
-          <div class="user-info">
-            {{ '사용자 이름' }}
+      <div v-for="(item, idx) in messageList" :key="idx">
+        <div v-if="item.sendUserId !== $store.state.auth.userInfo.userId" class="d-flex justify-content-start">
+          <div class="user-pic">
+            <img alt="" src="../images/friends/user-sample.jpg" />
           </div>
-          <div class="message-recieve">
-            {{ '내용' }}
+          <div>
+            <div class="user-info">
+              {{ '사용자 이름' }}
+            </div>
+            <div class="message-recieve">
+              {{ item.sendMessage }}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-end">
-        <div class="message-send">
-          {{ '내용' }}
-        </div>
-      </div>
-      <div class="d-flex justify-content-end">
-        <div class="message-send">
-          {{ '내용' }}
-        </div>
-      </div>
-      <div class="d-flex justify-content-end">
-        <div class="message-send">
-          {{ '내용' }}
+        <div v-if="item.sendUserId === $store.state.auth.userInfo.userId" class="d-flex justify-content-end">
+          <div class="message-send">
+            {{ item.sendMessage }}
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +62,8 @@ export default {
       stompClient: null,
       roomIdx: '',
       chatRoomInfo: {},
-      chatUserInfo: {}
+      chatUserInfo: {},
+      messageList: []
     };
   },
   watch: {
@@ -88,13 +81,14 @@ export default {
         this.roomIdx = this.roomInfo.chatRoomInfo.chatRoomIdx;
         this.chatRoomInfo = this.roomInfo.chatRoomInfo;
       }
+      this.chatUserInfo = this.roomInfo.chatUserInfo;
     },
     closeRoom() {
       this.$emit('closeRoom');
     },
     onEnter(e) {
       e.preventDefault();
-      if (this.message.length > 1) {
+      if (this.message.length > 0) {
         if (e.ctrlKey) {
           this.message += '\n';
         } else {
@@ -103,18 +97,22 @@ export default {
       }
       this.$refs.textarea.focus();
     },
-    sendMessage() {
-      if (!this.roomInfo.chatRoomInfo) {
+    async sendMessage() {
+      if (Object.keys(this.chatRoomInfo).length === 0) {
         this.createChatRoom();
+        // this.connect();
       }
       if (!(this.stompClient && this.stompClient.connected)) {
         this.connect();
       }
-      // console.log(this.stompClient);
-      this.send();
+      setTimeout(() => {
+        this.send();
+      }, 100);
+
+      this.scrollDown();
     },
     createChatRoom() {
-      axiosUtil.post('/api/chat/chat/' + this.roomInfo.chatUserInfo.userId, {}, result => {
+      axiosUtil.post('/api/chat/chat/' + this.chatUserInfo.userId, {}, result => {
         this.chatRoomInfo = result.data.result;
       });
     },
@@ -129,9 +127,10 @@ export default {
         frame => {
           this.connected = true;
           console.log('소켓 연결 성공', frame);
-          this.stompClient.subscribe('/send/1', res => {
+          this.stompClient.subscribe('/send/' + this.chatRoomInfo.chatRoomIdx, res => {
             console.log('구독으로 받은 메시지 입니다.', res.body);
-            this.recvList.push(JSON.parse(res.body));
+            this.messageList.push(JSON.parse(res.body));
+            this.scrollDown();
           });
         },
         error => {
@@ -141,15 +140,20 @@ export default {
       );
     },
     send() {
-      console.log('Send message:' + this.message);
+      console.log(this.$store.state.auth.stompClient);
       if (this.stompClient && this.stompClient.connected) {
         const msgInfo = {
           chatRoomIdx: this.chatRoomInfo.chatRoomIdx,
-          sendUserId: this.chatUserInfo.userId,
+          sendUserId: this.$store.state.auth.userInfo.userId,
           sendMessage: this.message
         };
-        this.stompClient.send('/receive/1', JSON.stringify(msgInfo), {});
+        this.stompClient.send('/receive/' + this.chatRoomInfo.chatRoomIdx, JSON.stringify(msgInfo), {});
+        this.message = '';
       }
+    },
+    scrollDown() {
+      let container = this.$el.querySelector('.content');
+      container.scrollTop = container.scrollHeight;
     }
   },
   beforeMount() {},
@@ -177,6 +181,7 @@ export default {
   flex-shrink: 1;
   background-color: blanchedalmond;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .main .send {
