@@ -21,10 +21,6 @@ public class AdminService {
 		return adminRepository.getUserList();
 	}
 
-	public long getUserCount() {
-		return adminRepository.getUserCount();
-	}
-
 	public int deleteUser(String id) {
 		return adminRepository.deleteUser(id);
 	}
