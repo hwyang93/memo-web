@@ -1,5 +1,9 @@
 package memoWeb.web.main.controller;
 
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import memoWeb.common.constant.CommonConstants;
 import memoWeb.web.main.domain.*;
 import memoWeb.web.main.service.MainService;
@@ -11,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +23,14 @@ import java.util.Map;
 //@Controller
 @RestController
 @RequestMapping("/api/main")
-public class MainContorller {
+public class MainController {
 
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	private static final String SECRET_KEY = "accessToken";
 	private static MainService mainService;
-	private static final Logger logger = LoggerFactory.getLogger(MainContorller.class);
+
 	@Autowired
-	public MainContorller(MainService mainService) {
+	public MainController(MainService mainService) {
 		this.mainService = mainService;
 	}
 
@@ -32,6 +39,8 @@ public class MainContorller {
 		UserDTO result = null;
 		result = mainService.login(user);
 		if (result != null) {
+			String token = createToken(user.getUserId());
+			result.setToken(token);
 			session.setAttribute(CommonConstants.SESSION, result);
 		}
 		model.addAttribute("result", result);
@@ -42,6 +51,7 @@ public class MainContorller {
 	public ResponseEntity signUp(@RequestBody UserVO member) {
 
 		UserVO result = mainService.signUp(member);
+
 		return ResponseEntity.ok().body(result);
 	}
 
@@ -104,7 +114,7 @@ public class MainContorller {
 //	}
 
 	@GetMapping("/schedule")
-	public Map<String,Object> getSchedule (HttpSession session) {
+	public Map<String, Object> getSchedule(HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
 		Map<String, Object> resultMap = new HashMap<>();
 		List<UserScheduleVO> userScheduleList = mainService.getUserScheduleList(user);
@@ -127,4 +137,15 @@ public class MainContorller {
 
 		return resultMap;
 	}
+
+	public String createToken(String subject) {
+		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+		Key signingKey = Keys.secretKeyFor(signatureAlgorithm);
+		JwtBuilder builder = Jwts.builder()
+				.setSubject(subject)
+				.signWith(signingKey);
+		return builder.compact();
+	}
+
 }

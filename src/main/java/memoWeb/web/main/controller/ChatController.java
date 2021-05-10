@@ -24,26 +24,12 @@ public class ChatController {
 		this.chatServeice = chatServeice;
 	}
 
-//	@MessageMapping("/receive/{chatRoomIdx}")
-//	@SendTo("/send/{chatRoomIdx}")
-//	public ChatVO SocketHandler(ChatVO chatVO) {
-//		String userName = chatVO.getUserName();
-//		String content = chatVO.getContent();
-//
-//		ChatVO result = new ChatVO(userName, content);
-//		return result;
-//	}
-
 	@MessageMapping("/receive/{chatRoomIdx}")
 	@SendTo("/send/{chatRoomIdx}")
-	public ChatRoomMessageDTO SocketHandler(ChatRoomMessageDTO chatRoomMessage) {
-		int chatRoomIdx = chatRoomMessage.getChatRoomIdx();
-		String userName = chatRoomMessage.getSendUserId();
-		String sendDate = chatRoomMessage.getSendDate();
-		String content = chatRoomMessage.getSendMessage();
+	public ChatRoomMessageDTO SocketHandler(ChatRoomMessageDTO chatRoomMessageDTO, ChatRoomMessage chatRoomMessage) {
+		chatServeice.insertChatMessage(chatRoomMessage);
 
-		ChatRoomMessageDTO result = new ChatRoomMessageDTO(chatRoomIdx, userName, sendDate, content);
-		return result;
+		return chatRoomMessageDTO;
 	}
 
 	@GetMapping("/chat")
@@ -66,9 +52,14 @@ public class ChatController {
 		params.put("user2", userId);
 		ChatRoomUserDTO chatRoomInfo = chatServeice.getChatRoom(params);
 		UserDTO chatUserInfo = chatServeice.getUserInfo(userId);
+		List<ChatRoomMessageDTO> chatRoomMessage = null;
+		if (chatRoomInfo != null) {
+			chatRoomMessage = chatServeice.getChatMessage(chatRoomInfo);
+		}
 
 		resultMap.put("chatRoomInfo", chatRoomInfo);
 		resultMap.put("chatUserInfo", chatUserInfo);
+		resultMap.put("chatRoomMessage", chatRoomMessage);
 		return resultMap;
 	}
 
@@ -82,4 +73,14 @@ public class ChatController {
 		resultMap.put("result", chatServeice.createChatRoom(params));
 		return resultMap;
 	}
+
+	@PostMapping("/chatMessage")
+	public Map<String, Object> insertChatMessage(HttpSession session, @RequestBody ChatRoomMessage chatRoomMessage) {
+		Map<String, Object> resultMap = new HashMap<>();
+		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+		chatRoomMessage.setSendUserId(user.getUserId());
+
+		return resultMap;
+	}
+
 }
