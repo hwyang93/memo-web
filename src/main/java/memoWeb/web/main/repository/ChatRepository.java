@@ -21,4 +21,8 @@ public interface ChatRepository {
 	void createChatRoom(ChatRoom chatRoom);
 
 	void joinChatRoom(ChatRoomUser chatRoomUser);
+
+	List<ChatRoomMessageDTO> getChatMessage(ChatRoomUserDTO chatRoomUser);
+
+	void insertChatMessage(ChatRoomMessage chatRoomMessage);
 }

@@ -55,4 +55,11 @@ public class ChatService {
 		return chatRoom;
 	}
 
+	public List<ChatRoomMessageDTO> getChatMessage(ChatRoomUserDTO chatRoomUser) {
+		return chatRepository.getChatMessage(chatRoomUser);
+	}
+
+	public void insertChatMessage(ChatRoomMessage chatRoomMessage) {
+		chatRepository.insertChatMessage(chatRoomMessage);
+	}
 }

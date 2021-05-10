@@ -11,10 +11,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
 public class ChatRoomMessageDTO implements Serializable {
 	private int chatRoomIdx;
 	private String sendUserId;
 	private String sendDate;
 	private String sendMessage;
+
 }

@@ -1,14 +1,29 @@
 import axios from 'axios';
+import store from '../store/index.js';
+import router from '../router/index.js';
 
 const axiosUtil = {
   get: function (url, data, cbSuccess, cbFail, cbComplete) {
-    axios.get(url, { params: data }).then(cbSuccess).catch(cbFail).then(cbComplete);
+    axios
+      .get(url, {
+        headers: {
+          token: store.state.auth.userInfo.token
+        },
+        params: data
+      })
+      .then(cbSuccess)
+      .catch(() => {
+        router.push('/login');
+      })
+      .then(cbComplete);
   },
 
   post: function (url, data, cbSuccess, cbFail, cbComplete) {
     axios
       .post(url, data, {
-        headers: { 'Content-Type': 'Application/json' }
+        headers: {
+          'Content-Type': 'Application/json'
+        }
       })
       .then(cbSuccess)
       .catch(cbFail)

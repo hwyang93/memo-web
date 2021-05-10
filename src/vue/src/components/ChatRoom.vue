@@ -75,11 +75,12 @@ export default {
     initRoom() {
       if (!this.roomInfo.chatRoomInfo) {
         this.title = this.roomInfo.chatUserInfo.userName;
-        this.chatUserInfo = this.roomInfo.chatUserInfo;
       } else {
         this.title = this.roomInfo.chatRoomInfo.chatRoomTitle;
         this.roomIdx = this.roomInfo.chatRoomInfo.chatRoomIdx;
         this.chatRoomInfo = this.roomInfo.chatRoomInfo;
+        this.messageList = this.roomInfo.chatRoomMessage;
+        this.connect();
       }
       this.chatUserInfo = this.roomInfo.chatUserInfo;
     },
