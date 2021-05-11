@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +48,7 @@ public class MyScheduleContoller {
 		return map;
 	}
 	
-	@PutMapping("updateSchedule")
+	@PostMapping(value = "updateSchedule")
 	public Map<String, Object> updateSchedule(@RequestBody UserScheduleVO userScheduleVO, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		long result = myScheduleService.updateSchedule(userScheduleVO);
