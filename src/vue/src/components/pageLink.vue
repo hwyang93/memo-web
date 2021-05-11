@@ -71,6 +71,7 @@ export default {
         console.log(result);
         if (result.data.result == 1) {
           alert('삭제되었습니다.');
+          location.reload();
         } else {
           alert('오류');
         }

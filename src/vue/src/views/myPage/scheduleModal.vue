@@ -182,11 +182,14 @@ export default {
       this.scheduleDetail.title = document.getElementById('title').value;
       this.scheduleDetail.promisePlace = document.getElementById('promisePlace').value;
       this.scheduleDetail.memo = document.getElementById('memo').value;
-      axiosUtil.put('/api/mySchedule/updateSchedule', this.scheduleDetail, result => {
+      axiosUtil.post('/api/mySchedule/updateSchedule', this.scheduleDetail, result => {
         alert('수정되었습니다.');
         this.isStatusOn = true;
         this.isdefault = true;
         this.isModify = false;
+        if ((this.isStatusOn = false)) {
+          location.reload();
+        }
       });
     },
     deleteBtn() {
