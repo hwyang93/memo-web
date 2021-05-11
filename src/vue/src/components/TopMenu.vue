@@ -44,7 +44,9 @@
         <!-- //navbar-collapse -->
         <div class="user-area d-flex">
         <ul class="d-flex align-items-center">
-          <li class="user-info"><a @click="goMenu('/myPage/profile')">User</a></li>
+        <li class="user-info"><a @click="goMenu('/myPage/profile')">User</a></li>
+        <li class="user-info"><i class="fas fa-power-off"></i></li>
+
           <li class="user-Notifications">
             <!-- <button type="button" class="btn btn-primary">
               <i class="far fa-bell"></i> <span class="badge bg-secondary">4</span>
