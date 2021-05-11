@@ -47,7 +47,16 @@ public class MainController {
 		return ResponseEntity.ok().body(result);
 	}
 
+	@PostMapping("logout")
+	public Map<String, Object> logout(HttpSession session) {
+		Map<String, Object> resultMap = new HashMap<>();
+		session.setAttribute(CommonConstants.SESSION, null);
+		resultMap.put("result", "logout");
+		return resultMap;
+	}
+
 	@PostMapping("signUp.do")
+
 	public ResponseEntity signUp(@RequestBody UserVO member) {
 
 		UserVO result = mainService.signUp(member);
