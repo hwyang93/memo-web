@@ -1,6 +1,6 @@
 <template>
   <!--navbar-start-->
-  <nav class="navbar navbar-default navbar-expand-md main-navbar">
+  <nav ref="navbar" class="navbar navbar-default navbar-expand-md main-navbar" :class="[isFixed===true? 'h_stiky':'']">
     <div class="container">
       <div class="brand_toggle_cont">
         <!-- Brand -->
@@ -66,7 +66,6 @@
       </div>
       </div>
       <!-- //navbar-collapse -->
-
     </div>
   </nav>
   <!--navbar-end-->
@@ -75,9 +74,23 @@
 <script>
 export default {
   name: "TopMenu",
+  data() {
+    return {
+      isFixed:false
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
   methods: {
     goMenu(url) {
       this.$router.push(url);
+    },
+    handleScroll() {
+      this.isFixed = window.scrollY > 50;
     }
   }
 }

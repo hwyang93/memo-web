@@ -20,10 +20,12 @@ import ChatComponent from './components/ChatComponent';
 export default {
   name: 'App',
   components: { TopMenu, ContentLoader, ChatComponent },
+
   methods: {
-    loginGo: function () {
+    loginGo() {
       this.$router.push('/login');
-    }
+    },
+
   }
 };
 </script>
