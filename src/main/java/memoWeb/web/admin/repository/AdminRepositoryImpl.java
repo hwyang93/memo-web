@@ -13,6 +13,7 @@ import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import memoWeb.web.main.domain.QUserVO;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 
 @Repository
@@ -30,13 +31,6 @@ public class AdminRepositoryImpl implements AdminRepository {
 				.where(quser.userId.notLike("admin"))
 				.orderBy(quser.regDate.desc())
 				.fetch();
-	}
-
-	@Override
-	public long getUserCount() {
-		final JPAQuery<UserVO> query = new JPAQuery<>(em);
-		return query.from(quser)
-			.fetchCount();
 	}
 
 	@Override

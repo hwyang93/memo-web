@@ -29,21 +29,17 @@ public class AdminController {
 	}
 	
 	@GetMapping("/userList")
-	public Map<String,Object> getUserList(Model model, UserVO userVo){
+	public Map<String,Object> getUserList(Model model){
 		Map<String,Object> map = new HashMap<>();
 		List<UserVO> userList = adminService.getUserList();
-		long userCount = adminService.getUserCount();
 		map.put("userList", userList);
-		map.put("userCount", userCount);
 		return map;
 	}
 	
 	@GetMapping("/deleteUser/{id}")
-	public Map<String,Object> deleteUser(@PathVariable("id") String id, Model model, UserVO userVo){
+	public Map<String,Object> deleteUser(@PathVariable("id") String id, Model model){
 		Map<String,Object> map = new HashMap<>();
-		System.out.println(id);
 		int result = adminService.deleteUser(id);
-		System.out.println(result);
 		map.put("result", result);
 		return map;
 	}
