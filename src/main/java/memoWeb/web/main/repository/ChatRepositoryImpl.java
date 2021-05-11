@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +22,7 @@ public class ChatRepositoryImpl implements ChatRepository {
 	QChatRoom qChatRoom = QChatRoom.chatRoom;
 	QChatRoomUser qChatRoomUser = QChatRoomUser.chatRoomUser;
 	QChatRoomUser qChatRoomUser2 = new QChatRoomUser("qChatRoomUser2");
+	QChatRoomMessage qChatRoomMessage = QChatRoomMessage.chatRoomMessage;
 	QUserVO qUser = QUserVO.userVO;
 	QGroupsVO qGroup = QGroupsVO.groupsVO;
 	@PersistenceContext
@@ -105,6 +105,19 @@ public class ChatRepositoryImpl implements ChatRepository {
 	@Override
 	public void joinChatRoom(ChatRoomUser chatRoomUser) {
 		em.persist(chatRoomUser);
+	}
+
+	@Override
+	public List<ChatRoomMessageDTO> getChatMessage(ChatRoomUserDTO chatRoomUser) {
+		return queryFactory.select(Projections.fields(ChatRoomMessageDTO.class, qChatRoomMessage.chatRoomIdx, qChatRoomMessage.sendUserId, qChatRoomMessage.sendDate, qChatRoomMessage.sendMessage))
+				.from(qChatRoomMessage)
+				.where(qChatRoomMessage.chatRoomIdx.eq(chatRoomUser.getChatRoomIdx()))
+				.fetch();
+	}
+
+	@Override
+	public void insertChatMessage(ChatRoomMessage chatRoomMessage) {
+		em.persist(chatRoomMessage);
 	}
 
 }
