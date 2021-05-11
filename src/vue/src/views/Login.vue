@@ -36,7 +36,6 @@
 
 <script>
 import axiosUtil from '../utils/axios-util.js';
-import bcrypt from 'bcrypt';
 export default {
   name: 'login',
   data() {
@@ -49,13 +48,7 @@ export default {
   },
   methods: {
     goLogin: function () {
-      debugger;
-      const salt = bcrypt.genSaltSync(10)
-      const params = {
-        userId : this.userId,
-        userPassword: bcrypt.hashSync(password, salt)
-      }
-      axiosUtil.post('/api/main/login.do', params, result => {
+      axiosUtil.post('/api/main/login.do', this.form, result => {
         if (!result.data) {
           alert('일치하는 회원이 없습니다.');
         } else {
