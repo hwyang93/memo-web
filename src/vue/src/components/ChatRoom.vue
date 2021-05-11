@@ -122,20 +122,16 @@ export default {
 
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
-      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`);
       this.stompClient.connect(
         {},
-        frame => {
+        () => {
           this.connected = true;
-          console.log('소켓 연결 성공', frame);
           this.stompClient.subscribe('/send/' + this.chatRoomInfo.chatRoomIdx, res => {
-            console.log('구독으로 받은 메시지 입니다.', res.body);
             this.messageList.push(JSON.parse(res.body));
             this.scrollDown();
           });
         },
-        error => {
-          console.log('소켓 연결 실패', error);
+        () => {
           this.connected = false;
         }
       );
