@@ -23,6 +23,10 @@ export default new Vuex.Store({
       if (userInfo) {
         state.auth.userInfo = userInfo;
       }
+    },
+    resetState(state) {
+      state.auth.isLogin = false
+      state.auth.userInfo = {}
     }
   },
   actions: {},

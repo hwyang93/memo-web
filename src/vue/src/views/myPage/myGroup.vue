@@ -76,7 +76,7 @@
                         ></b-form-input>
                       </b-form-group>
 
-                      <label for="tags-basic">멤버 추가</label>
+                      <label>멤버 추가</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
 
                       <div class="button-area mt-3">
@@ -97,7 +97,7 @@
                     <ul class="user-list-area">
                       <h4>{{this.groupDetail.groupTitle}}</h4>
                       <p>info : <br>{{this.groupDetail.groupComment}}</p>
-                      <label for="tags-basic">참여 멤버</label>
+                      <label>참여 멤버</label>
                       <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
                       <b-button variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
@@ -123,7 +123,7 @@
                               <span>{{item.userName}}</span>
                             </a>
                           </div>
-                          <button class="btn btn-info" id="btn-add-group">Add</button>
+                          <button class="btn btn-info" @click="requestFriend(item.userId)" id="btn-add-group">Add</button>
                         </li>
                       </ul>
                     </div>
@@ -138,14 +138,14 @@
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                        <button class="btn btn-danger">Delete</button>
                       </li>
                       <li class="user-list">
                         <a href="#" class="user-pic">
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                        <button class="btn btn-danger">Delete</button>
                       </li>
                     </ul>
               </b-tab>
@@ -161,6 +161,7 @@
 <script>
 import axiosUtil from '@/utils/axios-util';
 import leftMenu from '@/views/myPage/leftMenu';
+
 export default {
   name: 'group',
   components: {
@@ -169,6 +170,7 @@ export default {
   data() {
     return {
       userList: [],
+      friendsList: [],
       groupList: [],
       groupInfo: [],
       memberValue: [],
@@ -218,14 +220,6 @@ export default {
       this.$refs['group-modal'].show();
     },
     openDrop() {
-      // var test = [];
-      // var temp;
-      // for(var i = 0; i<10; i++) {
-      //   temp = {};
-      //   temp.groupIdx = groupIdx;
-      //   temp.groupUser = item;
-      //   test.push(temp);
-      // }
       console.log("event")
       if (this.friend.keyword.length > 0) {
         this.getUserList();
@@ -233,47 +227,42 @@ export default {
         this.userList = [];
       }
       console.log(this.userList);
-      // debugger;
-      if(this.userList.length > 0) {
-        this.friend.flag = true;
-      } else {
-        this.friend.flag = false;
-      }
-      // const hideContent = document.querySelector('.search-drop');
-      // hideContent.classList.toggle('show');
-      // const inputValue = document.querySelector('#search-input');
-      // let keywordFilter = inputValue.value.toUpperCase();
-      // let matchList = document.querySelector('.search-result-list');
-
-      // for ( i = 0; i < matchList.length; i++) {
-      //   txtValue = matchList[i].textContent || matchList[i].innerText;
-      //   if(txtValue.toUpperCase().indexOf(keywordFilter) > -1) {
-      //     // hideContent.style.display = '';
-      //     matchList[i].style.display = '';
-      //   } else {
-      //     // hideContent.style.display = 'none';
-      //     matchList[i].style.display = 'none';
-      //   }
-      // }
+      this.friend.flag = this.userList.length > 0;
     },
-    // getFriendsList() {
-    //   var params =  {
-    //     relationStatus : 'ALL'
-    //   }
-    //   axiosUtil.get('/api/myGroup/getFriendList.do', {params}, result => {
-    //     this.userList = result.data.userList;
-    //   });
+    // outFocus() {
+    //   this.friend.flag = false;
+    //   this.friend.keyword = '';
     // },
+    getFriendsList() {
+      const params =  {
+        relationStatus : 'ALL'
+      }
+      axiosUtil.get('/api/myGroup/getFriendList.do', params, result => {
+        console.log(result);
+        this.friendsList = result.data.friendsList;
+        console.log('friends list : ', this.friendsList)
+      });
+    },
     getUserList() {
-      var params =  {
+      const params =  {
         keyword : this.friend.keyword
       }
       console.log(this.friend.keyword);
-      axiosUtil.get('/api/myGroup/getUserList.do', {params}, result => {
+      axiosUtil.get('/api/myGroup/getUserList.do', params, result => {
         this.userList = result.data.userList;
         // console.log(this.userList);
       });
     },
+    requestFriend(userId) {
+      const params = {
+        followingUserId : userId
+      }
+      axiosUtil.post('/api/myGroup/joinUserRelation.do', params, () => {
+        alert('친구 신청이 완료 되었습니다.');
+        this.getFriendsList()
+      });
+    },
+
     deleteGroup() {
       axiosUtil.post('/api/myGroup/deleteGroup.do', {}, result => {
         this.groupList = result.data.groupList;
@@ -281,7 +270,7 @@ export default {
       });
     },
     // getGroupInfo() {
-    //   var params = {
+    //   const params = {
     //     groupIdx : this.groupId.groupIdx
     //   }
     //   axiosUtil.get('/api/myGroup/getGroupInfo.do', {params}, result => {
@@ -307,14 +296,15 @@ export default {
       this.$nextTick(() => {
         this.form.show = true
       })
-    }
+    },
 
   },
   beforeMount() {
-    // this.getFriendsList();
-    // this.getUserList();
     this.getGroupList();
     // this.getGroupInfo();
+  },
+  created() {
+    this.getFriendsList()
   }
 };
 </script>

@@ -17,7 +17,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		UserDTO userInfo = (UserDTO) session.getAttribute(CommonConstants.SESSION);
 		String token = request.getHeader("token");
-		if (token == null || !token.equals(userInfo.getToken())) {
+		if (userInfo == null || token == null || !token.equals(userInfo.getToken())) {
 			throw new JwtException("로그인 정보가 없습니다.");
 		}
 		return true;
