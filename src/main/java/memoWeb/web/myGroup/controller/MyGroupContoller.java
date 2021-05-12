@@ -26,7 +26,7 @@ public class MyGroupContoller {
 
     @GetMapping("getUserList.do")
     public String getUserList(Model model, HttpSession session, @RequestParam HashMap<String, Object> params) {
-        List<UserVO> result = myGroupService.getUserList(params);
+        List<UserDTO> result = myGroupService.getUserList(params);
         model.addAttribute("userList", result);
         return "jsonView";
     }
@@ -40,7 +40,7 @@ public class MyGroupContoller {
 
     @PostMapping("joinUserRelation.do")
     public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationVO userRelation) {
-        userRelation.setFollowUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        userRelation.setUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         userRelation.setRelationStatus("W");
         UserRelationVO result = myGroupService.joinUserRelation(userRelation);
         model.addAttribute("joinUser", result);

@@ -1,6 +1,7 @@
 package memoWeb.web.myGroup.repository;
 
 import com.querydsl.core.Tuple;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.*;
 
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface MyGroupRepository {
-    public List<UserVO> getUserList(HashMap<String, Object> params);
+    public List<UserDTO> getUserList(HashMap<String, Object> params);
 
     public UserVO getUserInfo(UserVO user);
 

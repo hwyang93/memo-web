@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.QUserVO;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
     private final JPAQueryFactory queryFactory;
 
     public MyGroupRepositoryImpl(JPAQueryFactory queryFactory) {
@@ -38,9 +38,10 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 
 
     @Override
-    public List<UserVO> getUserList(HashMap<String, Object> params) {
-        return queryFactory.selectFrom(qUser)
-                .where(qUser.userId .contains((String) params.get("keyword"))
+    public List<UserDTO> getUserList(HashMap<String, Object> params) {
+        return queryFactory.select(Projections.fields(UserDTO.class,qUser.userId,qUser.userName,qUser.userEmail))
+                .from(qUser)
+                .where(qUser.userId.contains((String) params.get("keyword"))
                 .or(qUser.userName.contains((String) params.get("keyword"))
                 .or(qUser.userEmail.contains((String) params.get("keyword")))))
                 .fetch();
@@ -62,7 +63,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     @Override
     public List<UserRelationVO> getFriendList(UserRelationVO userRelation) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(qUserRelation.followingUserId.eq(userRelation.getFollowUserId()));
+        builder.and(qUserRelation.userId.eq(userRelation.getUserId()));
 
         if (userRelation.getRelationStatus() != null && !userRelation.getRelationStatus().equals("ALL")) {
             builder.and(qUserRelation.relationStatus.eq(userRelation.getRelationStatus()));
