@@ -22,18 +22,24 @@ const axiosUtil = {
     axios
       .post(url, data, {
         headers: {
-          'Content-Type': 'Application/json'
+          'Content-Type': 'Application/json',
+          token: store.state.auth.userInfo.token
         }
       })
       .then(cbSuccess)
-      .catch(cbFail)
+      .catch(()=>{
+          router.push('/login');
+      })
       .then(cbComplete);
   },
 
   put: function (url, data, cbSuccess, cbFail, cbComplete) {
     axios
       .put(url, data, {
-        headers: { 'Content-Type': 'Application/json' }
+        headers: {
+            'Content-Type': 'Application/json',
+            token: store.state.auth.userInfo.token
+        }
       })
       .then(cbSuccess)
       .catch(cbFail)
