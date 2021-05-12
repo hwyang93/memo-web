@@ -17,9 +17,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/myGroup")
 public class MyGroupContoller {
+    @Autowired
     private static MyGroupService myGroupService;
 
-    @Autowired
     public MyGroupContoller(MyGroupService myGroupService) {
         this.myGroupService = myGroupService;
     }
@@ -39,10 +39,10 @@ public class MyGroupContoller {
     }
 
     @PostMapping("joinUserRelation.do")
-    public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationVO userRelation) {
+    public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationDTO userRelation) {
         userRelation.setUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
         userRelation.setRelationStatus("W");
-        UserRelationVO result = myGroupService.joinUserRelation(userRelation);
+        UserRelationDTO result = myGroupService.joinUserRelation(userRelation);
         model.addAttribute("joinUser", result);
         return "jsonView";
     }
@@ -102,9 +102,9 @@ public class MyGroupContoller {
 
     @PostMapping("joinGroup.do")
     public String joinGroup(Model model, @RequestBody List<GroupMemberVO> groupMemberList) {
-        groupMemberList.forEach(groupMemeber -> {
-            groupMemeber.setMemberAuth("N");
-            groupMemeber.setApprovalStatus("N");
+        groupMemberList.forEach(groupMember -> {
+            groupMember.setMemberAuth("N");
+            groupMember.setApprovalStatus("N");
         });
         myGroupService.joinGroupMember(groupMemberList);
         return "jsonView";
@@ -113,6 +113,21 @@ public class MyGroupContoller {
     @PostMapping("deleteGroup.do")
     public String deleteGroup(Model model, @RequestBody GroupDTO group) {
         myGroupService.deleteGroup(group);
+        return "jsonView";
+    }
+
+    @GetMapping("getFriendReqList.do")
+    public String getFriendReqList(Model model, HttpSession session, @ModelAttribute GroupDTO group) {
+        UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+        List<UserRelationDTO> result = myGroupService.getFriendReqList(user);
+        model.addAttribute("friendReqList", result);
+        return "jsonView";
+
+    }
+
+    @PostMapping("friendConsent.do")
+    public String friendConsent (Model model, @RequestBody UserRelationDTO userRelation) {
+        myGroupService.friendConsent(userRelation);
         return "jsonView";
     }
 }
