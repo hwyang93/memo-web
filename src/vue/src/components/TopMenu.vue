@@ -45,7 +45,9 @@
         <div class="user-area d-flex">
         <ul class="d-flex align-items-center">
         <li class="user-info"><a @click="goMenu('/myPage/profile')">User</a></li>
-        <li class="user-info"><i class="fas fa-power-off"></i></li>
+        <li class="user-info"><a @click="logout()">
+          <i class="fas fa-power-off"></i>
+        </a></li>
 
           <li class="user-Notifications">
             <!-- <button type="button" class="btn btn-primary">
@@ -75,11 +77,20 @@
 </template>
 
 <script>
+import axiosUtil from '@/utils/axios-util';
+
 export default {
   name: "TopMenu",
   methods: {
     goMenu(url) {
       this.$router.push(url);
+    },
+    logout() {
+      axiosUtil.post('/api/main/logout', {}, () => {
+        localStorage.removeItem('vuex');
+        this.$router.push('/login');
+
+      });
     }
   }
 }

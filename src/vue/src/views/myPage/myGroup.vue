@@ -138,14 +138,14 @@
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                        <button class="btn btn-danger" id="">Delete</button>
                       </li>
                       <li class="user-list">
                         <a href="#" class="user-pic">
                           <img src="../../images/friends/user-sample.jpg" alt="" />
                         </a>
                         <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger" id="btn-add-group">Delete</button>
+                        <button class="btn btn-danger" id="">Delete</button>
                       </li>
                     </ul>
               </b-tab>
