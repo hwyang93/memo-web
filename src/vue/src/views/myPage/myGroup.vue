@@ -255,7 +255,7 @@ export default {
     },
     requestFriend(userId) {
       const params = {
-        followingUserId : userId
+        followUserId : userId
       }
       axiosUtil.post('/api/myGroup/joinUserRelation.do', params, () => {
         alert('친구 신청이 완료 되었습니다.');
