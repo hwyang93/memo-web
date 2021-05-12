@@ -16,11 +16,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/myGroup")
-public class MyGroupContoller {
+public class MyGroupController {
     @Autowired
     private static MyGroupService myGroupService;
 
-    public MyGroupContoller(MyGroupService myGroupService) {
+    public MyGroupController(MyGroupService myGroupService) {
         this.myGroupService = myGroupService;
     }
 
