@@ -36,7 +36,6 @@
 
 <script>
 import axiosUtil from '../utils/axios-util.js';
-
 export default {
   name: 'login',
   data() {

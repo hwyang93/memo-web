@@ -33,7 +33,6 @@ public class MainController {
 	public MainController(MainService mainService) {
 		this.mainService = mainService;
 	}
-
 	@PostMapping("login.do")
 	public ResponseEntity login(Model model, @RequestBody UserDTO user, HttpSession session) {
 		UserDTO result = null;
