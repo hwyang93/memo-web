@@ -89,7 +89,7 @@ export default {
       axiosUtil.post('/api/main/logout', {}, () => {
         localStorage.removeItem('vuex');
         this.$router.push('/login');
-
+        this.$store.commit('resetState')
       });
     }
   }
