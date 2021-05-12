@@ -170,6 +170,7 @@ export default {
   data() {
     return {
       userList: [],
+      friendsList: [],
       groupList: [],
       groupInfo: [],
       memberValue: [],
@@ -226,21 +227,22 @@ export default {
         this.userList = [];
       }
       console.log(this.userList);
-      // debugger;
       this.friend.flag = this.userList.length > 0;
     },
-    outFocus() {
-      this.friend.flag = false;
-      this.friend.keyword = '';
-    },
-    // getFriendsList() {
-    //   var params =  {
-    //     relationStatus : 'ALL'
-    //   }
-    //   axiosUtil.get('/api/myGroup/getFriendList.do', {params}, result => {
-    //     this.userList = result.data.userList;
-    //   });
+    // outFocus() {
+    //   this.friend.flag = false;
+    //   this.friend.keyword = '';
     // },
+    getFriendsList() {
+      const params =  {
+        relationStatus : 'ALL'
+      }
+      axiosUtil.get('/api/myGroup/getFriendList.do', params, result => {
+        console.log(result);
+        this.friendsList = result.data.friendsList;
+        console.log('friends list : ', this.friendsList)
+      });
+    },
     getUserList() {
       const params =  {
         keyword : this.friend.keyword
@@ -257,6 +259,7 @@ export default {
       }
       axiosUtil.post('/api/myGroup/joinUserRelation.do', params, () => {
         alert('친구 신청이 완료 되었습니다.');
+        this.getFriendsList()
       });
     },
 
@@ -267,7 +270,7 @@ export default {
       });
     },
     // getGroupInfo() {
-    //   var params = {
+    //   const params = {
     //     groupIdx : this.groupId.groupIdx
     //   }
     //   axiosUtil.get('/api/myGroup/getGroupInfo.do', {params}, result => {
@@ -297,10 +300,11 @@ export default {
 
   },
   beforeMount() {
-    // this.getFriendsList();
-    // this.getUserList();
     this.getGroupList();
     // this.getGroupInfo();
+  },
+  created() {
+    this.getFriendsList()
   }
 };
 </script>
