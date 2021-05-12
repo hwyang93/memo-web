@@ -49,8 +49,8 @@ public class MyGroupContoller {
 
     @GetMapping("getFriendList.do")
     public String getFriendList(Model model, HttpSession session, @ModelAttribute UserRelationVO userRelation) {
-        userRelation.setFollowUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
-        List<UserRelationVO> result = myGroupService.getFriendList(userRelation);
+        userRelation.setUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+        List<UserRelationDTO> result = myGroupService.getFriendList(userRelation);
         model.addAttribute("friendsList", result);
         return "jsonView";
     }

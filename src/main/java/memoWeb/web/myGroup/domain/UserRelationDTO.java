@@ -18,5 +18,6 @@ public class UserRelationDTO {
 	private String relationStatus;
 
 	private String keyword;
+	private String followUserName;
 
 }

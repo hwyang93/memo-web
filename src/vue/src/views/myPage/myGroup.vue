@@ -225,9 +225,10 @@ export default {
         this.getUserList();
       } else {
         this.userList = [];
+        this.friend.flag = false;
       }
       console.log(this.userList);
-      this.friend.flag = this.userList.length > 0;
+
     },
     // outFocus() {
     //   this.friend.flag = false;
@@ -250,7 +251,8 @@ export default {
       console.log(this.friend.keyword);
       axiosUtil.get('/api/myGroup/getUserList.do', params, result => {
         this.userList = result.data.userList;
-        // console.log(this.userList);
+        this.friend.flag = this.userList.length > 0;
+        console.log(this.userList);
       });
     },
     requestFriend(userId) {
