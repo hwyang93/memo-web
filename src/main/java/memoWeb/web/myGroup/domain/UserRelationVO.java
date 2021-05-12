@@ -17,10 +17,10 @@ import javax.persistence.Table;
 @Table(name = "USER_RELATION")
 public class UserRelationVO {
 	@Id
+	@Column(name = "USER_ID")
+	private String userId;
 	@Column(name = "FOLLOW_USER_ID")
 	private String followUserId;
-	@Column(name = "FOLLOWING_USER_ID")
-	private String followingUserId;
 	@Column(name = "REG_DATE", insertable = false, updatable = false,
             columnDefinition = "Date default sysdate")
 	private String regDate;

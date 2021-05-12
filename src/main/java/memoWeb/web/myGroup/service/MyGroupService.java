@@ -1,6 +1,7 @@
 package memoWeb.web.myGroup.service;
 
 import com.querydsl.core.Tuple;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.*;
 import memoWeb.web.myGroup.repository.MyGroupRepository;
@@ -20,7 +21,7 @@ public class MyGroupService {
         this.myGroupRepository = myGroupRepository;
     }
 
-    public List<UserVO> getUserList(HashMap<String, Object> params) {
+    public List<UserDTO> getUserList(HashMap<String, Object> params) {
         return myGroupRepository.getUserList(params);
     }
 

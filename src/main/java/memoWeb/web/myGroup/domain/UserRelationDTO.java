@@ -12,8 +12,8 @@ import javax.persistence.Table;
 
 @Data
 public class UserRelationDTO {
+	private String userId;
 	private String followUserId;
-	private String followingUserId;
 	private String regDate;
 	private String relationStatus;
 
