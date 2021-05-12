@@ -57,7 +57,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     }
 
     @Override
-    public UserRelationVO joinUserRelation(UserRelationVO userRelation) {
+    public UserRelationDTO joinUserRelation(UserRelationDTO userRelation) {
         em.persist(userRelation);
         return userRelation;
     }
@@ -125,6 +125,25 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     @Override
     public void deleteGroup(GroupDTO group) {
         queryFactory.delete(qGroups).where(qGroups.groupIdx.eq(group.getGroupIdx()));
+    }
+
+    @Override
+    public List<UserRelationDTO> getFriendReqList(UserDTO user) {
+        return queryFactory.select(Projections.fields(UserRelationDTO.class, qUserRelation.userId, qUserRelation.followUserId, qUserRelation.relationStatus,
+                ExpressionUtils.as(JPAExpressions.select(qUser.userName).from(qUser).where(qUser.userId.eq(qUserRelation.userId)), "followUserName")))
+                .from(qUserRelation)
+                .where(qUserRelation.followUserId.eq(user.getUserId())
+                        .and(qUserRelation.relationStatus.eq("W")))
+                .fetch();
+    }
+
+    @Override
+    public long updateUserRelationStatus(UserRelationDTO userRelation) {
+        return queryFactory.update(qUserRelation)
+                .where(qUserRelation.userId.eq(userRelation.getUserId())
+                        .and(qUserRelation.followUserId.eq(userRelation.getFollowUserId())))
+                .set(qUserRelation.relationStatus, userRelation.getRelationStatus())
+                .execute();
     }
 
 
