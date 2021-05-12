@@ -1,7 +1,9 @@
 package memoWeb.web.myGroup.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserDTO;
@@ -61,15 +63,16 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
     }
 
     @Override
-    public List<UserRelationVO> getFriendList(UserRelationVO userRelation) {
+    public List<UserRelationDTO> getFriendList(UserRelationVO userRelation) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(qUserRelation.userId.eq(userRelation.getUserId()));
 
         if (userRelation.getRelationStatus() != null && !userRelation.getRelationStatus().equals("ALL")) {
             builder.and(qUserRelation.relationStatus.eq(userRelation.getRelationStatus()));
         }
-
-        return queryFactory.selectFrom(qUserRelation)
+        return queryFactory.select(Projections.fields(UserRelationDTO.class, qUserRelation.userId, qUserRelation.followUserId, qUserRelation.relationStatus,
+                ExpressionUtils.as(JPAExpressions.select(qUser.userName).from(qUser).where(qUser.userId.eq(qUserRelation.followUserId)), "followUserName")))
+                .from(qUserRelation)
                 .where(builder)
                 .fetch();
     }

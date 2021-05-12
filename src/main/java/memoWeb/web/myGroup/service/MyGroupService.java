@@ -33,7 +33,7 @@ public class MyGroupService {
         return myGroupRepository.joinUserRelation(userRelation);
     }
 
-    public List<UserRelationVO> getFriendList (UserRelationVO userRelation) {
+    public List<UserRelationDTO> getFriendList (UserRelationVO userRelation) {
         return myGroupRepository.getFriendList(userRelation);
     }
 

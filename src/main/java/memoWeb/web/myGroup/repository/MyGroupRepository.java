@@ -15,7 +15,7 @@ public interface MyGroupRepository {
 
     public UserRelationVO joinUserRelation(UserRelationVO userRelation);
 
-    public List<UserRelationVO> getFriendList(UserRelationVO userRelation);
+    public List<UserRelationDTO> getFriendList(UserRelationVO userRelation);
 
     public int getGroupIdx();
 
