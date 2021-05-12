@@ -2,7 +2,7 @@
   <section class="container space-type-1 blog_page">
     <h1 class="title-type-1">My Group</h1>
     <div class="row">
-      <!--blog-sidbar-->
+      <!--blog-sidebar-->
       <div class="col-lg-4 col-md-12">
         <div class="sidebar sidebar_left shadow-wrap-1">
           <!--search-->
@@ -128,26 +128,25 @@
                       </ul>
                     </div>
                   </div>
-
                 </b-form>
 
                 <h3 class="title-type-2">친구 목록</h3>
                 <ul class="user-list-area">
-                      <li class="user-list">
-                        <a href="#" class="user-pic">
-                          <img src="../../images/friends/user-sample.jpg" alt="" />
-                        </a>
-                        <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger">Delete</button>
-                      </li>
-                      <li class="user-list">
-                        <a href="#" class="user-pic">
-                          <img src="../../images/friends/user-sample.jpg" alt="" />
-                        </a>
-                        <a href="#" class="user-name">charm_bbong</a>
-                        <button class="btn btn-danger">Delete</button>
-                      </li>
-                    </ul>
+                  <li class="user-list" v-for="(item, index) in friendsList" :key="index">
+                    <a href="#" class="user-pic">
+                      <img src="../../images/friends/user-sample.jpg" alt="" />
+                    </a>
+                    <a href="#" class="user-name">{{item.followUserName}}
+                    </a>
+                    <span v-if="item.relationStatus === 'C'"><i class="fas fa-handshake"></i></span>
+                    <span v-else v-b-tooltip.hover title="수락 대기 중 입니다."><i class="fas fa-handshake-slash"></i></span>
+                    <button class="btn btn-danger">Delete</button>
+                  </li>
+                </ul>
+
+                <h3 class="title-type-2">친구 요청</h3>
+
+
               </b-tab>
             </b-tabs>
           </div>
@@ -243,6 +242,9 @@ export default {
         this.friendsList = result.data.friendsList;
         console.log('friends list : ', this.friendsList)
       });
+    },
+    removeFriend() {
+
     },
     getUserList() {
       const params =  {
