@@ -9,33 +9,34 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface MyGroupRepository {
-    public List<UserDTO> getUserList(HashMap<String, Object> params);
+	List<UserDTO> getUserList(HashMap<String, Object> params);
 
-    public UserVO getUserInfo(UserVO user);
+	UserVO getUserInfo(UserVO user);
 
-    public UserRelationDTO joinUserRelation(UserRelationDTO userRelation);
+	UserRelationDTO joinUserRelation(UserRelationDTO userRelation);
 
-    public List<UserRelationDTO> getFriendList(UserRelationVO userRelation);
+	List<UserRelationDTO> getFriendList(UserRelationVO userRelation);
 
-    public int getGroupIdx();
+	int getGroupIdx();
 
-    public void createGroup(GroupsVO group);
+	void createGroup(GroupsVO group);
 
-    public void joinGroupMember(GroupMemberVO groupMember);
+	void joinGroupMember(GroupMemberVO groupMember);
 
-    public List<GroupDTO> getGroupList(UserVO user);
+	List<GroupDTO> getGroupList(UserVO user);
 
-    public GroupsVO getGroupInfo(GroupsVO group);
+	GroupsVO getGroupInfo(GroupsVO group);
 
-    public List<GroupMemberDTO> getGroupMemberList(GroupDTO group);
+	List<GroupMemberDTO> getGroupMemberList(GroupDTO group);
 
-    public void deleteGroupMembers (GroupDTO group);
+	void deleteGroupMembers(GroupDTO group);
 
-    public void deleteGroup(GroupDTO group);
+	void deleteGroup(GroupDTO group);
 
-    public List<UserRelationDTO> getFriendReqList(UserDTO user);
+	List<UserRelationDTO> getFriendReqList(UserDTO user);
 
-    public long updateUserRelationStatus(UserRelationDTO userRelation);
+	long updateUserRelationStatus(UserRelationDTO userRelation);
 
+	long deleteUserRelation(UserRelationDTO userRelation);
 
 }
