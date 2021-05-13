@@ -29,7 +29,7 @@ public class MyGroupService {
         return myGroupRepository.getUserInfo(user);
     };
 
-    public UserRelationVO joinUserRelation (UserRelationVO userRelation) {
+    public UserRelationDTO joinUserRelation (UserRelationDTO userRelation) {
         return myGroupRepository.joinUserRelation(userRelation);
     }
 
@@ -62,6 +62,20 @@ public class MyGroupService {
     public void deleteGroup(GroupDTO group) {
         myGroupRepository.deleteGroupMembers(group);
         myGroupRepository.deleteGroup(group);
+    }
+
+    public List<UserRelationDTO> getFriendReqList(UserDTO user) {
+        return myGroupRepository.getFriendReqList(user);
+    }
+
+    public void friendConsent (UserRelationDTO userRelation) {
+        userRelation.setRelationStatus("I");
+        UserRelationDTO joinInfo = new UserRelationDTO();
+        joinInfo.setUserId(userRelation.getFollowUserId());
+        joinInfo.setFollowUserId(userRelation.getUserId());
+        joinInfo.setRelationStatus("I");
+        long result = myGroupRepository.updateUserRelationStatus(userRelation);
+        myGroupRepository.joinUserRelation(userRelation);
     }
 
 }

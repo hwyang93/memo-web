@@ -13,7 +13,7 @@ public interface MyGroupRepository {
 
     public UserVO getUserInfo(UserVO user);
 
-    public UserRelationVO joinUserRelation(UserRelationVO userRelation);
+    public UserRelationDTO joinUserRelation(UserRelationDTO userRelation);
 
     public List<UserRelationDTO> getFriendList(UserRelationVO userRelation);
 
@@ -32,5 +32,10 @@ public interface MyGroupRepository {
     public void deleteGroupMembers (GroupDTO group);
 
     public void deleteGroup(GroupDTO group);
+
+    public List<UserRelationDTO> getFriendReqList(UserDTO user);
+
+    public long updateUserRelationStatus(UserRelationDTO userRelation);
+
 
 }
