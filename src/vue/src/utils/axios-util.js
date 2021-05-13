@@ -12,7 +12,9 @@ const axiosUtil = {
         params: data
       })
       .then(cbSuccess)
-      .catch(() => {
+      .catch((result) => {
+          debugger;
+          console.log(result);
         router.push('/login');
       })
       .then(cbComplete);

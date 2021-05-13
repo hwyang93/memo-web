@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     getMemoInfo() {
+
       axiosUtil.get('/api/myMemo/myMemo/' + this.idx, {}, result => {
         this.form.title = result.data.result.title;
         this.form.memoPlace = result.data.result.memoPlace;
@@ -61,7 +62,7 @@ export default {
         this.form.lon = result.data.result.lon;
         this.form.lat = result.data.result.lat;
         this.scheduleList.push(result.data.result);
-        this.$refs.kakaoMap.setCenter(this.form.lat, this.form.lon);
+        // this.$refs.kakaoMap.setCenter(this.form.lat, this.form.lon);
       });
     },
     closeModal() {

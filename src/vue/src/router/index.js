@@ -48,6 +48,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/groupDetail.vue')
   },
   {
+    path: '/userPage/user',
+    name: 'admin',
+    component: () => import(/* webpackChunkName: "main" */ '../views/userPage/userComponent')
+  },
+  {
     path: '/adminPage/admin',
     name: 'admin',
     component: () => import(/* webpackChunkName: "main" */ '../views/adminPage/admin.vue')
