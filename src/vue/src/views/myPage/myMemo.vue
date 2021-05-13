@@ -1,9 +1,9 @@
 <template>
   <section class="container space blog_page">
     <div class="row">
-      <!--blog-sidbar-->
+      <!--blog-sidebar-->
       <div class="col-lg-4 col-md-12">
-        <div class="sidebar sidbar_left bg-gray">
+        <div class="sidebar sidebar_left bg-gray">
           <!--search-->
           <left-search />
           <!--widgets-cat-->

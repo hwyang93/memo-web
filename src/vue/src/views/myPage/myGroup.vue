@@ -133,18 +133,23 @@
                 <h3 class="title-type-2">친구 목록</h3>
                 <ul class="user-list-area">
                   <li class="user-list" v-for="(item, index) in friendsList" :key="index">
-                    <a href="#" class="user-pic">
-                      <img src="../../images/friends/user-sample.jpg" alt="" />
-                    </a>
+                    <div class="d-flex align-items-center">
+                      <span v-if="item.relationStatus === 'C'"><i class="fas fa-handshake"></i></span>
+                      <span v-else><i class="fas fa-handshake-slash"></i></span>
+                      <a href="#" class="user-pic">
+                        <img src="../../images/friends/user-sample.jpg" alt="" />
+                      </a>
+                    </div>
+
                     <a href="#" class="user-name">{{item.followUserName}}
                     </a>
-                    <span v-if="item.relationStatus === 'C'"><i class="fas fa-handshake"></i></span>
-                    <span v-else v-b-tooltip.hover title="수락 대기 중 입니다."><i class="fas fa-handshake-slash"></i></span>
+
                     <button class="btn btn-danger">Delete</button>
                   </li>
                 </ul>
 
                 <h3 class="title-type-2">친구 요청</h3>
+
 
 
               </b-tab>
@@ -314,5 +319,7 @@ export default {
 </script>
 
 <style>
-
+.user-list span {
+  margin-right: 10px;
+}
 </style>

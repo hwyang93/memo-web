@@ -36,13 +36,13 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Username</label>
+                      <label>Username</label>
                       <input type="text" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Email</label>
+                      <label>Email</label>
                       <input type="text" class="form-control">
                     </div>
                   </div>
@@ -51,13 +51,13 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Password</label>
+                      <label>Password</label>
                       <input type="password" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Password</label>
+                      <label>Password</label>
                       <input type="password" class="form-control">
                     </div>
                   </div>
@@ -66,7 +66,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="">About Me</label>
+                      <label>About Me</label>
                       <textarea rows="5" placeholder="Here can be your description" class="form-control border-input"></textarea>
                     </div>
                   </div>
