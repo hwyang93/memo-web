@@ -13,8 +13,6 @@ const axiosUtil = {
       })
       .then(cbSuccess)
       .catch((result) => {
-          debugger;
-          console.log(result);
         router.push('/login');
       })
       .then(cbComplete);
