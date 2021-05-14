@@ -150,8 +150,6 @@
 
                 <h3 class="title-type-2">친구 요청</h3>
 
-
-
               </b-tab>
             </b-tabs>
           </div>
