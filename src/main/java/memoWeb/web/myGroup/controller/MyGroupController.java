@@ -39,7 +39,7 @@ public class MyGroupController {
 	}
 
 	@PostMapping("joinUserRelation.do")
-	public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationDTO userRelation) {
+	public String joinUserRelation(Model model, HttpSession session, @RequestBody UserRelationVO userRelation) {
 		userRelation.setUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
 		userRelation.setRelationStatus("W");
 		long result = myGroupService.joinUserRelation(userRelation);
@@ -130,4 +130,12 @@ public class MyGroupController {
 		myGroupService.friendConsent(userRelation);
 		return "jsonView";
 	}
+
+	@PostMapping("deleteFriend.do")
+	public String deleteFriend(Model model, @RequestBody UserRelationDTO userRelation) {
+		long result = myGroupService.deleteUserRelation(userRelation);
+		model.addAttribute("result", result);
+		return "jsonView";
+	}
+
 }

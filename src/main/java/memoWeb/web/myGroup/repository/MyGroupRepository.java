@@ -1,6 +1,5 @@
 package memoWeb.web.myGroup.repository;
 
-import com.querydsl.core.Tuple;
 import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.*;
@@ -13,7 +12,7 @@ public interface MyGroupRepository {
 
 	UserVO getUserInfo(UserVO user);
 
-	long joinUserRelation(UserRelationDTO userRelation);
+	long joinUserRelation(UserRelationVO userRelation);
 
 	List<UserRelationDTO> getFriendList(UserRelationVO userRelation);
 
