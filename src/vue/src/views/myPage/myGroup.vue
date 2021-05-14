@@ -11,8 +11,8 @@
             <div class="blog-sidebar-widgets-inner">
               <form class="searchform">
                 <div class="form-group search_2 p-0">
-                  <input type="text" class="form-control" placeholder="키워드 검색" id="s" />
-                  <button type="button" class="btn"><i class="fas fa-search"></i></button>
+                  <input id="s" class="form-control" placeholder="키워드 검색" type="text" />
+                  <button class="btn" type="button"><i class="fas fa-search"></i></button>
                 </div>
               </form>
             </div>
@@ -24,18 +24,18 @@
             <h3 class="widgets-title"><span>Tags</span></h3>
             <div class="blog-sidebar-widgets-inner">
               <div class="tagcloud">
-                <a href="index.html" class="tag-cloud-link">Marketing</a>
-                <a href="index.html" class="tag-cloud-link">Font</a>
-                <a href="index.html" class="tag-cloud-link">Design</a>
-                <a href="index.html" class="tag-cloud-link">Networking</a>
-                <a href="index.html" class="tag-cloud-link">I Interior</a>
-                <a href="index.html" class="tag-cloud-link">Seo</a>
-                <a href="index.html" class="tag-cloud-link">theme</a>
-                <a href="index.html" class="tag-cloud-link">Web design</a>
-                <a href="index.html" class="tag-cloud-link">Post</a>
-                <a href="index.html" class="tag-cloud-link">Developing</a>
-                <a href="index.html" class="tag-cloud-link">Socail</a>
-                <a href="index.html" class="tag-cloud-link">html</a>
+                <a class="tag-cloud-link" href="index.html">Marketing</a>
+                <a class="tag-cloud-link" href="index.html">Font</a>
+                <a class="tag-cloud-link" href="index.html">Design</a>
+                <a class="tag-cloud-link" href="index.html">Networking</a>
+                <a class="tag-cloud-link" href="index.html">I Interior</a>
+                <a class="tag-cloud-link" href="index.html">Seo</a>
+                <a class="tag-cloud-link" href="index.html">theme</a>
+                <a class="tag-cloud-link" href="index.html">Web design</a>
+                <a class="tag-cloud-link" href="index.html">Post</a>
+                <a class="tag-cloud-link" href="index.html">Developing</a>
+                <a class="tag-cloud-link" href="index.html">Socail</a>
+                <a class="tag-cloud-link" href="index.html">html</a>
               </div>
             </div>
           </div>
@@ -47,58 +47,48 @@
           <h2></h2>
           <div class="tab-area-gf">
             <b-tabs content-class="mt-3" fill>
-              <b-tab title="Group" active>
+              <b-tab active title="Group">
                 <h3 class="title-type-2">그룹 관리</h3>
                 <b-button v-b-modal.modal-center>그룹 만들기</b-button>
-                  <b-modal id="modal-center" centered title="그룹 만들기">
+                <b-modal id="modal-center" centered title="그룹 만들기">
+                  <b-form v-if="form.show" @reset="onReset" @submit="onSubmit">
+                    <b-form-group id="input-group-1" label="Group Name:" label-for="input-1">
+                      <b-form-input id="input-1" v-model="form.groupName" placeholder="Group Name" required type="text"></b-form-input>
+                    </b-form-group>
 
-                    <b-form @submit="onSubmit" @reset="onReset" v-if="form.show">
-                      <b-form-group
-                        id="input-group-1"
-                        label="Group Name:"
-                        label-for="input-1"
-                      >
-                        <b-form-input
-                          id="input-1"
-                          v-model="form.groupName"
-                          type="text"
-                          placeholder="Group Name"
-                          required
-                        ></b-form-input>
-                      </b-form-group>
+                    <b-form-group id="input-group-2" label="Group Information:" label-for="input-2">
+                      <b-form-input id="input-2" v-model="form.groupInfo" placeholder="Enter Information" required></b-form-input>
+                    </b-form-group>
 
-                      <b-form-group id="input-group-2" label="Group Information:" label-for="input-2">
-                        <b-form-input
-                          id="input-2"
-                          v-model="form.groupInfo"
-                          placeholder="Enter Information"
-                          required
-                        ></b-form-input>
-                      </b-form-group>
+                    <label>멤버 추가</label>
+                    <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
 
-                      <label>멤버 추가</label>
-                      <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
-
-                      <div class="button-area mt-3">
-                        <b-button type="submit" variant="primary">Submit</b-button>
-                        <b-button type="reset" variant="danger">Reset</b-button>
-                      </div>
-                    </b-form>
-                  </b-modal>
+                    <div class="button-area mt-3">
+                      <b-button type="submit" variant="primary">Submit</b-button>
+                      <b-button type="reset" variant="danger">Reset</b-button>
+                    </div>
+                  </b-form>
+                </b-modal>
                 <h3 class="title-type-2">참여중인 그룹</h3>
                 <div class="group-list-area">
                   <ul class="group-list">
-                    <li v-for="(item, index) in groupList" :key="index" @click="showModal(item)" class="group-item shadow-wrap-1" :class="[item.memberAuth == 'member' ? 'member':item.approvalStatus=='N' ? 'pending':'']">
-                      <h4>{{item.groupTitle}}</h4>
-                      <p>info : {{item.groupComment}}</p>
+                    <li
+                      v-for="(item, index) in groupList"
+                      :key="index"
+                      :class="[item.memberAuth == 'member' ? 'member' : item.approvalStatus == 'N' ? 'pending' : '']"
+                      class="group-item shadow-wrap-1"
+                      @click="showModal(item)"
+                    >
+                      <h4>{{ item.groupTitle }}</h4>
+                      <p>info : {{ item.groupComment }}</p>
                     </li>
                   </ul>
                   <b-modal ref="group-modal" centered title="그룹 정보">
                     <ul class="user-list-area">
-                      <h4>{{this.groupDetail.groupTitle}}</h4>
-                      <p>info : <br>{{this.groupDetail.groupComment}}</p>
+                      <h4>{{ this.groupDetail.groupTitle }}</h4>
+                      <p>info : <br />{{ this.groupDetail.groupComment }}</p>
                       <label>참여 멤버</label>
-                      <b-form-tags input-id="tags-basic" v-model="memberValue" :disableAddButton="true"></b-form-tags>
+                      <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
                       <b-button variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
@@ -107,23 +97,30 @@
 
               <b-tab title="Friends">
                 <h3 class="title-type-2">친구 관리</h3>
-                <p>친구 찾기: </p>
+                <p>친구 찾기:</p>
                 <b-form inline>
                   <div class="search-friend-area">
-                    <b-form-input v-model="friend.keyword" id="inline-form-input-name search-input" class="mb-2 mr-sm-2 mb-sm-0" placeholder="enter user name" @keyup="openDrop" autocomplete="off"></b-form-input>
+                    <b-form-input
+                      id="inline-form-input-name search-input"
+                      v-model="friend.keyword"
+                      autocomplete="off"
+                      class="mb-2 mr-sm-2 mb-sm-0"
+                      placeholder="enter user name"
+                      @keyup="openDrop"
+                    ></b-form-input>
                     <!-- <b-button variant="primary" @click="getUserList">Search</b-button> -->
-                    <div class="search-drop shadow-wrap-1" v-if="this.friend.flag">
+                    <div v-if="this.friend.flag" class="search-drop shadow-wrap-1">
                       <ul class="search-result-box">
                         <li v-for="(item, index) in userList" :key="index" class="search-result-list">
                           <div class="search-result">
-                            <a href="#" class="user-box">
+                            <a class="user-box" href="#">
                               <div class="user-pic">
-                                <img src="../../images/friends/user-sample.jpg" alt="" />
+                                <img alt="" src="../../images/friends/user-sample.jpg" />
                               </div>
-                              <span>{{item.userName}}</span>
+                              <span>{{ item.userName }}</span>
                             </a>
                           </div>
-                          <button class="btn btn-info" @click="requestFriend(item.userId)" id="btn-add-group">Add</button>
+                          <button type="button" id="btn-add-group" class="btn btn-info" @click="requestFriend(item.userId)">Add</button>
                         </li>
                       </ul>
                     </div>
@@ -132,29 +129,26 @@
 
                 <h3 class="title-type-2">친구 목록</h3>
                 <ul class="user-list-area">
-                  <li class="user-list" v-for="(item, index) in friendsList" :key="index">
+                  <li v-for="(item, index) in friendsList" :key="index" class="user-list">
                     <div class="d-flex align-items-center">
                       <span v-if="item.relationStatus === 'I'"><i class="fas fa-handshake"></i></span>
                       <span v-else><i class="fas fa-handshake-slash"></i></span>
-                      <a href="#" class="user-pic">
-                        <img src="../../images/friends/user-sample.jpg" alt="" />
+                      <a class="user-pic" href="#">
+                        <img alt="" src="../../images/friends/user-sample.jpg" />
                       </a>
                     </div>
 
-                    <a href="#" class="user-name">{{item.followUserName}}
-                    </a>
+                    <a class="user-name" href="#">{{ item.followUserName }} </a>
 
                     <button class="btn btn-danger">Delete</button>
                   </li>
                 </ul>
 
                 <h3 class="title-type-2">친구 요청</h3>
-
               </b-tab>
             </b-tabs>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -181,19 +175,18 @@ export default {
         groupInfo: '',
         show: true
       },
-      friend:{
-        keyword : '',
-        flag : false,
+      friend: {
+        keyword: '',
+        flag: false
       },
-      groupId:{
-        groupIdx : ''
+      groupId: {
+        groupIdx: ''
       },
       groupDetail: {
         groupTitle: '',
         groupComment: '',
         groupMembers: []
-      },
-
+      }
     };
   },
   watch: {
@@ -215,14 +208,14 @@ export default {
   },
   methods: {
     showModal(item) {
-      console.log('item',item);
+      console.log('item', item);
       this.groupDetail.groupTitle = item.groupTitle;
       this.groupDetail.groupComment = item.groupComment;
       console.log(this.groupDetail.groupTitle);
       this.$refs['group-modal'].show();
     },
     openDrop() {
-      console.log("event")
+      console.log('event');
       if (this.friend.keyword.length > 0) {
         this.getUserList();
       } else {
@@ -230,29 +223,26 @@ export default {
         this.friend.flag = false;
       }
       console.log(this.userList);
-
     },
     // outFocus() {
     //   this.friend.flag = false;
     //   this.friend.keyword = '';
     // },
     getFriendsList() {
-      const params =  {
-        relationStatus : 'ALL'
-      }
+      const params = {
+        relationStatus: 'ALL'
+      };
       axiosUtil.get('/api/myGroup/getFriendList.do', params, result => {
         console.log(result);
         this.friendsList = result.data.friendsList;
-        console.log('friends list : ', this.friendsList)
+        console.log('friends list : ', this.friendsList);
       });
     },
-    removeFriend() {
-
-    },
+    removeFriend() {},
     getUserList() {
-      const params =  {
-        keyword : this.friend.keyword
-      }
+      const params = {
+        keyword: this.friend.keyword
+      };
       console.log(this.friend.keyword);
       axiosUtil.get('/api/myGroup/getUserList.do', params, result => {
         this.userList = result.data.userList;
@@ -262,11 +252,11 @@ export default {
     },
     requestFriend(userId) {
       const params = {
-        followUserId : userId
-      }
+        followUserId: userId
+      };
       axiosUtil.post('/api/myGroup/joinUserRelation.do', params, () => {
         alert('친구 신청이 완료 되었습니다.');
-        this.getFriendsList()
+        this.getFriendsList();
       });
     },
 
@@ -292,26 +282,24 @@ export default {
       });
     },
     onSubmit(event) {
-      event.preventDefault()
-
+      event.preventDefault();
     },
     onReset(event) {
-      event.preventDefault()
-      this.form.groupName = ''
-      this.form.groupInfo = ''
-      this.form.show = false
+      event.preventDefault();
+      this.form.groupName = '';
+      this.form.groupInfo = '';
+      this.form.show = false;
       this.$nextTick(() => {
-        this.form.show = true
-      })
-    },
-
+        this.form.show = true;
+      });
+    }
   },
   beforeMount() {
     this.getGroupList();
     // this.getGroupInfo();
   },
   created() {
-    this.getFriendsList()
+    this.getFriendsList();
   }
 };
 </script>

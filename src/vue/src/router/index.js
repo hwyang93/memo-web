@@ -6,7 +6,6 @@ import Home from '../views/Home.vue';
 Vue.use(VueRouter);
 
 const routes = [
-
   {
     path: '/',
     name: 'Home',
@@ -43,13 +42,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/myProfile.vue')
   },
   {
-    path: '/myPage/group/groupDetail/:id?',
+    path: '/myPage/group/groupDetail',
     name: 'groupDetail',
     component: () => import(/* webpackChunkName: "main" */ '../views/myPage/groupDetail.vue')
   },
   {
     path: '/userPage/user',
-    name: 'admin',
+    name: 'User',
     component: () => import(/* webpackChunkName: "main" */ '../views/userPage/userComponent')
   },
   {

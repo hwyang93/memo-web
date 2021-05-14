@@ -27,11 +27,10 @@ public class MyGroupService {
 
 	public UserVO getUserInfo(UserVO user) {
 		return myGroupRepository.getUserInfo(user);
+
 	}
 
-	;
-
-	public long joinUserRelation(UserRelationDTO userRelation) {
+	public long joinUserRelation(UserRelationVO userRelation) {
 		return myGroupRepository.joinUserRelation(userRelation);
 	}
 
@@ -74,12 +73,23 @@ public class MyGroupService {
 
 	public void friendConsent(UserRelationDTO userRelation) {
 		userRelation.setRelationStatus("I");
-		UserRelationDTO joinInfo = new UserRelationDTO();
+		UserRelationVO joinInfo = new UserRelationVO();
 		joinInfo.setUserId(userRelation.getFollowUserId());
 		joinInfo.setFollowUserId(userRelation.getUserId());
 		joinInfo.setRelationStatus("I");
 		long result = myGroupRepository.updateUserRelationStatus(userRelation);
-		myGroupRepository.joinUserRelation(userRelation);
+		myGroupRepository.joinUserRelation(joinInfo);
+	}
+
+	public long deleteUserRelation(UserRelationDTO userRelation) {
+		long result = myGroupRepository.deleteUserRelation(userRelation);
+		if (userRelation.getRelationStatus().equals("I")) {
+			UserRelationDTO userRelation2 = new UserRelationDTO();
+			userRelation2.setUserId(userRelation.getFollowUserId());
+			userRelation2.setFollowUserId(userRelation.getUserId());
+			myGroupRepository.deleteUserRelation(userRelation2);
+		}
+		return result;
 	}
 
 }

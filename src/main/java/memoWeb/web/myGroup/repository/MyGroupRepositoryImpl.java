@@ -9,7 +9,6 @@ import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 import memoWeb.web.myGroup.domain.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,11 +52,9 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 	}
 
 	@Override
-	public long joinUserRelation(UserRelationDTO userRelation) {
-		return queryFactory.insert(qUserRelation)
-				.columns(qUserRelation.userId, qUserRelation.followUserId, qUserRelation.relationStatus)
-				.values(userRelation.getUserId(), userRelation.getFollowUserId(), userRelation.getRelationStatus())
-				.execute();
+	public long joinUserRelation(UserRelationVO userRelation) {
+		em.persist(userRelation);
+		return 1;
 	}
 
 	@Override
