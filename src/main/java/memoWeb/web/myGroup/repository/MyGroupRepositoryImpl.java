@@ -53,9 +53,11 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 	}
 
 	@Override
-	public UserRelationDTO joinUserRelation(UserRelationDTO userRelation) {
-		em.persist(userRelation);
-		return userRelation;
+	public long joinUserRelation(UserRelationDTO userRelation) {
+		return queryFactory.insert(qUserRelation)
+				.columns(qUserRelation.userId, qUserRelation.followUserId, qUserRelation.relationStatus)
+				.values(userRelation.getUserId(), userRelation.getFollowUserId(), userRelation.getRelationStatus())
+				.execute();
 	}
 
 	@Override
