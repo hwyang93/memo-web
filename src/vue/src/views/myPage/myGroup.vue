@@ -134,7 +134,7 @@
                 <ul class="user-list-area">
                   <li class="user-list" v-for="(item, index) in friendsList" :key="index">
                     <div class="d-flex align-items-center">
-                      <span v-if="item.relationStatus === 'C'"><i class="fas fa-handshake"></i></span>
+                      <span v-if="item.relationStatus === 'I'"><i class="fas fa-handshake"></i></span>
                       <span v-else><i class="fas fa-handshake-slash"></i></span>
                       <a href="#" class="user-pic">
                         <img src="../../images/friends/user-sample.jpg" alt="" />
