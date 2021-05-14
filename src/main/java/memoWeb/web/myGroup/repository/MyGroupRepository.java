@@ -13,7 +13,7 @@ public interface MyGroupRepository {
 
 	UserVO getUserInfo(UserVO user);
 
-	UserRelationDTO joinUserRelation(UserRelationDTO userRelation);
+	long joinUserRelation(UserRelationDTO userRelation);
 
 	List<UserRelationDTO> getFriendList(UserRelationVO userRelation);
 
