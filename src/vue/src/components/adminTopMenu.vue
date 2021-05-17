@@ -2,7 +2,7 @@
   <section class="topMenu-a">
     <div class="title-container title-light">
       <div class="title-dash">
-        <a class="title-brand">Dashboard</a>
+        <a class="title-brand">{{ this.headName }}</a>
         <a id="logoutBtn" @click="logout()">logout</a>
       </div>
     </div>
@@ -11,7 +11,16 @@
 
 <script>
 export default {
-  name: 'adminTopMenu'
+  name: 'adminTopMenu',
+  props: ['send'],
+  data() {
+    return {
+      headName: ''
+    };
+  },
+  beforeMount() {
+    this.headName = this.$props.send;
+  }
 };
 </script>
 <style>
