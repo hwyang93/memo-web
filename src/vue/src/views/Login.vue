@@ -54,7 +54,7 @@ export default {
         } else {
           this.$store.commit('LOGIN', result.data);
           if (result.data.userId == 'admin') {
-            this.$router.push('/adminPage/admin');
+            this.$router.push('/admin/Dashboard');
           } else {
             this.$router.push('/');
           }
