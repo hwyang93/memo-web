@@ -52,9 +52,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/userPage/userComponent')
   },
   {
-    path: '/adminPage/admin',
-    name: 'admin',
-    component: () => import(/* webpackChunkName: "main" */ '../views/adminPage/admin.vue')
+    path: '/admin/Dashboard',
+    name: 'Dashboard',
+    component: () => import(/* webpackChunkName: "main" */ '../views/admin/Dashboard.vue')
+  },
+  {
+    path: '/admin/Users',
+    name: 'Users',
+    component: () => import(/* webpackChunkName: "main" */ '../views/admin/Users.vue')
   }
 ];
 

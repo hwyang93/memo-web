@@ -2,24 +2,35 @@
   <div class="wrapper-admin">
     <side-menu> </side-menu>
     <!-- user -->
-    <div class="main-content">
-      <admin-top-menu></admin-top-menu>
-      <div class="row">
-        <div class="col-lg-5 col-md-5">
-          <div class="card card-user shadow-wrap-1">
-            <div class="card-content">
-              <div>Users</div>
-              <div>icon</div>
-              <div>Total</div>
+    <div class="main-area">
+      <div class="main-content">
+        <admin-top-menu :send="this.pageName"></admin-top-menu>
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="card card-user shadow-wrap-1">
+              <div class="card-content">
+                <div class="c-box title">Users</div>
+                <div class="c-box icon"><img src="#" id="userIcon" /></div>
+                <div class="c-box cnt">Total</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-5 col-md-5">
-          <div class="card card-user shadow-wrap-1">
-            <div class="card-content">
-              <div>Post</div>
-              <div>icon</div>
-              <div>Total</div>
+          <div class="col-lg-4 col-md-6">
+            <div class="card card-user shadow-wrap-1">
+              <div class="card-content">
+                <div class="c-box title">Post</div>
+                <div class="c-box icon"><img src="#" id="userIcon" /></div>
+                <div class="c-box cnt">Total</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="card card-user shadow-wrap-1">
+              <div class="card-content">
+                <div class="c-box title">Group</div>
+                <div class="c-box icon"><img src="#" id="userIcon" /></div>
+                <div class="c-box cnt">Total</div>
+              </div>
             </div>
           </div>
         </div>
@@ -39,7 +50,7 @@ export default {
   },
   data() {
     return {
-      name: ''
+      pageName: 'Dashboard'
     };
   },
   methods: {
@@ -48,7 +59,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.main-area {
+  position: fixed;
+  width: 100%;
+}
 .main-content {
   background-color: #f4f3ef;
   position: relative;
@@ -63,5 +78,17 @@ export default {
 }
 .card .card-content {
   padding: 15px 15px 10px;
+}
+.c-box.title {
+  padding: 7px;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  font-weight: 600;
+}
+#userIcon {
+  text-align: center;
+  width: 250px;
+  height: 250px;
+  border: 1px solid #ccc;
 }
 </style>
