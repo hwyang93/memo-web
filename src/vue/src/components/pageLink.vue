@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="userListTbl">
+    <!-- <table class="userListTbl">
       <colgroup>
         <col width="20%" />
         <col width="20%" />
@@ -27,6 +27,24 @@
           <th>{{ user.userEmail }}</th>
           <th>{{ $moment(user.regDate).format('YYYY-MM-DD') }}</th>
           <th><span class="delBtn" @click="delUser(user.userId)">Delete</span></th>
+        </tr>
+      </tbody>
+    </table> -->
+    <table class="userListTbl">
+      <colgroup>
+        <col width="50%" />
+        <col width="50%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">아이디</th>
+          <th scope="col">이름</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(user, index) in paginatedData" :key="index">
+          <th>{{ user.userId }}</th>
+          <th>{{ user.userName }}</th>
         </tr>
       </tbody>
     </table>

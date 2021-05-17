@@ -12,6 +12,8 @@
       <ul class="side-nav">
         <li class="nav-item"><a class="nav-link" @click="change('/admin/DashBoard')">DashBoard</a></li>
         <li class="nav-item"><a class="nav-link" @click="change('/admin/Users')">Users</a></li>
+        <li class="nav-item"><a class="nav-link" @click="change('/admin/Post')">Post</a></li>
+        <li class="nav-item"><a class="nav-link" @click="change('/admin/Groups')">Groups</a></li>
       </ul>
     </div>
   </div>

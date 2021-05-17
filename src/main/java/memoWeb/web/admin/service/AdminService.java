@@ -24,4 +24,20 @@ public class AdminService {
 	public int deleteUser(String id) {
 		return adminRepository.deleteUser(id);
 	}
+
+	public UserVO getUserInfo(String id) {
+		return adminRepository.getUserInfo(id);
+	}
+
+	public long getUserCnt() {
+		return adminRepository.getUserCnt();
+	}
+
+	public long getPostCnt() {
+		return 0;
+	}
+
+	public long getGroupCnt() {
+		return 0;
+	}
 }
