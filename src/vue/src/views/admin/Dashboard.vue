@@ -10,8 +10,8 @@
             <div class="card card-user shadow-wrap-1">
               <div class="card-content">
                 <div class="c-box title">Users</div>
-                <div class="c-box icon"><img src="#" id="userIcon" /></div>
-                <div class="c-box cnt">Total</div>
+                <div class="c-box icon"><img src="../../images/dashboard/user.png" id="dashIcon" /></div>
+                <div class="c-box total">Total : {{ this.userCnt }}</div>
               </div>
             </div>
           </div>
@@ -19,8 +19,8 @@
             <div class="card card-user shadow-wrap-1">
               <div class="card-content">
                 <div class="c-box title">Post</div>
-                <div class="c-box icon"><img src="#" id="userIcon" /></div>
-                <div class="c-box cnt">Total</div>
+                <div class="c-box icon"><img src="../../images/dashboard/post.png" id="dashIcon" /></div>
+                <div class="c-box total">Total : {{ this.postCnt }}</div>
               </div>
             </div>
           </div>
@@ -28,8 +28,8 @@
             <div class="card card-user shadow-wrap-1">
               <div class="card-content">
                 <div class="c-box title">Group</div>
-                <div class="c-box icon"><img src="#" id="userIcon" /></div>
-                <div class="c-box cnt">Total</div>
+                <div class="c-box icon"><img src="../../images/dashboard/group.png" id="dashIcon" /></div>
+                <div class="c-box total">Total : {{ this.groupCnt }}</div>
               </div>
             </div>
           </div>
@@ -41,7 +41,7 @@
 <script>
 import AdminTopMenu from '../../components/adminTopMenu.vue';
 import SideMenu from '../../components/sideMenu.vue';
-
+import axiosUtil from '@/utils/axios-util';
 export default {
   name: 'Dashboard',
   components: {
@@ -50,11 +50,18 @@ export default {
   },
   data() {
     return {
-      pageName: 'Dashboard'
+      pageName: 'Dashboard',
+      userCnt: 0,
+      postCnt: 0,
+      groupCnt: 0
     };
   },
-  methods: {
-    logout() {}
+  created() {
+    axiosUtil.get('/api/admin/dashboard/', {}, result => {
+      this.userCnt = result.data.userCnt;
+      this.postCnt = result.data.postCnt;
+      this.groupCnt = result.data.groupCnt;
+    });
   }
 };
 </script>
@@ -79,16 +86,28 @@ export default {
 .card .card-content {
   padding: 15px 15px 10px;
 }
+.c-box {
+  width: 100%;
+}
 .c-box.title {
   padding: 7px;
-  width: 100%;
-  border-bottom: 1px solid #ccc;
+
   font-weight: 600;
 }
-#userIcon {
+.c-box.icon {
+  padding: 20px;
+  margin: auto;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   text-align: center;
-  width: 250px;
-  height: 250px;
-  border: 1px solid #ccc;
+}
+.c-box.total {
+  padding: 7px;
+  font-weight: 600;
+}
+#dashIcon {
+  width: 70%;
+  height: 70%;
+  opacity: 0.5;
 }
 </style>

@@ -39,4 +39,19 @@ public class AdminRepositoryImpl implements AdminRepository {
 		return (int) deleteClause.where(quser.userId.eq(id)).execute();
 	}
 
+	@Override
+	public UserVO getUserInfo(String id) {
+		final JPAQuery<UserVO> query = new JPAQuery<>(em);
+		return query.from(quser)
+				.where(quser.userId.eq(id))
+				.fetchOne();
+	}
+
+	@Override
+	public long getUserCnt() {
+		final JPAQuery<UserVO> query = new JPAQuery<>(em);
+		return query.from(quser)
+				.fetchCount();
+	}
+
 }

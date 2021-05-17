@@ -28,11 +28,32 @@ public class AdminController {
 		this.adminService = adminService;
 	}
 	
+	@GetMapping("/dashboard")
+	public Map<String,Object> getDashboardData(Model model){
+		Map<String,Object> map = new HashMap<>();
+		long userCnt = adminService.getUserCnt();
+		long postCnt = adminService.getPostCnt();
+		long groupCnt = adminService.getGroupCnt();
+
+		map.put("userCnt", userCnt);
+		map.put("postCnt", postCnt);
+		map.put("groupCnt", groupCnt);
+		return map;
+	}
+	
 	@GetMapping("/userList")
 	public Map<String,Object> getUserList(Model model){
 		Map<String,Object> map = new HashMap<>();
 		List<UserVO> userList = adminService.getUserList();
 		map.put("userList", userList);
+		return map;
+	}
+	
+	@GetMapping("/userInfo/{id}")
+	public Map<String,Object> getUserInfo(@PathVariable("id") String id, Model model){
+		Map<String,Object> map = new HashMap<>();
+		UserVO userInfo = adminService.getUserInfo(id);
+		map.put("userInfo", userInfo);
 		return map;
 	}
 	

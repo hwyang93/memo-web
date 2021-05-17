@@ -60,6 +60,16 @@ const routes = [
     path: '/admin/Users',
     name: 'Users',
     component: () => import(/* webpackChunkName: "main" */ '../views/admin/Users.vue')
+  },
+  {
+    path: '/admin/Post',
+    name: 'Post',
+    component: () => import(/* webpackChunkName: "main" */ '../views/admin/Post.vue')
+  },
+  {
+    path: '/admin/Groups',
+    name: 'Groups',
+    component: () => import(/* webpackChunkName: "main" */ '../views/admin/Groups.vue')
   }
 ];
 
