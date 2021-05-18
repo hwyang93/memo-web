@@ -3,7 +3,7 @@
     <div class="title-container title-light">
       <div class="title-dash">
         <a class="title-brand">{{ this.headName }}</a>
-        <a id="logoutBtn" @click="logout()">logout</a>
+        <a id="logoutBtn" @click="logout()"><i class="fas fa-power-off"></i></a>
       </div>
     </div>
   </section>
@@ -17,6 +17,15 @@ export default {
     return {
       headName: ''
     };
+  },
+  methods: {
+    logout() {
+      axiosUtil.post('/api/main/logout', {}, () => {
+        localStorage.removeItem('vuex');
+        this.$router.push('/login');
+        this.$store.commit('resetState');
+      });
+    }
   },
   beforeMount() {
     this.headName = this.$props.send;

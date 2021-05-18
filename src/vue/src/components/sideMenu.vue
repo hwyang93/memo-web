@@ -22,13 +22,10 @@
 export default {
   name: 'sideMenu',
   data() {
-    return {
-      name: '',
-      isActive: true
-    };
+    return {};
   },
   methods: {
-    change(url) {
+    change(url, item) {
       this.$router.push(url);
     }
   }
@@ -115,5 +112,8 @@ a:not([href]):not([tabindex]).nav-link:focus {
   font-weight: 600;
   line-height: 40px;
   text-align: left;
+}
+a:active {
+  color: #053c4b;
 }
 </style>
