@@ -50,7 +50,7 @@
               <b-tab active title="Group">
                 <h3 class="title-type-2">그룹 관리</h3>
                 <b-button v-b-modal.modal-center>그룹 만들기</b-button>
-                <b-modal id="modal-center" centered title="그룹 만들기">
+                <b-modal id="modal-center" centered title="그룹 만들기" hide-footer>
                   <b-form v-if="form.show" @reset="onReset" @submit="onSubmit">
                     <b-form-group id="input-group-1" label="Group Name:" label-for="input-1">
                       <b-form-input id="input-1" v-model="form.groupName" placeholder="Group Name" required type="text"></b-form-input>
@@ -64,8 +64,8 @@
                     <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
 
                     <div class="button-area mt-3">
-                      <b-button type="submit" variant="primary">Submit</b-button>
-                      <b-button type="reset" variant="danger">Reset</b-button>
+                      <b-button @click="createGroup()" type="submit" variant="primary">만들기</b-button>
+                      <b-button type="reset" variant="danger">닫기</b-button>
                     </div>
                   </b-form>
                 </b-modal>
@@ -83,13 +83,13 @@
                       <p>info : {{ item.groupComment }}</p>
                     </li>
                   </ul>
-                  <b-modal ref="group-modal" centered title="그룹 정보">
+                  <b-modal ref="group-modal" centered title="그룹 정보" hide-footer>
                     <ul class="user-list-area">
                       <h4>{{ this.groupDetail.groupTitle }}</h4>
                       <p>info : <br />{{ this.groupDetail.groupComment }}</p>
                       <label>참여 멤버</label>
                       <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
-                      <b-button variant="danger mt-3">그룹 삭제</b-button>
+                      <b-button @click="deleteGroup()" variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -275,6 +275,15 @@ export default {
     //     console.log(this.groupId);
     //   });
     // },
+    createGroup() {
+      const params = {
+        groupTitle: this.form.groupName,
+        group_member: [],
+      }
+      axiosUtil.get('/api/myGroup/createGroup.do\'', params, result => {
+        this.groupList = result.data.groupList;
+      })
+    },
     getGroupList() {
       axiosUtil.get('/api/myGroup/getGroupList.do', {}, result => {
         this.groupList = result.data.groupList;
