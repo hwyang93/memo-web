@@ -20,8 +20,4 @@ public class PostFile {
 	@Column(name = "FILE_SAVE_NAME")
 	private String fileSaveName;
 
-	@ManyToOne
-	@JoinColumn(name = "POST_IDX")
-	private Post post;
-
 }

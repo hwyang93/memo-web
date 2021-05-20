@@ -3,6 +3,7 @@ package memoWeb.web.main.domain;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import memoWeb.web.post.domain.Post;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,4 +48,8 @@ public class UserMemo implements Serializable {
 
 	@Column(name = "MEMO")
 	private String memo;
+
+	@OneToOne(mappedBy = "userMemo")
+	@JoinColumn(name = "IDX")
+	private Post post;
 }
