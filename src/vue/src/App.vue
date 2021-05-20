@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="header-one" v-if="$route.path !== '/login' && $route.path !== '/signUp' && $store.state.auth.userInfo.userId !== 'admin'" id="header">
+    <header class="header-one" v-if="$route.path !== '/login' && $route.path !== '/signUp'" id="header">
       <TopMenu />
     </header>
     <!-- Header-end -->
