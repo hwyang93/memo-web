@@ -89,7 +89,7 @@
                       <p>info : <br />{{ this.groupDetail.groupComment }}</p>
                       <label>참여 멤버</label>
                       <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
-                      <b-button @click="deleteGroup()" variant="danger mt-3">그룹 삭제</b-button>
+                      <b-button @click="deleteGroup(groupDetail.groupIdx)" variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -184,6 +184,7 @@ export default {
       },
       groupDetail: {
         groupTitle: '',
+        groupIdx: '',
         groupComment: '',
         groupMembers: []
       }
@@ -211,7 +212,9 @@ export default {
       console.log('item', item);
       this.groupDetail.groupTitle = item.groupTitle;
       this.groupDetail.groupComment = item.groupComment;
+      this.groupDetail.groupIdx = item.groupIdx;
       console.log(this.groupDetail.groupTitle);
+      this.getGroupInfo(item.groupIdx);
       this.$refs['group-modal'].show();
     },
     openDrop() {
@@ -260,21 +263,27 @@ export default {
       });
     },
 
-    deleteGroup() {
-      axiosUtil.post('/api/myGroup/deleteGroup.do', {}, result => {
-        this.groupList = result.data.groupList;
+    deleteGroup(groupIdx) {
+      const params = {
+        groupIdx : groupIdx
+      }
+      axiosUtil.post('/api/myGroup/deleteGroup.do', params, () => {
+        // this.groupList = result.data.groupList;
         // console.log('group list : ', this.groupList);
+        alert('삭제 되었습니다');
+        this.getGroupList();
       });
     },
-    // getGroupInfo() {
-    //   const params = {
-    //     groupIdx : this.groupId.groupIdx
-    //   }
-    //   axiosUtil.get('/api/myGroup/getGroupInfo.do', {params}, result => {
-    //     this.groupId = result.data.groupId;
-    //     console.log(this.groupId);
-    //   });
-    // },
+    getGroupInfo(groupIdx) {
+      const params = {
+        groupIdx : groupIdx
+      }
+      axiosUtil.get('/api/myGroup/getGroupInfo.do', params, result => {
+        this.groupId = result.data.groupId;
+        console.log(result);
+        console.log(this.groupId);
+      });
+    },
     createGroup() {
       const params = {
         groupTitle: this.form.groupName,
