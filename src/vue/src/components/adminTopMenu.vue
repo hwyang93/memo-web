@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import axiosUtil from '@/utils/axios-util';
 export default {
   name: 'adminTopMenu',
   props: ['send'],

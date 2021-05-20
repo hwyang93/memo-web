@@ -107,7 +107,7 @@ public class MainRepositoryImpl implements MainRepository {
 		return queryFactory.select(Projections.fields(UserDTO.class, qUser.userId, qUser.userName))
 				.from(qUser)
 				.innerJoin(qUserRelation)
-				.on(qUserRelation.userId.eq(user.getUserId()))
+				.on(qUserRelation.followUserId.eq(user.getUserId()))
 				.where(qUser.userId.eq(qUserRelation.followUserId)
 						.and(qUserRelation.relationStatus.eq("I"))
 						.and((qUser.userId.contains(user.getKeyword())

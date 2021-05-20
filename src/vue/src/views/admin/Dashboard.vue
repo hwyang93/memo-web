@@ -11,7 +11,7 @@
               <div class="card-content">
                 <div class="c-box title">Users</div>
                 <div class="c-box icon"><img src="../../images/dashboard/user.png" id="dashIcon" /></div>
-                <div class="c-box data"><chart></chart></div>
+                <div class="c-box data"><line-chart></line-chart></div>
                 <div class="c-box total">Total : {{ this.userCnt }}</div>
               </div>
             </div>
@@ -45,21 +45,20 @@
 import AdminTopMenu from '../../components/adminTopMenu.vue';
 import SideMenu from '../../components/sideMenu.vue';
 import axiosUtil from '@/utils/axios-util';
-import chart from '@/components/chart.vue';
+import LineChart from '@/components/LineChart.vue';
 export default {
   name: 'Dashboard',
   components: {
     SideMenu,
     AdminTopMenu,
-    chart
+    LineChart
   },
   data() {
     return {
       pageName: 'Dashboard',
       userCnt: 0,
       postCnt: 0,
-      groupCnt: 0,
-      datacollection: null
+      groupCnt: 0
     };
   },
   methods: {},
@@ -125,5 +124,14 @@ export default {
   width: 70%;
   height: 70%;
   opacity: 0.5;
+}
+canvas {
+  height: 250px;
+}
+</style>
+
+<style scoped>
+.navbar {
+  display: none;
 }
 </style>
