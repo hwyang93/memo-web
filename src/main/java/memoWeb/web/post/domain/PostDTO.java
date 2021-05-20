@@ -17,7 +17,7 @@ public class PostDTO {
 	private int memoIdx;
 	private String contents;
 
-//	private UserMemo userMemo;
+	private UserMemo userMemo;
 	private List<PostFile> postFiles;
 
 	@Autowired
@@ -27,7 +27,7 @@ public class PostDTO {
 
 	public PostDTO(Post post) {
 		this.postIdx = post.getPostIdx();
-		this.memoIdx = post.getMemoIdx();
+//		this.memoIdx = post.getMemoIdx();
 		this.contents = post.getContents();
 //		this.userMemo = post.getUserMemo();
 		this.postFiles = post.getPostFiles();
@@ -37,6 +37,7 @@ public class PostDTO {
 	}
 
 	public static List<PostDTO> toDtoList(List<Post> post) {
+		PostDTO test = PostDTO.toDto(post.get(0));
 		return post.stream()
 				.map(PostDTO::toDto)
 				.collect(Collectors.toList());

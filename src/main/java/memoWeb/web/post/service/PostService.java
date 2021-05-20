@@ -1,5 +1,6 @@
 package memoWeb.web.post.service;
 
+import memoWeb.common.utils.ObjectMapperUtils;
 import memoWeb.web.main.domain.*;
 import memoWeb.web.main.repository.ChatRepository;
 import memoWeb.web.post.domain.Post;
@@ -23,7 +24,7 @@ public class PostService {
 
 	public List<PostDTO> getPostList(PostDTO postDTO) {
 		Post post = Post.toEntity(postDTO).build();
-		List<Post> postList = postRepository.findAll();
-		return PostDTO.toDtoList(postList);
+		List<Post> postList = postRepository.getPostList(post);
+		return ObjectMapperUtils.mapAll(postList, PostDTO.class);
 	}
 }

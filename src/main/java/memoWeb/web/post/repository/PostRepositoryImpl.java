@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.*;
 import memoWeb.web.myGroup.domain.QGroupsVO;
 import memoWeb.web.post.domain.Post;
+import memoWeb.web.post.domain.QPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,20 +18,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class PostRepositoryImpl{
-//public class PostRepositoryImpl implements PostRepository {
+//public class PostRepositoryImpl{
+public class PostRepositoryImpl implements PostRepository {
 	@Autowired
 	private final JPAQueryFactory queryFactory;
 	@PersistenceContext
 	private EntityManager em;
 
+	QPost qPost = QPost.post;
+
 	public PostRepositoryImpl(JPAQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
 	}
 
-
-//	@Override
+	@Override
 	public List<Post> getPostList(Post post) {
-		return null;
+		return queryFactory.selectFrom(qPost).fetch();
 	}
 }
