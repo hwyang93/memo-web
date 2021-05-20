@@ -30,6 +30,8 @@ public interface MyGroupRepository {
 
 	void deleteGroupMembers(GroupDTO group);
 
+	void deleteGroupSchedule(GroupDTO group);
+
 	void deleteGroup(GroupDTO group);
 
 	List<UserRelationDTO> getFriendReqList(UserDTO user);
