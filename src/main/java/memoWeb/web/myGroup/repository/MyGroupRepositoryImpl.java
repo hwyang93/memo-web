@@ -5,6 +5,7 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import memoWeb.web.main.domain.QGroupSchedule;
 import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
@@ -27,6 +28,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 	QUserRelationVO qUserRelation = QUserRelationVO.userRelationVO;
 	QGroupsVO qGroups = QGroupsVO.groupsVO;
 	QGroupMemberVO qGroupMember = QGroupMemberVO.groupMemberVO;
+	QGroupSchedule qGroupSchedule = QGroupSchedule.groupSchedule;
 	@PersistenceContext
 	private EntityManager em;
 
@@ -114,12 +116,17 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 
 	@Override
 	public void deleteGroupMembers(GroupDTO group) {
-		queryFactory.delete(qGroupMember).where(qGroupMember.groupIdx.eq(group.getGroupIdx()));
+		queryFactory.delete(qGroupMember).where(qGroupMember.groupIdx.eq(group.getGroupIdx())).execute();
+	}
+
+	@Override
+	public void deleteGroupSchedule(GroupDTO group) {
+		queryFactory.delete(qGroupSchedule).where(qGroupSchedule.groupIdx.eq(group.getGroupIdx())).execute();
 	}
 
 	@Override
 	public void deleteGroup(GroupDTO group) {
-		queryFactory.delete(qGroups).where(qGroups.groupIdx.eq(group.getGroupIdx()));
+		queryFactory.delete(qGroups).where(qGroups.groupIdx.eq(group.getGroupIdx())).execute();
 	}
 
 	@Override

@@ -63,6 +63,7 @@ public class MyGroupService {
 	}
 
 	public void deleteGroup(GroupDTO group) {
+		myGroupRepository.deleteGroupSchedule(group);
 		myGroupRepository.deleteGroupMembers(group);
 		myGroupRepository.deleteGroup(group);
 	}
