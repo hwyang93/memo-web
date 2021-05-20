@@ -89,7 +89,18 @@
 
 <script>
 export default {
-  name: "myProfile"
+  name: "myProfile",
+  data() {
+    return {
+      profile: {
+        userName: '',
+        userEmail: '',
+        userPassword: '',
+        userPasswordChk: '',
+        userComment: '',
+      }
+    }
+  }
 }
 </script>
 

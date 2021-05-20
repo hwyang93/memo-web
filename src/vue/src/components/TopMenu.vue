@@ -44,7 +44,7 @@
         <!-- //navbar-collapse -->
         <div class="user-area d-flex">
         <ul class="d-flex align-items-center">
-        <li class="user-info"><a @click="goMenu('/myPage/profile')">User</a></li>
+        <li class="user-info"><a @click="goMenu('/myPage/profile')">{{userName}}</a></li>
         <li class="user-info"><a @click="logout()">
           <i class="fas fa-power-off"></i>
         </a></li>
@@ -81,6 +81,11 @@ import axiosUtil from '@/utils/axios-util';
 
 export default {
   name: "TopMenu",
+  data() {
+    return {
+      userName: this.$store.state.auth.userInfo.userName
+    }
+  },
   methods: {
     goMenu(url) {
       this.$router.push(url);

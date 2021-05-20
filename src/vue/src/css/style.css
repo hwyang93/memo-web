@@ -3315,6 +3315,12 @@ nav .no-arrow.dropdown-toggle::after {
   overflow: hidden;
   width: 60%;
   transition: opacity 0.4s, transform 0.4ms;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.25);
+}
+.modal-window.post {
+  padding: 15px;
+  width: 40%;
 }
 .modal-footer {
   padding: 0.7rem;
@@ -3397,9 +3403,9 @@ nav .no-arrow.dropdown-toggle::after {
 #endDate {
   width: 83%;
 }
-.mb-3 {
-  cursor: pointer;
-}
+/*.mb-3 {*/
+/*  cursor: pointer;*/
+/*}*/
 .mb-3:hover .detail-card {
   display: block;
 }
