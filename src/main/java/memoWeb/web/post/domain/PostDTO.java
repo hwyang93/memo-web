@@ -1,5 +1,6 @@
 package memoWeb.web.post.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,22 +9,20 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostDTO {
 	private int postIdx;
-	private int memoIdx;
+//	private int memoIdx;
 	private String contents;
 
-	private UserMemo userMemo;
-	private List<PostFile> postFiles;
-
-	@Autowired
-	private static ModelMapper modelMapper;
-
-	public PostDTO() {}
+	private UserMemo userMemo = new UserMemo();
+	private List<PostFile> postFiles = new ArrayList<>();
 
 	public PostDTO(Post post) {
 		this.postIdx = post.getPostIdx();
@@ -31,16 +30,6 @@ public class PostDTO {
 		this.contents = post.getContents();
 //		this.userMemo = post.getUserMemo();
 		this.postFiles = post.getPostFiles();
-	}
-	public static PostDTO toDto(Post post) {
-		return modelMapper.map(post, PostDTO.class);
-	}
-
-	public static List<PostDTO> toDtoList(List<Post> post) {
-		PostDTO test = PostDTO.toDto(post.get(0));
-		return post.stream()
-				.map(PostDTO::toDto)
-				.collect(Collectors.toList());
 	}
 
 }

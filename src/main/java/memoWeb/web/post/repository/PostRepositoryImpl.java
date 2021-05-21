@@ -26,6 +26,7 @@ public class PostRepositoryImpl implements PostRepository {
 	private EntityManager em;
 
 	QPost qPost = QPost.post;
+	QUserMemo qUserMemo = QUserMemo.userMemo;
 
 	public PostRepositoryImpl(JPAQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
@@ -33,6 +34,8 @@ public class PostRepositoryImpl implements PostRepository {
 
 	@Override
 	public List<Post> getPostList(Post post) {
-		return queryFactory.selectFrom(qPost).fetch();
+		return queryFactory.selectFrom(qPost)
+				.where(qUserMemo.userId.eq(post.getUserMemo().getUserId()))
+				.fetch();
 	}
 }

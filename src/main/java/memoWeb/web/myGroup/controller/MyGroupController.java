@@ -74,28 +74,29 @@ public class MyGroupController {
 	}
 
 	@PostMapping("createGroup.do")
-	public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group) {
+//	public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group) {
+	public String createGroup(Model model, HttpSession session, @RequestParam HashMap<String,Object> params) {
 		int groupIdx = myGroupService.getGroupIdx();
 
-		group.setGroupMasterUser(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
-		group.setGroupIdx(groupIdx);
-
-
-		GroupMemberVO masterUser = new GroupMemberVO();
-		masterUser.setGroupIdx(groupIdx);
-		masterUser.setGroupUser(group.getGroupMasterUser());
-		masterUser.setApprovalStatus("Y");
-		masterUser.setMemberAuth("M");
-
-		groupMemberList.add(masterUser);
-		groupMemberList.forEach(groupMember -> {
-			groupMember.setGroupIdx(groupIdx);
-			groupMember.setMemberAuth("N");
-			groupMember.setApprovalStatus("N");
-		});
-
-		myGroupService.createGroup(group);
-		myGroupService.joinGroupMember(groupMemberList);
+//		group.setGroupMasterUser(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+//		group.setGroupIdx(groupIdx);
+//
+//
+//		GroupMemberVO masterUser = new GroupMemberVO();
+//		masterUser.setGroupIdx(groupIdx);
+//		masterUser.setGroupUser(group.getGroupMasterUser());
+//		masterUser.setApprovalStatus("Y");
+//		masterUser.setMemberAuth("M");
+//
+//		groupMemberList.add(masterUser);
+//		groupMemberList.forEach(groupMember -> {
+//			groupMember.setGroupIdx(groupIdx);
+//			groupMember.setMemberAuth("N");
+//			groupMember.setApprovalStatus("N");
+//		});
+//
+//		myGroupService.createGroup(group);
+//		myGroupService.joinGroupMember(groupMemberList);
 
 		return "jsonView";
 	}
