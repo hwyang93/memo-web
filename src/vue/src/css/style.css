@@ -3160,6 +3160,9 @@ nav .no-arrow.dropdown-toggle::after {
   border-radius: 50%;
   overflow: hidden;
 }
+.user-name {
+  margin-left: 12px;
+}
 /* friends list end */
 
 /* group list start */

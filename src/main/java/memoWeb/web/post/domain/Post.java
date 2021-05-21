@@ -33,7 +33,8 @@ public class Post {
 		return PostBuilder()
 				.postIdx(postDTO.getPostIdx())
 //				.memoIdx(postDTO.getMemoIdx())
-				.contents(postDTO.getContents());
+				.contents(postDTO.getContents())
+				.userMemo(postDTO.getUserMemo());
 	}
 
 

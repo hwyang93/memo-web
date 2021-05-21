@@ -49,7 +49,4 @@ public class UserMemo implements Serializable {
 	@Column(name = "MEMO")
 	private String memo;
 
-	@OneToOne(mappedBy = "userMemo")
-	@JoinColumn(name = "IDX")
-	private Post post;
 }
