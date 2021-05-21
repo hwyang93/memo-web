@@ -9,18 +9,21 @@ export default {
   extends: Line,
   data() {
     return {
+      list: [],
+      date: {},
+      cnt: {},
       datacollection: {
         //Data to be represented on x-axis
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        labels: [],
         datasets: [
           {
-            label: 'Data One',
+            label: 'user',
             backgroundColor: '#f87979',
             pointBackgroundColor: 'white',
             borderWidth: 1,
             pointBorderColor: '#249EBF',
             //Data to be represented on y-axis
-            data: [40, 20, 30, 50, 90, 10, 20, 40, 50, 70, 90, 100]
+            data: []
           }
         ]
       },
@@ -50,31 +53,23 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false
-      },
-      list: [],
-      date: {},
-      cnt: {}
+      }
     };
   },
   methods: {
     getMonthData() {
       axiosUtil.get('/api/admin/getMonthData', {}, result => {
-        this.list = result.data.list;
-        for (d in list) {
-          this.date.put(d.regDate);
-        }
-        for (c in list) {
-          this.cnt.put(d.cnt);
-        }
-        console.log(this.date);
-        console.log(this.cnt);
+        this.list = result.data;
+        console.log(this.list);
+        this.datacollection.labels = Object.keys(this.list);
+        console.log(this.datacollection.datasets);
+        this.datacollection.datasets[0].data = Object.values(this.list);
+        this.renderChart(this.datacollection, this.options);
       });
     }
   },
-  mounted() {
+  beforeMount() {
     this.getMonthData();
-    //renderChart function renders the chart with the datacollection and options object.
-    this.renderChart(this.datacollection, this.options);
   }
 };
 </script>

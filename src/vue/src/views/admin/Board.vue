@@ -30,7 +30,7 @@
 import SideMenu from '../../components/sideMenu.vue';
 import AdminTopMenu from '../../components/adminTopMenu.vue';
 export default {
-  name: 'Post',
+  name: 'Board',
   components: {
     SideMenu,
     AdminTopMenu

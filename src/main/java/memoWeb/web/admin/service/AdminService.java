@@ -46,4 +46,24 @@ public class AdminService {
 	public List<Tuple> getMonthData() {
 		return adminRepository.getMonthData();
 	}
+
+	public List<Tuple> getuGroupCnt(String id) {
+		return adminRepository.getuGroupCnt(id);
+	}
+
+	public long getuPostCnt(String id) {
+		return adminRepository.getuPostCnt(id);
+	}
+
+	public long getMemoCnt() {
+		return adminRepository.getMemoCnt();
+	}
+
+	public long getScheduleCnt() {
+		return adminRepository.getScheduleCnt();
+	}
+
+	public long getGscheduleCnt() {
+		return adminRepository.getGscheduleCnt();
+	}
 }
