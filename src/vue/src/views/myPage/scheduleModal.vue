@@ -187,20 +187,15 @@ export default {
         this.isStatusOn = true;
         this.isdefault = true;
         this.isModify = false;
-        if ((this.isStatusOn = false)) {
-          location.reload();
-        }
       });
     },
     deleteBtn() {
       axiosUtil.get('/api/mySchedule/deleteSchedule/' + this.scheduleDetail.idx, {}, result => {
         alert('삭제되었습니다.');
         this.isStatusOn = false;
-        if ((this.isStatusOn = false)) {
-          window.location.reload();
-        }
         this.isdefault = true;
         this.isModify = false;
+        window.location.reload();
       });
     },
     cancel: function () {

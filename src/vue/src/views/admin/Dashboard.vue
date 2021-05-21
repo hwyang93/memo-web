@@ -72,66 +72,6 @@ export default {
   mounted() {}
 };
 </script>
-
-<style>
-.main-area {
-  position: fixed;
-  width: 100%;
-}
-.main-content {
-  background-color: #f4f3ef;
-  position: relative;
-  z-index: 2;
-  float: right;
-  width: calc(100% - 260px);
-  min-height: 100%;
-  overflow: auto;
-}
-.card {
-  margin: 30px 20px 30px 20px;
-}
-.card .card-content {
-  padding: 15px 15px 10px;
-}
-.c-box {
-  width: 100%;
-  padding: 20px;
-}
-.c-box.title {
-  padding: 7px;
-  font-weight: 600;
-}
-.c-box.icon {
-  padding: 20px;
-  margin: auto;
-  border-top: 1px solid #ccc;
-  text-align: center;
-}
-.c-box.total {
-  border-top: 1px solid #ccc;
-  padding: 7px;
-  font-weight: 600;
-  text-align: right;
-  color: gray;
-}
-.c-box.data {
-  padding: 10px;
-  margin: auto;
-  height: 250px;
-  margin-bottom: 15px;
-}
-#dashIcon {
-  width: 70%;
-  height: 70%;
-  opacity: 0.5;
-}
-canvas {
-  height: 250px;
-}
-</style>
-
-<style scoped>
-.navbar {
-  display: none;
-}
+<style lang="css">
+@import '../../css/adminStyle.css';
 </style>

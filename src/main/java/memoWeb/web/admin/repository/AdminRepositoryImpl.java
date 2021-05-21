@@ -9,11 +9,18 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ConstantImpl;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import memoWeb.web.main.domain.QUserVO;
-import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 
 @Repository
@@ -54,4 +61,20 @@ public class AdminRepositoryImpl implements AdminRepository {
 				.fetchCount();
 	}
 
+	@Override
+	public List<Tuple> getMonthData() {
+		final JPAQuery<UserVO> query = new JPAQuery<>(em);
+		/*
+		 * StringTemplate formattedDate = Expressions.stringTemplate(
+		 * "TO_CHAR({0}, {1})" , quser.regDate , ConstantImpl.create("yyyy-mm"));
+		 */
+		return query.from(quser)
+				.select(to_char(quser.regDate,("yyyy-mm")), quser.userId.count().as("cnt"))
+				.groupBy(to_char(quser.regDate,("yyyy-mm")))
+				.fetch();
+	}
+
+	private Expression<?> to_char(StringPath regDate, String string) {
+		return Expressions.stringTemplate("to_char({0},'{1s}')", regDate, ConstantImpl.create(string));
+	}
 }
