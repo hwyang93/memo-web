@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.Tuple;
+
 import memoWeb.web.admin.repository.AdminRepository;
 import memoWeb.web.main.domain.UserVO;
 
@@ -39,5 +41,9 @@ public class AdminService {
 
 	public long getGroupCnt() {
 		return 0;
+	}
+
+	public List<Tuple> getMonthData() {
+		return adminRepository.getMonthData();
 	}
 }

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import memoWeb.common.constant.CommonConstants;
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
+
 import memoWeb.web.admin.service.AdminService;
-import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
 
 @RestController
@@ -62,6 +61,15 @@ public class AdminController {
 		Map<String,Object> map = new HashMap<>();
 		int result = adminService.deleteUser(id);
 		map.put("result", result);
+		return map;
+	}
+	
+	@GetMapping("/getMonthData")
+	public Map<String,Object> getMonthData(Model model){
+		Map<String,Object> map = new HashMap<>();
+		List<Tuple> list = adminService.getMonthData();
+		// tuple인걸로 못보냄 바꿔줘야함
+		map.put("list", list);
 		return map;
 	}
 }

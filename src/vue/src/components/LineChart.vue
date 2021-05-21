@@ -1,9 +1,9 @@
 <script>
 //Importing Line class from the vue-chartjs wrapper
+import { Line } from 'vue-chartjs';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
-import { Line } from 'vue-chartjs';
-
+import axiosUtil from '@/utils/axios-util';
 //Exporting this so it can be used in other components
 export default {
   extends: Line,
@@ -50,10 +50,29 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false
-      }
+      },
+      list: [],
+      date: {},
+      cnt: {}
     };
   },
+  methods: {
+    getMonthData() {
+      axiosUtil.get('/api/admin/getMonthData', {}, result => {
+        this.list = result.data.list;
+        for (d in list) {
+          this.date.put(d.regDate);
+        }
+        for (c in list) {
+          this.cnt.put(d.cnt);
+        }
+        console.log(this.date);
+        console.log(this.cnt);
+      });
+    }
+  },
   mounted() {
+    this.getMonthData();
     //renderChart function renders the chart with the datacollection and options object.
     this.renderChart(this.datacollection, this.options);
   }
