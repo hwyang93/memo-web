@@ -62,9 +62,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/admin/Users.vue')
   },
   {
-    path: '/admin/Post',
-    name: 'Post',
-    component: () => import(/* webpackChunkName: "main" */ '../views/admin/Post.vue')
+    path: '/admin/Board',
+    name: 'Board',
+    component: () => import(/* webpackChunkName: "main" */ '../views/admin/Board.vue')
   },
   {
     path: '/admin/Groups',

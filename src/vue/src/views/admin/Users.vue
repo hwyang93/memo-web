@@ -60,7 +60,35 @@
                       <th scope="col">Email</th>
                       <td colspan="3">{{ this.userInfo.userEmail }}</td>
                     </tr>
+                    <tr scope="row">
+                      <th scope="col">Post</th>
+                      <td colspan="3">{{ this.uPostCnt }} 개</td>
+                    </tr>
+                    <tr scope="row" v-if="uGroupCnt.length == 0">
+                      <th scope="col">Group</th>
+                      <td colspan="3">0 개</td>
+                    </tr>
+                    <tr scope="row" v-else>
+                      <th scope="col">Group</th>
+                      <td colspan="3" v-for="g in uGroupCnt" :key="g.index">
+                        {{ g }} 개
+                        <span id="showGroupName" v-if="close" @click="groupToggle()">그룹 보기 ▼</span>
+                        <span id="showGroupName" v-else-if="open" @click="groupToggle()">닫기 ▲</span>
+                        <div class="groupBox" v-if="open">
+                          <div class="gitem" v-for="gt in groupTitle" :key="gt.index">
+                            {{ gt }}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
                   </tbody>
+                </table>
+                <table class="userInfoTbl">
+                  <colgroup>
+                    <col width="20%" />
+                    <col width="30%" />
+                  </colgroup>
+                  <tbody></tbody>
                 </table>
                 <div>
                   <span class="delBtn" @click="delUser(this.userInfo.userId)">Delete</span>
@@ -88,14 +116,18 @@ export default {
     return {
       userList: [],
       userInfo: {},
+      uGroupCnt: [],
+      uPostCnt: 0,
       pageName: 'Users',
-      index: 1
+      index: 1,
+      close: true,
+      open: false,
+      groupTitle: []
     };
   },
   created() {
     axiosUtil.get('/api/admin/userList', {}, result => {
       this.userList = result.data.userList;
-      console.log(this.userList[0].userId);
       axiosUtil.get('/api/admin/userInfo/' + this.userList[0].userId, {}, result => {
         this.userInfo = result.data.userInfo;
       });
@@ -103,9 +135,19 @@ export default {
   },
   methods: {
     detail(id) {
+      if (this.open == true) {
+        this.open = false;
+        this.close = true;
+      }
       axiosUtil.get('/api/admin/userInfo/' + id, {}, result => {
         this.userInfo = result.data.userInfo;
+        this.groupTitle = Object.keys(result.data.uGroupCnt);
+        this.uGroupCnt = Object.values(result.data.uGroupCnt);
       });
+    },
+    groupToggle() {
+      this.close = !this.close;
+      this.open = !this.open;
     },
     delUser: function (id) {
       axiosUtil.get('/api/admin/deleteUser/' + id, {}, result => {

@@ -12,5 +12,10 @@ public interface AdminRepository {
 	UserVO getUserInfo(String id);
 	long getUserCnt();
 	List<Tuple> getMonthData();
+	List<Tuple> getuGroupCnt(String id);
+	long getuPostCnt(String id);
+	long getMemoCnt();
+	long getScheduleCnt();
+	long getGscheduleCnt();
 
 }

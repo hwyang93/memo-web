@@ -3,6 +3,7 @@ package memoWeb.web.admin.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 
 import memoWeb.web.admin.service.AdminService;
@@ -51,8 +51,18 @@ public class AdminController {
 	@GetMapping("/userInfo/{id}")
 	public Map<String,Object> getUserInfo(@PathVariable("id") String id, Model model){
 		Map<String,Object> map = new HashMap<>();
+		Map<String,Object> uGroupCnt = new TreeMap<>();
 		UserVO userInfo = adminService.getUserInfo(id);
+		List<Tuple> result = adminService.getuGroupCnt(id);
+		long uPostCnt = adminService.getuPostCnt(id);
+		for(Tuple tuple : result) {
+			int sum = 0;
+			sum += Integer.parseInt(String.valueOf(tuple.get(1, Integer.class)));
+			uGroupCnt.put(tuple.get(0, String.class), sum);
+		}
 		map.put("userInfo", userInfo);
+		map.put("uGroupCnt", uGroupCnt);
+		map.put("uPostCnt", uPostCnt);
 		return map;
 	}
 	
@@ -65,11 +75,24 @@ public class AdminController {
 	}
 	
 	@GetMapping("/getMonthData")
-	public Map<String,Object> getMonthData(Model model){
-		Map<String,Object> map = new HashMap<>();
+	public Map<String,Integer> getMonthData(Model model){
+		Map<String,Integer> map = new TreeMap<>();
 		List<Tuple> list = adminService.getMonthData();
-		// tuple인걸로 못보냄 바꿔줘야함
-		map.put("list", list);
+		for(Tuple tuple : list) {
+			map.put(tuple.get(0, String.class), Integer.parseInt(String.valueOf(tuple.get(1, Integer.class))));
+		}
+		return map;
+	}
+	
+	@GetMapping("/getPostData")
+	public Map<String,Integer> getPostData(Model model){
+		Map<String,Integer> map = new HashMap<>();
+		long memo = adminService.getMemoCnt();
+		long schedule = adminService.getScheduleCnt();
+		long gSchedule = adminService.getGscheduleCnt();
+		map.put("memo", (int) memo);
+		map.put("schedule", (int) schedule);
+		map.put("gSchedule", (int) gSchedule);
 		return map;
 	}
 }
