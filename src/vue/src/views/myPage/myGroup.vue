@@ -53,16 +53,30 @@
                 <b-modal id="modal-center" centered title="그룹 만들기" hide-footer>
                   <b-form v-if="form.show" @reset="onReset" @submit="onSubmit">
                     <b-form-group id="input-group-1" label="Group Name:" label-for="input-1">
-                      <b-form-input id="input-1" v-model="form.groupName" placeholder="Group Name" required type="text"></b-form-input>
+                      <b-form-input id="input-1" v-model="createGroupDetail.groupTitle" placeholder="Group Name" required type="text"></b-form-input>
                     </b-form-group>
-
                     <b-form-group id="input-group-2" label="Group Information:" label-for="input-2">
-                      <b-form-input id="input-2" v-model="form.groupInfo" placeholder="Enter Information" required></b-form-input>
+                      <b-form-input id="input-2" v-model="createGroupDetail.groupComment" placeholder="Enter Information" required></b-form-input>
                     </b-form-group>
-
                     <label>멤버 추가</label>
-                    <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
-
+                    <div>
+                      <ul class="user-list-area">
+                        <li v-for="(item, index) in confirmFriendsList" :key="index" class="user-list">
+                          <a class="d-flex align-items-center" href="#">
+                            <div class="user-pic" href="#">
+                              <img alt="" src="../../images/friends/user-sample.jpg" />
+                            </div>
+                            <div class="user-name" href="#">{{ item.followUserName }} </div>
+                          </a>
+                          <button class="btn btn-info" @click="addMember(item)">Add</button>
+                        </li>
+                      </ul>
+                    </div>
+                    <b-form-tags :disableAddButton="true" input-id="tags-basic">
+                      <b-form-tag v-for="(item,idx) in createGroupDetail.groupMembers" @remove="removeFromList(item.followUserId)" :key="idx">
+                        {{item.followUserName}}
+                      </b-form-tag>
+                    </b-form-tags>
                     <div class="button-area mt-3">
                       <b-button @click="createGroup()" type="submit" variant="primary">만들기</b-button>
                       <b-button type="reset" variant="danger">닫기</b-button>
@@ -75,7 +89,7 @@
                     <li
                       v-for="(item, index) in groupList"
                       :key="index"
-                      :class="[item.memberAuth == 'member' ? 'member' : item.approvalStatus == 'N' ? 'pending' : '']"
+                      :class="[item.memberAuth === 'member' ? 'member' : item.approvalStatus === 'N' ? 'pending' : '']"
                       class="group-item shadow-wrap-1"
                       @click="showModal(item)"
                     >
@@ -89,7 +103,7 @@
                       <p>info : <br />{{ this.groupDetail.groupComment }}</p>
                       <label>참여 멤버</label>
                       <b-form-tags v-model="memberValue" :disableAddButton="true" input-id="tags-basic"></b-form-tags>
-                      <b-button @click="deleteGroup()" variant="danger mt-3">그룹 삭제</b-button>
+                      <b-button @click="deleteGroup(groupDetail.groupIdx)" variant="danger mt-3">그룹 삭제</b-button>
                     </ul>
                   </b-modal>
                 </div>
@@ -137,9 +151,7 @@
                         <img alt="" src="../../images/friends/user-sample.jpg" />
                       </a>
                     </div>
-
                     <a class="user-name" href="#">{{ item.followUserName }} </a>
-
                     <button class="btn btn-danger">Delete</button>
                   </li>
                 </ul>
@@ -167,6 +179,7 @@ export default {
     return {
       userList: [],
       friendsList: [],
+      confirmFriendsList: [],
       groupList: [],
       groupInfo: [],
       memberValue: [],
@@ -184,8 +197,15 @@ export default {
       },
       groupDetail: {
         groupTitle: '',
+        groupIdx: '',
         groupComment: '',
         groupMembers: []
+      },
+      createGroupDetail: {
+        groupTitle: '',
+        groupIdx: '',
+        groupComment: '',
+        groupMembers: [],
       }
     };
   },
@@ -205,13 +225,22 @@ export default {
     //     member: this.groupList.memberAuth === member,
     //   }
     // }
+    // showUserName: function() {
+    //   let test = [];
+    //   this.createGroupDetail.groupMembers.map(item=>{
+    //     test.push(item.followUserName);
+    //   })
+    //   return test;
+    // }
   },
   methods: {
     showModal(item) {
       console.log('item', item);
       this.groupDetail.groupTitle = item.groupTitle;
       this.groupDetail.groupComment = item.groupComment;
-      console.log(this.groupDetail.groupTitle);
+      this.groupDetail.groupIdx = item.groupIdx;
+      console.log('모달열릴때', this.groupDetail.groupTitle);
+      this.getGroupInfo(item.groupIdx);
       this.$refs['group-modal'].show();
     },
     openDrop() {
@@ -224,10 +253,16 @@ export default {
       }
       console.log(this.userList);
     },
-    // outFocus() {
-    //   this.friend.flag = false;
-    //   this.friend.keyword = '';
-    // },
+    addMember(item) {
+      this.createGroupDetail.groupMembers.push(item)
+    },
+    removeFromList(idx) {
+      this.createGroupDetail.groupMembers.forEach((item,index) => {
+        if (item.followUserId === idx) {
+          this.createGroupDetail.groupMembers.splice(index, 1);
+        }
+      })
+    },
     getFriendsList() {
       const params = {
         relationStatus: 'ALL'
@@ -237,6 +272,15 @@ export default {
         this.friendsList = result.data.friendsList;
         console.log('friends list : ', this.friendsList);
       });
+    },
+    getConfirmFriendsList() {
+      const params = {
+        relationStatus: 'I'
+      };
+      axiosUtil.get('/api/myGroup/getFriendList.do', params, result => {
+        this.confirmFriendsList = result.data.friendsList;
+        console.log(result);
+      })
     },
     removeFriend() {},
     getUserList() {
@@ -259,29 +303,35 @@ export default {
         this.getFriendsList();
       });
     },
-
-    deleteGroup() {
-      axiosUtil.post('/api/myGroup/deleteGroup.do', {}, result => {
-        this.groupList = result.data.groupList;
+    deleteGroup(groupIdx) {
+      const params = {
+        groupIdx : groupIdx
+      }
+      axiosUtil.post('/api/myGroup/deleteGroup.do', params, () => {
+        // this.groupList = result.data.groupList;
         // console.log('group list : ', this.groupList);
+        alert('삭제 되었습니다');
+        this.getGroupList();
       });
     },
-    // getGroupInfo() {
-    //   const params = {
-    //     groupIdx : this.groupId.groupIdx
-    //   }
-    //   axiosUtil.get('/api/myGroup/getGroupInfo.do', {params}, result => {
-    //     this.groupId = result.data.groupId;
-    //     console.log(this.groupId);
-    //   });
-    // },
+    getGroupInfo(groupIdx) {
+      const params = {
+        groupIdx : groupIdx
+      }
+      axiosUtil.get('/api/myGroup/getGroupInfo.do', params, result => {
+        this.groupId = result.data.groupId;
+        console.log(result);
+        console.log(this.groupId);
+      });
+    },
     createGroup() {
       const params = {
-        groupTitle: this.form.groupName,
-        group_member: [],
+        groupTitle: this.createGroupDetail.groupTitle,
+        // group_member: this.createGroupDetail.groupMembers,
       }
-      axiosUtil.get('/api/myGroup/createGroup.do\'', params, result => {
-        this.groupList = result.data.groupList;
+      axiosUtil.post('/api/myGroup/createGroup.do', params, () => {
+        // this.groupList = result.data.groupList;
+        alert('저장되었습니다.');
       })
     },
     getGroupList() {
@@ -309,6 +359,7 @@ export default {
   },
   created() {
     this.getFriendsList();
+    this.getConfirmFriendsList();
   }
 };
 </script>
