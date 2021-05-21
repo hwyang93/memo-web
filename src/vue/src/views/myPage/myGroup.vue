@@ -66,15 +66,15 @@
                             <div class="user-pic" href="#">
                               <img alt="" src="../../images/friends/user-sample.jpg" />
                             </div>
-                            <div class="user-name" href="#">{{ item.followUserName }} </div>
+                            <div class="user-name" href="#">{{ item.followUserName }}</div>
                           </a>
                           <button class="btn btn-info" @click="addMember(item)">Add</button>
                         </li>
                       </ul>
                     </div>
                     <b-form-tags :disableAddButton="true" input-id="tags-basic">
-                      <b-form-tag v-for="(item,idx) in createGroupDetail.groupMembers" @remove="removeFromList(item.followUserId)" :key="idx">
-                        {{item.followUserName}}
+                      <b-form-tag v-for="(item, idx) in createGroupDetail.groupMembers" @remove="removeFromList(item.followUserId)" :key="idx">
+                        {{ item.followUserName }}
                       </b-form-tag>
                     </b-form-tags>
                     <div class="button-area mt-3">
@@ -205,7 +205,7 @@ export default {
         groupTitle: '',
         groupIdx: '',
         groupComment: '',
-        groupMembers: [],
+        groupMembers: []
       }
     };
   },
@@ -254,14 +254,14 @@ export default {
       console.log(this.userList);
     },
     addMember(item) {
-      this.createGroupDetail.groupMembers.push(item)
+      this.createGroupDetail.groupMembers.push(item);
     },
     removeFromList(idx) {
-      this.createGroupDetail.groupMembers.forEach((item,index) => {
+      this.createGroupDetail.groupMembers.forEach((item, index) => {
         if (item.followUserId === idx) {
           this.createGroupDetail.groupMembers.splice(index, 1);
         }
-      })
+      });
     },
     getFriendsList() {
       const params = {
@@ -280,7 +280,7 @@ export default {
       axiosUtil.get('/api/myGroup/getFriendList.do', params, result => {
         this.confirmFriendsList = result.data.friendsList;
         console.log(result);
-      })
+      });
     },
     removeFriend() {},
     getUserList() {
@@ -305,8 +305,8 @@ export default {
     },
     deleteGroup(groupIdx) {
       const params = {
-        groupIdx : groupIdx
-      }
+        groupIdx: groupIdx
+      };
       axiosUtil.post('/api/myGroup/deleteGroup.do', params, () => {
         // this.groupList = result.data.groupList;
         // console.log('group list : ', this.groupList);
@@ -316,8 +316,8 @@ export default {
     },
     getGroupInfo(groupIdx) {
       const params = {
-        groupIdx : groupIdx
-      }
+        groupIdx: groupIdx
+      };
       axiosUtil.get('/api/myGroup/getGroupInfo.do', params, result => {
         this.groupId = result.data.groupId;
         console.log(result);
@@ -327,12 +327,12 @@ export default {
     createGroup() {
       const params = {
         groupTitle: this.createGroupDetail.groupTitle,
-        // group_member: this.createGroupDetail.groupMembers,
-      }
+        group_member: this.createGroupDetail.groupMembers
+      };
       axiosUtil.post('/api/myGroup/createGroup.do', params, () => {
         // this.groupList = result.data.groupList;
         alert('저장되었습니다.');
-      })
+      });
     },
     getGroupList() {
       axiosUtil.get('/api/myGroup/getGroupList.do', {}, result => {

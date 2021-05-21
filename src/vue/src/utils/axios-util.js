@@ -12,7 +12,7 @@ const axiosUtil = {
         params: data
       })
       .then(cbSuccess)
-      .catch((result) => {
+      .catch(result => {
         router.push('/login');
       })
       .then(cbComplete);
@@ -27,8 +27,8 @@ const axiosUtil = {
         }
       })
       .then(cbSuccess)
-      .catch(()=>{
-          router.push('/login');
+      .catch(() => {
+        router.push('/login');
       })
       .then(cbComplete);
   },
@@ -37,8 +37,8 @@ const axiosUtil = {
     axios
       .put(url, data, {
         headers: {
-            'Content-Type': 'Application/json',
-            token: store.state.auth.userInfo.token
+          'Content-Type': 'Application/json',
+          token: store.state.auth.userInfo.token
         }
       })
       .then(cbSuccess)
