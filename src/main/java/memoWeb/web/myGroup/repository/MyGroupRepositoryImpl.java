@@ -62,12 +62,12 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 	@Override
 	public List<UserRelationDTO> getFriendList(UserRelationVO userRelation) {
 		BooleanBuilder builder = new BooleanBuilder();
-		builder.and(qUserRelation.followUserId.eq(userRelation.getUserId()));
+		builder.and(qUserRelation.userId.eq(userRelation.getUserId()));
 
 		if (userRelation.getRelationStatus() != null && !userRelation.getRelationStatus().equals("ALL")) {
 			builder.and(qUserRelation.relationStatus.eq(userRelation.getRelationStatus()));
 		}
-		return queryFactory.select(Projections.fields(UserRelationDTO.class, qUserRelation.followUserId, qUserRelation.followUserId, qUserRelation.relationStatus,
+		return queryFactory.select(Projections.fields(UserRelationDTO.class, qUserRelation.userId, qUserRelation.followUserId, qUserRelation.relationStatus,
 				ExpressionUtils.as(JPAExpressions.select(qUser.userName).from(qUser).where(qUser.userId.eq(qUserRelation.followUserId)), "followUserName")))
 				.from(qUserRelation)
 				.where(builder)
@@ -131,8 +131,8 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 
 	@Override
 	public List<UserRelationDTO> getFriendReqList(UserDTO user) {
-		return queryFactory.select(Projections.fields(UserRelationDTO.class, qUserRelation.followUserId, qUserRelation.followUserId, qUserRelation.relationStatus,
-				ExpressionUtils.as(JPAExpressions.select(qUser.userName).from(qUser).where(qUser.userId.eq(qUserRelation.followUserId)), "followUserName")))
+		return queryFactory.select(Projections.fields(UserRelationDTO.class, qUserRelation.userId, qUserRelation.followUserId, qUserRelation.relationStatus,
+				ExpressionUtils.as(JPAExpressions.select(qUser.userName).from(qUser).where(qUser.userId.eq(qUserRelation.userId)), "followUserName")))
 				.from(qUserRelation)
 				.where(qUserRelation.followUserId.eq(user.getUserId())
 						.and(qUserRelation.relationStatus.eq("W")))
@@ -142,7 +142,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 	@Override
 	public long updateUserRelationStatus(UserRelationDTO userRelation) {
 		return queryFactory.update(qUserRelation)
-				.where(qUserRelation.followUserId.eq(userRelation.getUserId())
+				.where(qUserRelation.userId.eq(userRelation.getUserId())
 						.and(qUserRelation.followUserId.eq(userRelation.getFollowUserId())))
 				.set(qUserRelation.relationStatus, userRelation.getRelationStatus())
 				.execute();
@@ -151,7 +151,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 	@Override
 	public long deleteUserRelation(UserRelationDTO userRelation) {
 		return queryFactory.delete(qUserRelation)
-				.where(qUserRelation.followUserId.eq(userRelation.getUserId())
+				.where(qUserRelation.userId.eq(userRelation.getUserId())
 						.and(qUserRelation.followUserId.eq(userRelation.getFollowUserId())))
 				.execute();
 	}
