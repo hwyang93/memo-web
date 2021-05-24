@@ -5,93 +5,94 @@
       <admin-top-menu :send="this.pageName"></admin-top-menu>
       <div class="container home-banner-container space-type-1">
         <div class="row">
-          <div class="col-lg-3 home-banner-row left shadow-wrap-1">
-            <img src="../../images/dashboard/user.png" id="title-icon" alt="userIcon" />
-            <h4 class="title-left">User List</h4>
-            <div class="userListBox">
-              <table class="userListTbl">
-                <colgroup>
-                  <col width="20%" />
-                  <col width="80%" />
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th scope="col">USER ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(user, index) in userList" :key="index">
-                    <th>{{ index + 1 }}</th>
-                    <th scope="col" @click="detail(user.userId)">{{ user.userId }}</th>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="col-lg-8 home-banner-row right shadow-wrap-1">
-            <div class="title-back">
+          <div class="col-lg-4">
+            <div class="home-banner-row left shadow-wrap-1">
               <img src="../../images/dashboard/user.png" id="title-icon" alt="userIcon" />
-              <h3 class="title-name">회원정보</h3>
-              <div class="userInfoBox">
-                <table class="userInfoTbl">
+              <h4 class="title-left">User List</h4>
+              <div class="left-listBox listBox">
+                <table class="listTbl">
                   <colgroup>
                     <col width="20%" />
-                    <col width="30%" />
-                    <col width="20%" />
-                    <col width="30%" />
+                    <col width="80%" />
                   </colgroup>
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th scope="col">user Id</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr scope="row">
-                      <th scope="col">Id</th>
-                      <td>{{ this.userInfo.userId }}</td>
-                      <th scope="col">Register Date</th>
-                      <td>{{ $moment(this.userInfo.regDate).format('YYYY-MM-DD') }}</td>
-                    </tr>
-                    <tr scope="row">
-                      <th scope="col">Name</th>
-                      <td colspan="3">{{ this.userInfo.userName }}</td>
-                    </tr>
-                    <tr scope="row">
-                      <th scope="col">Password</th>
-                      <td colspan="3">{{ this.userInfo.userPassword }}</td>
-                    </tr>
-                    <tr scope="row">
-                      <th scope="col">Email</th>
-                      <td colspan="3">{{ this.userInfo.userEmail }}</td>
-                    </tr>
-                    <tr scope="row">
-                      <th scope="col">Post</th>
-                      <td colspan="3">{{ this.uPostCnt }} 개</td>
-                    </tr>
-                    <tr scope="row" v-if="uGroupCnt.length == 0">
-                      <th scope="col">Group</th>
-                      <td colspan="3">0 개</td>
-                    </tr>
-                    <tr scope="row" v-else>
-                      <th scope="col">Group</th>
-                      <td colspan="3" v-for="g in uGroupCnt" :key="g.index">
-                        {{ g }} 개
-                        <span id="showGroupName" v-if="close" @click="groupToggle()">그룹 보기 ▼</span>
-                        <span id="showGroupName" v-else-if="open" @click="groupToggle()">닫기 ▲</span>
-                        <div class="groupBox" v-if="open">
-                          <div class="gitem" v-for="gt in groupTitle" :key="gt.index">
-                            {{ gt }}
-                          </div>
-                        </div>
-                      </td>
+                    <tr v-for="(user, index) in userList" :key="index">
+                      <th>{{ index + 1 }}</th>
+                      <th scope="col" @click="detail(user.userId)">{{ user.userId }}</th>
                     </tr>
                   </tbody>
                 </table>
-                <table class="userInfoTbl">
-                  <colgroup>
-                    <col width="20%" />
-                    <col width="30%" />
-                  </colgroup>
-                  <tbody></tbody>
-                </table>
-                <div>
-                  <span class="delBtn" @click="delUser(this.userInfo.userId)">Delete</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="home-banner-row right shadow-wrap-1">
+              <div class="title-back">
+                <img src="../../images/dashboard/user.png" id="title-icon" alt="userIcon" />
+                <h3 class="title-name">회원정보</h3>
+                <div class="infoBox">
+                  <table class="infoTbl">
+                    <colgroup>
+                      <col width="20%" />
+                      <col width="30%" />
+                      <col width="20%" />
+                      <col width="30%" />
+                    </colgroup>
+                    <tbody>
+                      <tr scope="row">
+                        <th scope="col">Id</th>
+                        <td>{{ this.userInfo.userId }}</td>
+                        <th scope="col">Register Date</th>
+                        <td>{{ $moment(this.userInfo.regDate).format('YYYY-MM-DD') }}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th scope="col">Name</th>
+                        <td colspan="3">{{ this.userInfo.userName }}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th scope="col">Password</th>
+                        <td colspan="3">{{ this.userInfo.userPassword }}</td>
+                      </tr>
+                      <tr scope="row">
+                        <th scope="col">Email</th>
+                        <td colspan="3">{{ this.userInfo.userEmail }}</td>
+                      </tr>
+                      <tr scope="row" v-if="uPostCnt.length == 0">
+                        <th scope="col">Post</th>
+                        <td colspan="3">0 개</td>
+                      </tr>
+                      <tr scope="row" v-else>
+                        <th scope="col">Post</th>
+                        <td colspan="3">{{ this.uPostCnt }} 개</td>
+                      </tr>
+                      <tr scope="row" v-if="uGroupCnt.length == 0">
+                        <th scope="col">Group</th>
+                        <td colspan="3">0 개</td>
+                      </tr>
+                      <tr scope="row" v-else>
+                        <th scope="col">Group</th>
+                        <td colspan="3">
+                          {{ this.uGroupCnt.length }} 개
+                          <span id="showGroupName" v-if="close" @click="groupToggle()">그룹 보기 ▼</span>
+                          <span id="showGroupName" v-else-if="open" @click="groupToggle()">닫기 ▲</span>
+                          <div class="groupBox" v-if="open">
+                            <div class="gitem" v-for="gt in groupTitle" :key="gt.index">
+                              {{ gt }}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    <span class="delBtn" @click="delUser(this.userInfo.userId)">Delete</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,6 +131,9 @@ export default {
       this.userList = result.data.userList;
       axiosUtil.get('/api/admin/userInfo/' + this.userList[0].userId, {}, result => {
         this.userInfo = result.data.userInfo;
+        this.groupTitle = Object.keys(result.data.uGroupCnt);
+        this.uGroupCnt = Object.values(result.data.uGroupCnt);
+        this.uPostCnt = result.data.uPostCnt;
       });
     });
   },
@@ -143,6 +147,7 @@ export default {
         this.userInfo = result.data.userInfo;
         this.groupTitle = Object.keys(result.data.uGroupCnt);
         this.uGroupCnt = Object.values(result.data.uGroupCnt);
+        this.uPostCnt = result.data.uPostCnt;
       });
     },
     groupToggle() {

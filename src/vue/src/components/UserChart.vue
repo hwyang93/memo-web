@@ -4,6 +4,7 @@ import { Line } from 'vue-chartjs';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 import axiosUtil from '@/utils/axios-util';
+import EventBus from '@/eventBus.js';
 //Exporting this so it can be used in other components
 export default {
   extends: Line,
@@ -53,7 +54,8 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false
-      }
+      },
+      userTotal: 0
     };
   },
   methods: {
@@ -64,6 +66,11 @@ export default {
         this.datacollection.labels = Object.keys(this.list);
         console.log(this.datacollection.datasets);
         this.datacollection.datasets[0].data = Object.values(this.list);
+        var dataList = Object.values(this.list);
+        this.userTotal = dataList.reduce((stack, el) => {
+          return stack + el;
+        }, 0);
+        EventBus.$emit('userTotal', this.userTotal);
         this.renderChart(this.datacollection, this.options);
       });
     }
