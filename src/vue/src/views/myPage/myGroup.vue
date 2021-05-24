@@ -325,9 +325,16 @@ export default {
       });
     },
     createGroup() {
+      let groupMembers = [];
+      let groupMember = {};
+      this.createGroupDetail.groupMembers.map(item => {
+        groupMember.groupUser = item.followUserId;
+        groupMembers.push(groupMember);
+      });
       const params = {
         groupTitle: this.createGroupDetail.groupTitle,
-        group_member: this.createGroupDetail.groupMembers
+        groupMembers: groupMembers
+        // group_member: this.createGroupDetail.groupMembers
       };
       axiosUtil.post('/api/myGroup/createGroup.do', params, () => {
         // this.groupList = result.data.groupList;

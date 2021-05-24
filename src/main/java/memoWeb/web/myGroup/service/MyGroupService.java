@@ -54,7 +54,9 @@ public class MyGroupService {
 		return myGroupRepository.getGroupIdx();
 	}
 
-	public void createGroup(GroupsVO group) {
+	public void createGroup(GroupDTO groupDTO) {
+		GroupsVO group = GroupsVO.toEntity(groupDTO).build();
+//		group.addMembers(group.getGroupMembers());
 		myGroupRepository.createGroup(group);
 	}
 
