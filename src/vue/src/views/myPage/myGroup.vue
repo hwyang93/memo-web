@@ -360,6 +360,7 @@ export default {
   created() {
     this.getFriendsList();
     this.getConfirmFriendsList();
+  //  test
   }
 };
 </script>
