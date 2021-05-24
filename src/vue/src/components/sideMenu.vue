@@ -10,10 +10,9 @@
 
       <slot> </slot>
       <ul class="side-nav">
-        <li class="nav-item"><a class="nav-link" @click="change('/admin/DashBoard')">DashBoard</a></li>
-        <li class="nav-item"><a class="nav-link" @click="change('/admin/Users')">Users</a></li>
-        <li class="nav-item"><a class="nav-link" @click="change('/admin/Board')">Board</a></li>
-        <li class="nav-item"><a class="nav-link" @click="change('/admin/Groups')">Groups</a></li>
+        <li class="nav-item" v-for="(m, index) in menu" :key="index">
+          <a class="nav-link" v-bind:class="{ 'active-menu': index === 0 }" @click="change(m)">{{ m }}</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -22,21 +21,19 @@
 export default {
   name: 'sideMenu',
   data() {
-    return {};
+    return {
+      menu: ['DashBoard', 'Users', 'Board', 'Groups']
+    };
   },
   methods: {
-    change(url, item) {
-      this.$router.push(url);
+    change(url) {
+      this.$router.push('/admin/' + url);
     }
   }
 };
 </script>
 
 <style>
-a:not([href]):not([tabindex]).nav-link.active {
-  color: #053c4b;
-  opacity: 1;
-}
 .sidebar {
   max-height: 100%;
   height: 100%;
@@ -92,6 +89,10 @@ img {
   font-weight: 600;
   text-transform: uppercase;
 }
+.active-menu {
+  color: #053c4b;
+  font-weight: 600;
+}
 a:not([href]):not([tabindex]).nav-link {
   color: #fff;
   margin: 10px 0px;
@@ -112,8 +113,5 @@ a:not([href]):not([tabindex]).nav-link:focus {
   font-weight: 600;
   line-height: 40px;
   text-align: left;
-}
-a:active {
-  color: #053c4b;
 }
 </style>

@@ -9,6 +9,7 @@ import com.querydsl.core.Tuple;
 
 import memoWeb.web.admin.repository.AdminRepository;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.post.domain.Post;
 
 @Service
 public class AdminService {
@@ -31,18 +32,6 @@ public class AdminService {
 		return adminRepository.getUserInfo(id);
 	}
 
-	public long getUserCnt() {
-		return adminRepository.getUserCnt();
-	}
-
-	public long getPostCnt() {
-		return 0;
-	}
-
-	public long getGroupCnt() {
-		return 0;
-	}
-
 	public List<Tuple> getMonthData() {
 		return adminRepository.getMonthData();
 	}
@@ -55,6 +44,10 @@ public class AdminService {
 		return adminRepository.getuPostCnt(id);
 	}
 
+	public long getPostCnt() {
+		return adminRepository.getPostCnt();
+	}
+	
 	public long getMemoCnt() {
 		return adminRepository.getMemoCnt();
 	}
@@ -65,5 +58,17 @@ public class AdminService {
 
 	public long getGscheduleCnt() {
 		return adminRepository.getGscheduleCnt();
+	}
+
+	public List<Post> getPostList() {
+		return adminRepository.getPostList();
+	}
+
+	public Post getPostDetail(int idx) {
+		return adminRepository.getPostDetail(idx);
+	}
+
+	public int deletePost(int idx) {
+		return adminRepository.deletePost(idx);
 	}
 }

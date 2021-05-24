@@ -16,6 +16,7 @@ import com.querydsl.core.Tuple;
 
 import memoWeb.web.admin.service.AdminService;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.post.domain.Post;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -27,19 +28,32 @@ public class AdminController {
 		this.adminService = adminService;
 	}
 	
-	@GetMapping("/dashboard")
-	public Map<String,Object> getDashboardData(Model model){
-		Map<String,Object> map = new HashMap<>();
-		long userCnt = adminService.getUserCnt();
-		long postCnt = adminService.getPostCnt();
-		long groupCnt = adminService.getGroupCnt();
-
-		map.put("userCnt", userCnt);
-		map.put("postCnt", postCnt);
-		map.put("groupCnt", groupCnt);
+	// dashboard
+	@GetMapping("/getMonthData")
+	public Map<String,Integer> getMonthData(Model model){
+		Map<String,Integer> map = new TreeMap<>();
+		List<Tuple> list = adminService.getMonthData();
+		for(Tuple tuple : list) {
+			map.put(tuple.get(0, String.class), Integer.parseInt(String.valueOf(tuple.get(1, Integer.class))));
+		}
 		return map;
 	}
 	
+	@GetMapping("/getPostData")
+	public Map<String,Integer> getPostData(Model model){
+		Map<String,Integer> map = new HashMap<>();
+		long post = adminService.getPostCnt();
+		long memo = adminService.getMemoCnt();
+		long schedule = adminService.getScheduleCnt();
+		long gSchedule = adminService.getGscheduleCnt();
+		map.put("post", (int) post);
+		map.put("memo", (int) memo);
+		map.put("schedule", (int) schedule);
+		map.put("gSchedule", (int) gSchedule);
+		return map;
+	}
+	
+	// users
 	@GetMapping("/userList")
 	public Map<String,Object> getUserList(Model model){
 		Map<String,Object> map = new HashMap<>();
@@ -51,9 +65,9 @@ public class AdminController {
 	@GetMapping("/userInfo/{id}")
 	public Map<String,Object> getUserInfo(@PathVariable("id") String id, Model model){
 		Map<String,Object> map = new HashMap<>();
-		Map<String,Object> uGroupCnt = new TreeMap<>();
 		UserVO userInfo = adminService.getUserInfo(id);
 		List<Tuple> result = adminService.getuGroupCnt(id);
+		Map<String,Object> uGroupCnt = new TreeMap<>();
 		long uPostCnt = adminService.getuPostCnt(id);
 		for(Tuple tuple : result) {
 			int sum = 0;
@@ -74,25 +88,29 @@ public class AdminController {
 		return map;
 	}
 	
-	@GetMapping("/getMonthData")
-	public Map<String,Integer> getMonthData(Model model){
-		Map<String,Integer> map = new TreeMap<>();
-		List<Tuple> list = adminService.getMonthData();
-		for(Tuple tuple : list) {
-			map.put(tuple.get(0, String.class), Integer.parseInt(String.valueOf(tuple.get(1, Integer.class))));
-		}
+	//board
+	@GetMapping("/postList")
+	public Map<String,Object> getPostList(Model model){
+		Map<String,Object> map = new HashMap<>();
+		List<Post> postList = adminService.getPostList();
+		map.put("postList", postList);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 		return map;
 	}
 	
-	@GetMapping("/getPostData")
-	public Map<String,Integer> getPostData(Model model){
-		Map<String,Integer> map = new HashMap<>();
-		long memo = adminService.getMemoCnt();
-		long schedule = adminService.getScheduleCnt();
-		long gSchedule = adminService.getGscheduleCnt();
-		map.put("memo", (int) memo);
-		map.put("schedule", (int) schedule);
-		map.put("gSchedule", (int) gSchedule);
+	@GetMapping("/postDetail/{idx}")
+	public Map<String,Object> getPostDetail(@PathVariable("idx") int idx, Model model){
+		Map<String,Object> map = new HashMap<>();
+		Post postDetail = adminService.getPostDetail(idx);
+		map.put("postDetail", postDetail);
 		return map;
 	}
+	
+	@GetMapping("/deletePost/{idx}")
+	public Map<String,Object> deletePost(@PathVariable("idx") int idx, Model model){
+		Map<String,Object> map = new HashMap<>();
+		int result = adminService.deletePost(idx);
+		map.put("result", result);
+		return map;
+	}
+	
 }
