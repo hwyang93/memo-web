@@ -1,15 +1,18 @@
 package memoWeb.web.myGroup.domain;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import memoWeb.web.post.domain.PostFile;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "GROUPS")
+@Builder(builderMethodName = "GroupsVOBuilder")
 public class GroupsVO {
     @Id
     @Column(name = "GROUP_IDX")
@@ -22,4 +25,22 @@ public class GroupsVO {
     private String regDate;
     @Column(name = "GROUP_COMMENT")
     private String groupComment;
+
+    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+    @Singular
+    private List<GroupMemberVO> groupMembers;
+
+    public static GroupsVOBuilder toEntity(GroupDTO groupDTO) {
+        return GroupsVOBuilder()
+                .groupIdx(groupDTO.getGroupIdx())
+                .groupMasterUser(groupDTO.getGroupMasterUser())
+                .groupTitle(groupDTO.getGroupTitle())
+                .groupComment(groupDTO.getGroupComment())
+                .groupMembers(groupDTO.getGroupMembers());
+    }
+
+    public void addMembers(List<GroupMemberVO> groupMembers) {
+        this.groupMembers.addAll(groupMembers);
+    }
+
 }

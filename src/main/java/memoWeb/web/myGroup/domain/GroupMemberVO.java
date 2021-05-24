@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Data
@@ -15,10 +12,9 @@ import javax.persistence.Table;
 @Table(name = "GROUP_MEMBER")
 public class GroupMemberVO {
 
-    @Id
-    @Column(name = "GROUP_IDX")
+    @Column(name = "GROUP_IDX",insertable = false, updatable = false)
     private int groupIdx;
-
+    @Id
     @Column(name = "GROUP_USER")
     private String groupUser;
     @Column(name = "REG_DATE", insertable = false, updatable = false,
@@ -28,4 +24,8 @@ public class GroupMemberVO {
     private String memberAuth;
     @Column(name = "APPROVAL_STATUS")
     private String approvalStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "GROUP_IDX")
+    private GroupsVO groups;
 }

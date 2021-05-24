@@ -26,13 +26,13 @@ import java.util.Map;
 public class MainController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-	private static final String SECRET_KEY = "accessToken";
 	private static MainService mainService;
 
 	@Autowired
 	public MainController(MainService mainService) {
 		this.mainService = mainService;
 	}
+
 	@PostMapping("login.do")
 	public ResponseEntity login(Model model, @RequestBody UserDTO user, HttpSession session) {
 		UserDTO result = null;

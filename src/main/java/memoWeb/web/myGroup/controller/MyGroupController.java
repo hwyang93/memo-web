@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,28 +75,36 @@ public class MyGroupController {
 	}
 
 	@PostMapping("createGroup.do")
-//	public String createGroup(Model model, HttpSession session, @RequestBody List<GroupMemberVO> groupMemberList, @RequestBody GroupsVO group) {
-	public String createGroup(Model model, HttpSession session, @RequestParam HashMap<String,Object> params) {
-		int groupIdx = myGroupService.getGroupIdx();
+	public String createGroup(Model model, HttpSession session, @RequestBody GroupDTO group) {
+		List<GroupMemberDTO> groupMemberList = new ArrayList<>();
+		int groupIdx = myGroupService.getGroupIdx()+1;
+//		int groupIdx = 999;
 
-//		group.setGroupMasterUser(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
-//		group.setGroupIdx(groupIdx);
-//
-//
-//		GroupMemberVO masterUser = new GroupMemberVO();
-//		masterUser.setGroupIdx(groupIdx);
-//		masterUser.setGroupUser(group.getGroupMasterUser());
-//		masterUser.setApprovalStatus("Y");
-//		masterUser.setMemberAuth("M");
-//
+		group.setGroupMasterUser(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+		group.setGroupIdx(groupIdx);
+
+
+		GroupMemberVO masterUser = new GroupMemberVO();
+		masterUser.setGroupIdx(groupIdx);
+		masterUser.setGroupUser(group.getGroupMasterUser());
+		masterUser.setApprovalStatus("Y");
+		masterUser.setMemberAuth("M");
+
 //		groupMemberList.add(masterUser);
 //		groupMemberList.forEach(groupMember -> {
 //			groupMember.setGroupIdx(groupIdx);
 //			groupMember.setMemberAuth("N");
 //			groupMember.setApprovalStatus("N");
 //		});
-//
-//		myGroupService.createGroup(group);
+
+		group.getGroupMembers().forEach(groupMember -> {
+			groupMember.setGroupIdx(groupIdx);
+			groupMember.setMemberAuth("N");
+			groupMember.setApprovalStatus("N");
+		});
+		group.getGroupMembers().add(masterUser);
+
+		myGroupService.createGroup(group);
 //		myGroupService.joinGroupMember(groupMemberList);
 
 		return "jsonView";
