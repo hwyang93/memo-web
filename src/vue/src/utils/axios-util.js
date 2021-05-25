@@ -32,6 +32,20 @@ const axiosUtil = {
       })
       .then(cbComplete);
   },
+  multipartPost: function (url, data, cbSuccess, cbFail, cbComplete) {
+    axios
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          token: store.state.auth.userInfo.token
+        }
+      })
+      .then(cbSuccess)
+      .catch(() => {
+        router.push('/login');
+      })
+      .then(cbComplete);
+  },
 
   put: function (url, data, cbSuccess, cbFail, cbComplete) {
     axios
