@@ -26,21 +26,20 @@ public class GroupsVO {
     @Column(name = "GROUP_COMMENT")
     private String groupComment;
 
-    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
-    @Singular
-    private List<GroupMemberVO> groupMembers;
+//    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+//    private List<GroupMemberVO> groupMembers;
 
     public static GroupsVOBuilder toEntity(GroupDTO groupDTO) {
         return GroupsVOBuilder()
                 .groupIdx(groupDTO.getGroupIdx())
                 .groupMasterUser(groupDTO.getGroupMasterUser())
                 .groupTitle(groupDTO.getGroupTitle())
-                .groupComment(groupDTO.getGroupComment())
-                .groupMembers(groupDTO.getGroupMembers());
+                .groupComment(groupDTO.getGroupComment());
+//                .groupMembers(groupDTO.getGroupMembers());
     }
 
-    public void addMembers(List<GroupMemberVO> groupMembers) {
-        this.groupMembers.addAll(groupMembers);
-    }
+//    public void addMembers(List<GroupMemberVO> groupMembers) {
+//        this.groupMembers.addAll(groupMembers);
+//    }
 
 }
