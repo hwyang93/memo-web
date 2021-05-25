@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "GROUP_MEMBER")
 public class GroupMemberVO {
 
-    @Column(name = "GROUP_IDX",insertable = false, updatable = false)
+    @Column(name = "GROUP_IDX")
     private int groupIdx;
     @Id
     @Column(name = "GROUP_USER")
@@ -25,7 +25,7 @@ public class GroupMemberVO {
     @Column(name = "APPROVAL_STATUS")
     private String approvalStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "GROUP_IDX")
-    private GroupsVO groups;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "GROUP_IDX")
+//    private GroupsVO groups;
 }
