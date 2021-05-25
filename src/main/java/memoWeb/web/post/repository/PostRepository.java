@@ -8,5 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface PostRepository {
+	UserMemo getUserMemo(int idx);
 	List<Post> getPostList(Post post);
+	void savePost(Post post);
 }

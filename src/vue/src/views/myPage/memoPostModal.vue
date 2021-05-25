@@ -11,10 +11,13 @@
           </div>
         </div>
         <div class="content">
-          <b-form-textarea placeholder="Enter something..." rows="1" max-rows="10" no-resize></b-form-textarea>
-          <b-carousel ref="preview" controls img-width="1024" img-height="480" :interval="0">
+          <b-form-textarea v-model="contents" placeholder="Enter something..." rows="1" max-rows="10" no-resize></b-form-textarea>
+          <b-carousel ref="preview" indicators controls img-width="1024" img-height="480" :interval="0">
             <b-carousel-slide v-for="(item, index) in previewImgs" :img-src="item" :key="index"></b-carousel-slide>
           </b-carousel>
+        </div>
+        <div>
+          <b-checkbox v-model="openFlag">공개여부</b-checkbox>
         </div>
         <div style="text-align: right">
           <b-form-file v-model="files" multiple style="display: none"></b-form-file>
@@ -25,7 +28,7 @@
         </div>
         <hr />
         <div style="text-align: right">
-          <b-button variant="primary">저장</b-button>
+          <b-button @click="onSave" variant="primary">저장</b-button>
         </div>
       </div>
     </div>
@@ -42,8 +45,10 @@ export default {
   },
   data() {
     return {
+      contents: '',
+      openFlag: false,
       files: [],
-      file: [],
+      file: null,
       previewImgs: []
     };
   },
@@ -60,12 +65,26 @@ export default {
       this.$refs.file.$el.querySelector('input[type=file]').click();
     },
     addFile() {
-      console.log(this.file);
       this.files.push(this.file);
       const imageUrl = URL.createObjectURL(this.file);
       this.previewImgs.push(imageUrl);
-      console.log(this.previewImgs.length);
       this.$refs.preview.setSlide(this.previewImgs.length - 1);
+    },
+    onSave() {
+      let files = [];
+      let file = {};
+      const formData = new FormData();
+      formData.append('contents', this.contents);
+      this.files.forEach(item => {
+        console.log(item);
+        formData.append(item.name, item);
+        file.fileOrgName = item.name;
+        files.push(file);
+      });
+
+      axiosUtil.multipartPost('/api/post/post/userMemo/' + this.idx, formData, () => {
+        alert('포스트가 저장되었습니다.');
+      });
     }
   },
   beforeMount() {}

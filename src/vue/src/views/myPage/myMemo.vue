@@ -20,7 +20,7 @@
               <div class="card-header">
                 {{ item.title }}
                 <div style="float: right">
-                  <button @click="goPost">
+                  <button @click="goPost(item.idx)">
                     <i class="fas fa-pencil-alt"></i>
                   </button>
                 </div>
@@ -40,7 +40,7 @@
       <memo-detail :idx="idx" @closeModal="closeModal('detail')" />
     </div>
     <div v-if="postModalFlag">
-      <memo-post-modal @closeModal="closeModal('post')" />
+      <memo-post-modal :idx="idx" @closeModal="closeModal('post')" />
     </div>
   </section>
 </template>
@@ -86,7 +86,8 @@ export default {
         this.postModalFlag = false;
       }
     },
-    goPost() {
+    goPost(idx) {
+      this.idx = idx;
       this.postModalFlag = true;
     }
   },
