@@ -16,6 +16,7 @@ import com.querydsl.core.Tuple;
 
 import memoWeb.web.admin.service.AdminService;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.post.domain.Post;
 
 @RestController
@@ -113,4 +114,23 @@ public class AdminController {
 		return map;
 	}
 	
+	
+	/* groups */
+	
+	@GetMapping("/groupList")
+	public Map<String,Object> getGroupList(Model model){
+		Map<String,Object> map = new HashMap<>();
+		List<GroupsVO> groupList = adminService.getGroupList();
+		map.put("groupList", groupList);
+		return map;
+	}
+	
+	@GetMapping("/groupDetail/{idx}")
+	public Map<String,Object> getGroupDetail(@PathVariable("idx") int idx, Model model){
+		Map<String,Object> map = new HashMap<>();
+		GroupsVO groupDetail = adminService.getGroupDetail(idx);
+		System.out.println(groupDetail);
+		map.put("groupDetail", groupDetail);
+		return map;
+	}
 }

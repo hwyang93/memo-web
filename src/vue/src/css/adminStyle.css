@@ -14,9 +14,11 @@
   min-height: 100%;
   overflow: auto;
 }
+.card-content {
+  width: 100%;
+}
 .c-box {
   width: 100%;
-  padding: 20px;
 }
 .c-box.title {
   padding: 7px;
@@ -164,9 +166,8 @@ canvas {
   border-radius: 8px;
   border: 1px solid #ccc;
   cursor: pointer;
-  position: absolute;
-  bottom: 30px;
-  left: 85%;
+  float: right;
+  margin-bottom: 10px;
 }
 #showGroupName {
   float: right;
@@ -210,12 +211,57 @@ canvas {
   float: left;
   margin-right: 12px;
 }
-.delFileBtn {
-  background: #eee;
-  font-size: 10px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  margin-left: 3px;
+.h-80 {
+  height: 80vh;
+}
+#groupInfo {
+  border: none;
+  resize: none;
+  width: 95%;
+  height: 100px;
+}
+.groupMemberBox {
+  border-top: 2px solid #00adb5;
+  margin-bottom: 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
+.mList {
+  padding: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 180px;
+}
+.mProfile {
+  width: 40px;
+  display: inline-block;
+  height: 40px;
+  margin-left: 0px;
+  margin-right: 10px;
+  background: #00adb5;
+  border-radius: 40px;
+  text-align: center;
+}
+.m-item {
+  margin-bottom: 10px;
+}
+.mList::-webkit-scrollbar {
+  width: 3px;
+}
+.mList::-webkit-scrollbar-thumb {
+  width: 3px;
+  background-color: #00adb5;
+  border-radius: 10px;
+}
+.mList::-webkit-scrollbar-track {
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+  background-color: #ccc;
+}
+.chartArea {
+  padding: 10px;
+  margin-bottom: 20px;
 }

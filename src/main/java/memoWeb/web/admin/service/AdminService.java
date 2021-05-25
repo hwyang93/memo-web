@@ -9,6 +9,7 @@ import com.querydsl.core.Tuple;
 
 import memoWeb.web.admin.repository.AdminRepository;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.post.domain.Post;
 
 @Service
@@ -70,5 +71,13 @@ public class AdminService {
 
 	public int deletePost(int idx) {
 		return adminRepository.deletePost(idx);
+	}
+
+	public List<GroupsVO> getGroupList() {
+		return adminRepository.getGroupList();
+	}
+
+	public GroupsVO getGroupDetail(int idx) {
+		return adminRepository.getGroupDetail(idx);
 	}
 }
