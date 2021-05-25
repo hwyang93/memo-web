@@ -76,7 +76,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 
 	@Override
 	public int getGroupIdx() {
-		return Optional.ofNullable(queryFactory.select(qGroups).select(qGroups.groupIdx.max()).fetchOne()).orElseGet(() -> 1);
+		return Optional.ofNullable(queryFactory.select(qGroups.groupIdx.max()).from(qGroups).fetchOne()).orElseGet(() -> 1);
 	}
 
 	@Override

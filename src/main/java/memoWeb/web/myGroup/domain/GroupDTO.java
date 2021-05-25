@@ -1,8 +1,14 @@
 package memoWeb.web.myGroup.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GroupDTO {
     private int groupIdx;
     private String groupMasterUser;
@@ -13,6 +19,8 @@ public class GroupDTO {
     private String memberRegDate;
     private String memberAuth;
     private String approvalStatus;
+
+    private List<GroupMemberVO> groupMembers;
 
 //    private GroupMemberDTO groupMember;
 
