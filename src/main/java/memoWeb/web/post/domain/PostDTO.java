@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PostDTO {
 	private int postIdx;
-//	private int memoIdx;
+	private int memoIdx;
 	private String contents;
 
 	private UserMemo userMemo = new UserMemo();

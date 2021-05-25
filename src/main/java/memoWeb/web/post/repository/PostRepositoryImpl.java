@@ -33,9 +33,21 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
+	public UserMemo getUserMemo(int idx) {
+		return queryFactory.selectFrom(qUserMemo)
+				.where(qUserMemo.idx.eq(idx))
+				.fetchOne();
+	}
+
+	@Override
 	public List<Post> getPostList(Post post) {
 		return queryFactory.selectFrom(qPost)
 				.where(qUserMemo.userId.eq(post.getUserMemo().getUserId()))
 				.fetch();
+	}
+
+	@Override
+	public void savePost(Post post) {
+		em.persist(post);
 	}
 }

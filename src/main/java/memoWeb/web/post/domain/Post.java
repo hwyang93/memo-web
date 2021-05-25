@@ -10,12 +10,21 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
+@SequenceGenerator(
+		name="POST_SEQ",
+		sequenceName="POST_SEQ",
+		initialValue=1,
+		allocationSize=1
+)
 @Table(name = "POST")
 @Builder(builderMethodName = "PostBuilder")
 public class Post {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "POST_IDX", insertable=false, updatable=false)
+	@GeneratedValue(
+			strategy=GenerationType.SEQUENCE,
+			generator="POST_SEQ"
+	)
+	@Column(name = "POST_IDX")
 	private int postIdx;
 //	@Column(name = "MEMO_IDX", insertable=false, updatable=false)
 //	private int memoIdx;
@@ -25,7 +34,7 @@ public class Post {
 	@OneToOne
 	@JoinColumn(name = "MEMO_IDX")
 	private UserMemo userMemo;
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "POST_IDX")
 	private List<PostFile> postFiles;
 
@@ -34,7 +43,8 @@ public class Post {
 				.postIdx(postDTO.getPostIdx())
 //				.memoIdx(postDTO.getMemoIdx())
 				.contents(postDTO.getContents())
-				.userMemo(postDTO.getUserMemo());
+				.userMemo(postDTO.getUserMemo())
+				.postFiles(postDTO.getPostFiles());
 	}
 
 

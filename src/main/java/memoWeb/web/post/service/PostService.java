@@ -22,9 +22,19 @@ public class PostService {
 		this.postRepository = postRepository;
 	}
 
+	public UserMemo getUserMemo(int idx) {
+		return postRepository.getUserMemo(idx);
+	}
+
 	public List<PostDTO> getPostList(PostDTO postDTO) {
 		Post post = Post.toEntity(postDTO).build();
 		List<Post> postList = postRepository.getPostList(post);
 		return ObjectMapperUtils.mapAll(postList, PostDTO.class);
+	}
+
+	public void savePost(PostDTO postDTO) {
+		Post post = Post.toEntity(postDTO).build();
+		postRepository.savePost(post);
+
 	}
 }
