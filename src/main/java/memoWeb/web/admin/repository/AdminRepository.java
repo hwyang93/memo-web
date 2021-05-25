@@ -5,6 +5,7 @@ import java.util.List;
 import com.querydsl.core.Tuple;
 
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.post.domain.Post;
 
 public interface AdminRepository {
@@ -21,5 +22,7 @@ public interface AdminRepository {
 	List<Post> getPostList();
 	Post getPostDetail(int idx);
 	int deletePost(int idx);
+	List<GroupsVO> getGroupList();
+	GroupsVO getGroupDetail(int idx);
 
 }

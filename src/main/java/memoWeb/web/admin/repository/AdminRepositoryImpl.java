@@ -28,6 +28,7 @@ import memoWeb.web.main.domain.QUserVO;
 import memoWeb.web.main.domain.UserMemo;
 import memoWeb.web.main.domain.UserScheduleVO;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.myGroup.domain.QGroupMemberVO;
 import memoWeb.web.myGroup.domain.QGroupsVO;
 import memoWeb.web.post.domain.Post;
@@ -49,7 +50,6 @@ public class AdminRepositoryImpl implements AdminRepository {
 	QGroupSchedule qGschedule = QGroupSchedule.groupSchedule;
 	
 	// ******** dashboard
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Tuple> getMonthData() {
 		final JPAQuery<UserVO> query = new JPAQuery<>(em);
@@ -166,6 +166,23 @@ public class AdminRepositoryImpl implements AdminRepository {
 	public int deletePost(int idx) {
 		final JPADeleteClause deleteClause = new JPADeleteClause(em,qPost);
 		return (int) deleteClause.where(qPost.postIdx.eq(idx)).execute();
+	}
+
+	@Override
+	public List<GroupsVO> getGroupList() {
+		final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
+		return query.from(qGroups).fetch();
+	}
+
+	@Override
+	public GroupsVO getGroupDetail(int idx) {
+		final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
+		return query.from(qGroups)
+				.leftJoin(qGroupMember)
+				.on(qGroupMember.groupIdx.eq(qGroups.groupIdx))
+				.fetchJoin()
+				.where(qGroups.groupIdx.eq(idx))
+				.fetchOne();
 	}
 
 }
