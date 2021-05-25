@@ -56,8 +56,8 @@ public class MyGroupService {
 
 	public void createGroup(GroupDTO groupDTO) {
 		GroupsVO group = GroupsVO.toEntity(groupDTO).build();
-//		group.addMembers(group.getGroupMembers());
 		myGroupRepository.createGroup(group);
+		this.joinGroupMember(groupDTO.getGroupMembers());
 	}
 
 	public void joinGroupMember(List<GroupMemberVO> groupMemberList) {
