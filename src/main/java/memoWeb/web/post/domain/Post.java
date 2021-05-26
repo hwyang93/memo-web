@@ -31,6 +31,7 @@ public class Post {
 //	private int memoIdx;
 	@Column(name = "CONTENTS")
 	private String contents;
+	
 	@Column(name="DEL_FLAG")
 	private String delFlag;
 	@Column(name="DEL_DATE")
