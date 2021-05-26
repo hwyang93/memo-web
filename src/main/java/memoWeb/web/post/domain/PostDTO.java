@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ public class PostDTO {
 	private int postIdx;
 	private int memoIdx;
 	private String contents;
+	private String delFlag;
+	private String delDate;
 
 	private UserMemo userMemo = new UserMemo();
 	private List<PostFile> postFiles = new ArrayList<>();
@@ -30,6 +33,8 @@ public class PostDTO {
 		this.contents = post.getContents();
 //		this.userMemo = post.getUserMemo();
 		this.postFiles = post.getPostFiles();
+		this.delFlag  = post.getDelFlag();
+		this.delDate = post.getDelDate();
 	}
 
 }

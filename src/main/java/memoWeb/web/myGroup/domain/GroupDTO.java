@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import javax.persistence.Column;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +17,8 @@ public class GroupDTO {
     private String groupTitle;
     private String groupComment;
     private String groupRegDate;
+	private String delFlag;
+	private String delDate;
     private String groupUser;
     private String memberRegDate;
     private String memberAuth;

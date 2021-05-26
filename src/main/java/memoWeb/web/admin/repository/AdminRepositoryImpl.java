@@ -178,9 +178,6 @@ public class AdminRepositoryImpl implements AdminRepository {
 	public GroupsVO getGroupDetail(int idx) {
 		final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
 		return query.from(qGroups)
-				.leftJoin(qGroupMember)
-				.on(qGroupMember.groupIdx.eq(qGroups.groupIdx))
-				.fetchJoin()
 				.where(qGroups.groupIdx.eq(idx))
 				.fetchOne();
 	}

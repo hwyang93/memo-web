@@ -62,9 +62,7 @@ export default {
     getMonthData() {
       axiosUtil.get('/api/admin/getMonthData', {}, result => {
         this.list = result.data;
-        console.log(this.list);
         this.datacollection.labels = Object.keys(this.list);
-        console.log(this.datacollection.datasets);
         this.datacollection.datasets[0].data = Object.values(this.list);
         var dataList = Object.values(this.list);
         this.userTotal = dataList.reduce((stack, el) => {

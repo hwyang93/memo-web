@@ -94,7 +94,8 @@ public class AdminController {
 	public Map<String,Object> getPostList(Model model){
 		Map<String,Object> map = new HashMap<>();
 		List<Post> postList = adminService.getPostList();
-		map.put("postList", postList);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+		System.out.println(postList);
+		map.put("postList", postList);
 		return map;
 	}
 	
