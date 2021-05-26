@@ -16,7 +16,7 @@ export default {
         labels: ['post', 'Memo', 'Schedule', 'GroupSchedule'],
         datasets: [
           {
-            label: 'Post',
+            label: 'Board',
             borderWidth: 1,
             pointBorderColor: '#249EBF',
             //Data to be represented on y-axis

@@ -11,6 +11,7 @@ public class UserDTO {
 	private String userName;
 	private String regDate;
 	private String openFlag;
+	private String delDate;
 
 	private String keyword;
 	private String token;

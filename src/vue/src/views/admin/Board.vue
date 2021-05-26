@@ -56,8 +56,7 @@
                         <td colspan="3">
                           <ul class="fileList">
                             <li class="fileItem" v-for="(f, index) in this.postFiles" :key="index">
-                              [ {{ f.fileSaveName }} ]
-                              <!--<span class="delFileBtn" @click="delFile(this.postDetail.postIdx)">X</span>-->
+                              {{ f.fileSaveName }} <span class="delBtn file" @click="delFile(this.postDetail.postIdx)">X</span>
                             </li>
                           </ul>
                         </td>

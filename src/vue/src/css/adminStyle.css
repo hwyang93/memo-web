@@ -210,15 +210,21 @@ canvas {
 .fileItem {
   float: left;
   margin-right: 12px;
+  margin-top: 10px;
 }
 .h-80 {
   height: 80vh;
 }
-#groupInfo {
+.groupInfo {
   border: none;
   resize: none;
   width: 95%;
   height: 100px;
+  padding-top: 10px;
+  font-size: 14px;
+}
+.groupInfo.isEmpty {
+  color: gray;
 }
 .groupMemberBox {
   border-top: 2px solid #00adb5;
@@ -228,7 +234,19 @@ canvas {
   overflow-y: auto;
   width: 100%;
 }
+.groupMember-Title {
+  width: 100%;
+}
+.gm {
+  float: left;
+}
+.groupMemberCnt {
+  padding: 25px;
+  font-size: 12px;
+  color: gray;
+}
 .mList {
+  width: 100%;
   padding: 10px;
   overflow: scroll;
   overflow-x: hidden;
@@ -264,4 +282,8 @@ canvas {
 .chartArea {
   padding: 10px;
   margin-bottom: 20px;
+}
+.delBtn.file {
+  padding: 0 7px;
+  margin-left: 5px;
 }

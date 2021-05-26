@@ -56,29 +56,29 @@
                     <tbody>
                       <tr scope="row">
                         <th scope="col">Group Title</th>
-                        <td colspan="2"></td>
-                      </tr>
-                      <tr scope="row">
-                        <th scope="col">Group Title</th>
-                        <td colspan="2"></td>
+                        <td colspan="2">{{ this.groupDetail.groupTitle }}</td>
                       </tr>
                       <tr scope="row">
                         <th scope="col">Info</th>
-                        <td colspan="2"><textarea id="groupInfo" readonly></textarea></td>
+                        <td colspan="2" v-if="this.groupDetail.groupComment != null"><textarea class="groupInfo" readonly v-model="this.groupDetail.groupComment"></textarea></td>
+                        <td colspan="2" v-else><textarea class="groupInfo isEmpty" readonly>그룹 소개가 없습니다.</textarea></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="groupMemberBox">
-                  <h4 class="title-left">Group Member</h4>
+                  <div class="groupMember-Title">
+                    <h4 class="title-left gm">Group Member</h4>
+                    <h6 class="groupMemberCnt">{{ this.groupMembers.length }} 명</h6>
+                  </div>
                   <div class="mList">
                     <ul>
-                      <li class="m-item" v-for="(gm, index) in this.groupMember" :key="index"><img src="#" class="mProfile" />{{ gm }}</li>
+                      <li class="m-item" v-for="(gm, index) in this.groupMembers" :key="index"><img src="#" class="mProfile" />{{ gm.groupUser }}</li>
                     </ul>
                   </div>
                 </div>
                 <div>
-                  <span class="delBtn" @click="delGroup()">Delete</span>
+                  <span class="delBtn" @click="delGroup(this.groupDetail.groupIdx)">Delete</span>
                 </div>
               </div>
             </div>
@@ -105,23 +105,26 @@ export default {
     return {
       pageName: 'Groups',
       groupList: [],
-      groupDetail: {},
-      groupMember: {}
+      groupDetail: [],
+      groupMembers: []
     };
   },
   methods: {
     getGroupList() {
       axiosUtil.get('/api/admin/groupList', {}, result => {
         this.groupList = result.data.groupList;
-        console.log(this.groupList);
+        axiosUtil.get('/api/admin/groupDetail/' + this.groupList[0].groupIdx, {}, result => {
+          this.groupDetail = result.data.groupDetail;
+          this.groupMembers = result.data.groupDetail.groupMembers;
+          console.log(this.groupDetail);
+          console.log(this.groupMembers);
+        });
       });
     },
     detail(idx) {
       axiosUtil.get('/api/admin/groupDetail/' + idx, {}, result => {
         this.groupDetail = result.data.groupDetail;
-        this.groupMember = result.data.groupDetail.groupMember;
-        console.log(this.groupDetail);
-        console.log(this.groupMember);
+        this.groupMembers = result.data.groupDetail.groupMembers;
       });
     }
   },
