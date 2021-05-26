@@ -1,14 +1,14 @@
 package memoWeb.web.main.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
@@ -30,5 +30,6 @@ public class UserVO {
 	private String regDate;
 	@Column(name = "OPEN_FLAG")
 	private String openFlag;
-
+	@Column(name="DEL_DATE")
+	private String delDate;
 }
