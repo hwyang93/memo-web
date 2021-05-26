@@ -91,7 +91,7 @@
                     </tbody>
                   </table>
                   <div>
-                    <span class="delBtn" @click="delUser(this.userInfo.userId)">Delete</span>
+                    <span class="delBtn" @click="delUser()">Delete</span>
                   </div>
                 </div>
               </div>
@@ -131,6 +131,7 @@ export default {
       this.userList = result.data.userList;
       axiosUtil.get('/api/admin/userInfo/' + this.userList[0].userId, {}, result => {
         this.userInfo = result.data.userInfo;
+        console.log(this.userInfo);
         this.groupTitle = Object.keys(result.data.uGroupCnt);
         this.uGroupCnt = Object.values(result.data.uGroupCnt);
         this.uPostCnt = result.data.uPostCnt;
@@ -154,8 +155,8 @@ export default {
       this.close = !this.close;
       this.open = !this.open;
     },
-    delUser: function (id) {
-      axiosUtil.get('/api/admin/deleteUser/' + id, {}, result => {
+    delUser() {
+      axiosUtil.get('/api/admin/deleteUser/' + this.userInfo.userId, {}, result => {
         if (result.data.result == 1) {
           alert('삭제되었습니다.');
           location.reload();

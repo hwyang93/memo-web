@@ -1,5 +1,8 @@
 package memoWeb.web.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -81,10 +85,17 @@ public class AdminController {
 		return map;
 	}
 	
-	@GetMapping("/deleteUser/{id}")
-	public Map<String,Object> deleteUser(@PathVariable("id") String id, Model model){
+	@GetMapping(value = "/deleteUser/{id}")
+	public Map<String,Object> deleteUser(@PathVariable("id") String id, Model model, UserVO member){
 		Map<String,Object> map = new HashMap<>();
-		int result = adminService.deleteUser(id);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date day = new Date();
+		String today = sdf.format(day);
+
+		member.setUserId(id);
+		member.setOpenFlag("N");
+		member.setDelDate(today);
+		long result = adminService.deleteUser(member);
 		map.put("result", result);
 		return map;
 	}
@@ -108,9 +119,16 @@ public class AdminController {
 	}
 	
 	@GetMapping("/deletePost/{idx}")
-	public Map<String,Object> deletePost(@PathVariable("idx") int idx, Model model){
+	public Map<String,Object> deletePost(@PathVariable("idx") int idx, Model model, Post post){
 		Map<String,Object> map = new HashMap<>();
-		int result = adminService.deletePost(idx);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date day = new Date();
+		String today = sdf.format(day);
+		
+        post.setPostIdx(idx);
+		post.setDelFlag("Y");
+		post.setDelDate(today);
+		long result = adminService.deletePost(post);
 		map.put("result", result);
 		return map;
 	}

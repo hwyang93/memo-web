@@ -59,6 +59,10 @@
                         <td colspan="2">{{ this.groupDetail.groupTitle }}</td>
                       </tr>
                       <tr scope="row">
+                        <th scope="col">Schedule</th>
+                        <td colspan="2">0 개</td>
+                      </tr>
+                      <tr scope="row">
                         <th scope="col">Info</th>
                         <td colspan="2" v-if="this.groupDetail.groupComment != null"><textarea class="groupInfo" readonly v-model="this.groupDetail.groupComment"></textarea></td>
                         <td colspan="2" v-else><textarea class="groupInfo isEmpty" readonly>그룹 소개가 없습니다.</textarea></td>
@@ -125,6 +129,16 @@ export default {
       axiosUtil.get('/api/admin/groupDetail/' + idx, {}, result => {
         this.groupDetail = result.data.groupDetail;
         this.groupMembers = result.data.groupDetail.groupMembers;
+      });
+    },
+    delGroup(idx) {
+      axiosUtil.get('/api/admin/deleteGroup/' + idx, {}, result => {
+        if (result.data.result == 1) {
+          alert('삭제되었습니다.');
+          location.reload();
+        } else {
+          alert('오류');
+        }
       });
     }
   },
