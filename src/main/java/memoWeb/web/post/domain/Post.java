@@ -4,6 +4,7 @@ import lombok.*;
 import memoWeb.web.main.domain.UserMemo;
 
 import javax.persistence.*;
+
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +31,10 @@ public class Post {
 //	private int memoIdx;
 	@Column(name = "CONTENTS")
 	private String contents;
+	@Column(name="DEL_FLAG")
+	private String delFlag;
+	@Column(name="DEL_DATE")
+	private String delDate;
 
 	@OneToOne
 	@JoinColumn(name = "MEMO_IDX")
@@ -43,6 +48,8 @@ public class Post {
 				.postIdx(postDTO.getPostIdx())
 //				.memoIdx(postDTO.getMemoIdx())
 				.contents(postDTO.getContents())
+				.delFlag(postDTO.getDelFlag())
+				.delDate(postDTO.getDelDate())
 				.userMemo(postDTO.getUserMemo())
 				.postFiles(postDTO.getPostFiles());
 	}
