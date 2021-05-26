@@ -1,6 +1,6 @@
 <template>
   <!--navbar-start-->
-  <nav class="navbar navbar-default navbar-expand-md main-navbar">
+  <nav ref="navbar" class="navbar navbar-default navbar-expand-md main-navbar" :class="[isFixed === true ? 'h_stiky' : '']">
     <div class="container">
       <div class="brand_toggle_cont">
         <!-- Brand -->
@@ -26,14 +26,8 @@
         </button>
       </div>
       <!-- navbar-collapse -->
-      <div
-        class="collapse navbar-collapse justify-content-center"
-        id="navbarSupportedContent"
-      >
-        <ul
-          class="navbar-nav menu navbar__nav nav justify-content-center"
-          id="top-menu"
-        >
+      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+        <ul class="navbar-nav menu navbar__nav nav justify-content-center" id="top-menu">
           <li class="nav-item">
             <a @click="goMenu('/')" class="nav-link">Home</a>
           </li>
@@ -43,34 +37,37 @@
         </ul>
         <!-- //navbar-collapse -->
         <div class="user-area d-flex">
-        <ul class="d-flex align-items-center">
-        <li class="user-info"><a @click="goMenu('/myPage/profile')">{{userName}}</a></li>
-        <li class="user-info"><a @click="logout()">
-          <i class="fas fa-power-off"></i>
-        </a></li>
+          <ul class="d-flex align-items-center">
+            <li class="user-info">
+              <a @click="goMenu('/myPage/profile')">{{ userName }}</a>
+            </li>
+            <li class="user-info">
+              <a @click="logout()">
+                <i class="fas fa-power-off"></i>
+              </a>
+            </li>
 
-          <li class="user-Notifications">
-            <!-- <button type="button" class="btn btn-primary">
+            <li class="user-Notifications">
+              <!-- <button type="button" class="btn btn-primary">
               <i class="far fa-bell"></i> <span class="badge bg-secondary">4</span>
             </button> -->
-            <div class="dropdown">
-              <button class="btn btn-primary no-arrow dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="far fa-bell"></i> <span class="badge bg-secondary">4</span>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                <li><a class="dropdown-item" href="#">description</a></li>
-                <li><a class="dropdown-item" href="#">description</a></li>
-                <li><a class="dropdown-item" href="#">description</a></li>
-                <!-- <li><hr class="dropdown-divider"></li> -->
-                <li><a class="dropdown-item" href="#">description</a></li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
+              <div class="dropdown">
+                <button class="btn btn-primary no-arrow dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="far fa-bell"></i> <span class="badge bg-secondary">4</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                  <li><a class="dropdown-item" href="#">description</a></li>
+                  <li><a class="dropdown-item" href="#">description</a></li>
+                  <li><a class="dropdown-item" href="#">description</a></li>
+                  <!-- <li><hr class="dropdown-divider"></li> -->
+                  <li><a class="dropdown-item" href="#">description</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <!-- //navbar-collapse -->
-
     </div>
   </nav>
   <!--navbar-end-->
@@ -80,11 +77,18 @@
 import axiosUtil from '@/utils/axios-util';
 
 export default {
-  name: "TopMenu",
+  name: 'TopMenu',
   data() {
     return {
-      userName: this.$store.state.auth.userInfo.userName
-    }
+      userName: this.$store.state.auth.userInfo.userName,
+      isFixed: false
+    };
+  },
+  created() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     goMenu(url) {
@@ -94,11 +98,14 @@ export default {
       axiosUtil.post('/api/main/logout', {}, () => {
         localStorage.removeItem('vuex');
         this.$router.push('/login');
-        this.$store.commit('resetState')
+        this.$store.commit('resetState');
       });
+    },
+    handleScroll() {
+      this.isFixed = window.scrollY > 50;
     }
   }
-}
+};
 </script>
 
 <style scoped>
