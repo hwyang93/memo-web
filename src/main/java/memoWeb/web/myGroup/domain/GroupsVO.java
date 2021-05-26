@@ -36,7 +36,6 @@ public class GroupsVO {
     private String regDate;
     @Column(name = "GROUP_COMMENT")
     private String groupComment;
-    
     @Column(name="DEL_FLAG")
 	private String delFlag;
 	@Column(name="DEL_DATE")

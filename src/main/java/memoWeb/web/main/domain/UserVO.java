@@ -30,7 +30,6 @@ public class UserVO {
 	private String regDate;
 	@Column(name = "OPEN_FLAG")
 	private String openFlag;
-	
 	@Column(name="DEL_DATE")
 	private String delDate;
 }
