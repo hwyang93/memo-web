@@ -10,7 +10,7 @@ import memoWeb.web.post.domain.Post;
 
 public interface AdminRepository {
 	List<UserVO> getUserList();
-	int deleteUser(String id);
+	long deleteUser(UserVO member);
 	UserVO getUserInfo(String id);
 	List<Tuple> getMonthData();
 	List<Tuple> getuGroupCnt(String id);
@@ -21,7 +21,7 @@ public interface AdminRepository {
 	long getGscheduleCnt();
 	List<Post> getPostList();
 	Post getPostDetail(int idx);
-	int deletePost(int idx);
+	long deletePost(Post post);
 	List<GroupsVO> getGroupList();
 	GroupsVO getGroupDetail(int idx);
 

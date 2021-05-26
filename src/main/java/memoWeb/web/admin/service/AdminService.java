@@ -25,8 +25,8 @@ public class AdminService {
 		return adminRepository.getUserList();
 	}
 
-	public int deleteUser(String id) {
-		return adminRepository.deleteUser(id);
+	public long deleteUser(UserVO member) {
+		return adminRepository.deleteUser(member);
 	}
 
 	public UserVO getUserInfo(String id) {
@@ -69,8 +69,8 @@ public class AdminService {
 		return adminRepository.getPostDetail(idx);
 	}
 
-	public int deletePost(int idx) {
-		return adminRepository.deletePost(idx);
+	public long deletePost(Post post) {
+		return adminRepository.deletePost(post);
 	}
 
 	public List<GroupsVO> getGroupList() {

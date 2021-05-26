@@ -206,6 +206,7 @@ canvas {
   overflow: scroll;
   overflow-y: auto;
   overflow-x: hidden;
+  color: gray;
 }
 .fileItem {
   float: left;
