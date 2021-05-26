@@ -6,6 +6,7 @@ import memoWeb.web.main.domain.*;
 import memoWeb.web.main.service.ChatService;
 import memoWeb.web.post.domain.PostDTO;
 import memoWeb.web.post.domain.PostFile;
+import memoWeb.web.post.domain.PostFileDTO;
 import memoWeb.web.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,10 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/post")
@@ -32,12 +30,18 @@ public class PostController {
 		this.postService = postService;
 	}
 
-	@GetMapping("/post")
-	public Map<String, Object> getPostList(@ModelAttribute PostDTO postDTO, @RequestParam HashMap<String, String> params) {
-		postDTO.getUserMemo().setUserId(params.get("userId"));
+	@GetMapping("/post/{userId}")
+	public Map<String, Object> getPostList(@ModelAttribute PostDTO postDTO, @PathVariable String userId) {
 		Map<String, Object> resultMap = new HashMap<>();
+		postDTO.getUserMemo().setUserId(userId);
 		List<PostDTO> result = postService.getPostList(postDTO);
-		resultMap.put("result", result);
+		for (PostDTO post : result) {
+			for (PostFileDTO postFile : post.getPostFiles()) {
+				String fileContent = FileUtils.getFileContent("D:/memo-web/post/"+postFile.getFileSaveName());
+				postFile.setFileContent(fileContent);
+			}
+		}
+		resultMap.put("postList", result);
 		return resultMap;
 	}
 
@@ -46,7 +50,8 @@ public class PostController {
 //	public Map<String, Object> savePost(HttpSession session, @RequestBody PostDTO postDTO, MultipartHttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		PostDTO postDTO = new PostDTO();
-		PostFile postFile = null;
+//		PostFile postFile = null;
+		PostFileDTO postFileDTO = null;
 		UserMemo userMemo = postService.getUserMemo(idx);
 		postDTO.setUserMemo(userMemo);
 		postDTO.setContents(request.getParameter("contents"));
@@ -56,11 +61,11 @@ public class PostController {
 			List<MultipartFile> files = request.getFiles(iterator.next());
 			for (MultipartFile file : files) {
 				try {
-					postFile = new PostFile();
+					postFileDTO = new PostFileDTO();
 					String newFileName = FileUtils.fileUpload(file);
-					postFile.setFileSaveName(newFileName);
-					postFile.setFileOrgName(file.getName());
-					postDTO.getPostFiles().add(postFile);
+					postFileDTO.setFileSaveName(newFileName);
+					postFileDTO.setFileOrgName(file.getName());
+					postDTO.getPostFiles().add(postFileDTO);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

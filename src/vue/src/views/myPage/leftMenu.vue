@@ -1,6 +1,6 @@
 <template>
   <div class="blog-sidebar-widgets">
-    <h3 class="widgets-title"> Categories </h3>
+    <h3 class="widgets-title">Categories</h3>
     <div class="blog-sidebar-widgets-inner">
       <ul>
         <li class="cat-item">
@@ -8,6 +8,9 @@
         </li>
         <li class="cat-item">
           <a @click="goMenu('/myPage/memo')"> - my Memo </a>
+        </li>
+        <li class="cat-item">
+          <a @click="goMenu('/myPage/post')"> - Post </a>
         </li>
         <li class="cat-item">
           <a @click="goMenu('/myPage/group')"> - my Group </a>
@@ -19,11 +22,11 @@
 
 <script>
 export default {
-  name: "leftMenu",
+  name: 'leftMenu',
   methods: {
     goMenu(url) {
       this.$router.push(url);
     }
   }
-}
+};
 </script>
