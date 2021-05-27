@@ -10,7 +10,7 @@
               <img src="../../images/dashboard/user.png" id="title-icon" alt="userIcon" />
               <h4 class="title-left">User List</h4>
               <div class="left-listBox listBox">
-                <table class="listTbl">
+                <table class="listTbl" v-if="this.userList != null">
                   <colgroup>
                     <col width="20%" />
                     <col width="80%" />
@@ -25,6 +25,21 @@
                     <tr v-for="(user, index) in userList" :key="index">
                       <th>{{ index + 1 }}</th>
                       <th scope="col" @click="detail(user.userId)">{{ user.userId }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="listTbl" v-else>
+                  <colgroup>
+                    <col width="100%" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="col">회원이 존재하지 않습니다.</th>
                     </tr>
                   </tbody>
                 </table>
@@ -129,13 +144,15 @@ export default {
   created() {
     axiosUtil.get('/api/admin/userList', {}, result => {
       this.userList = result.data.userList;
-      axiosUtil.get('/api/admin/userInfo/' + this.userList[0].userId, {}, result => {
-        this.userInfo = result.data.userInfo;
-        console.log(this.userInfo);
-        this.groupTitle = Object.keys(result.data.uGroupCnt);
-        this.uGroupCnt = Object.values(result.data.uGroupCnt);
-        this.uPostCnt = result.data.uPostCnt;
-      });
+      if (this.userList != null) {
+        axiosUtil.get('/api/admin/userInfo/' + this.userList[0].userId, {}, result => {
+          this.userInfo = result.data.userInfo;
+          console.log(this.userInfo);
+          this.groupTitle = Object.keys(result.data.uGroupCnt);
+          this.uGroupCnt = Object.values(result.data.uGroupCnt);
+          this.uPostCnt = result.data.uPostCnt;
+        });
+      }
     });
   },
   methods: {

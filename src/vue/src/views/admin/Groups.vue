@@ -19,7 +19,7 @@
               <img src="../../images/dashboard/group.png" id="title-icon" alt="groupIcon" />
               <h4 class="title-left">Group List</h4>
               <div class="left-listBox listBox">
-                <table class="listTbl">
+                <table class="listTbl" v-if="this.groupList != null">
                   <colgroup>
                     <col width="20%" />
                     <col width="80%" />
@@ -31,9 +31,24 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(group, index) in groupList" :key="index">
+                    <tr v-for="(g, index) in this.groupList" :key="index">
                       <th>{{ index + 1 }}</th>
-                      <th scope="col" @click="detail(group.groupIdx)">{{ group.groupTitle }}</th>
+                      <th scope="col" @click="detail(g.groupIdx)">{{ g.groupTitle }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="listTbl" v-else>
+                  <colgroup>
+                    <col width="100%" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="col">그룹이 존재하지 않습니다.</th>
                     </tr>
                   </tbody>
                 </table>
@@ -82,7 +97,7 @@
                   </div>
                 </div>
                 <div>
-                  <span class="delBtn" @click="delGroup(this.groupDetail.groupIdx)">Delete</span>
+                  <span class="delBtn" @click="delGroup()">Delete</span>
                 </div>
               </div>
             </div>
@@ -117,12 +132,12 @@ export default {
     getGroupList() {
       axiosUtil.get('/api/admin/groupList', {}, result => {
         this.groupList = result.data.groupList;
-        axiosUtil.get('/api/admin/groupDetail/' + this.groupList[0].groupIdx, {}, result => {
-          this.groupDetail = result.data.groupDetail;
-          this.groupMembers = result.data.groupDetail.groupMembers;
-          console.log(this.groupDetail);
-          console.log(this.groupMembers);
-        });
+        if (this.groupList != null) {
+          axiosUtil.get('/api/admin/groupDetail/' + this.groupList[0].groupIdx, {}, result => {
+            this.groupDetail = result.data.groupDetail;
+            this.groupMembers = result.data.groupDetail.groupMembers;
+          });
+        }
       });
     },
     detail(idx) {
@@ -131,8 +146,8 @@ export default {
         this.groupMembers = result.data.groupDetail.groupMembers;
       });
     },
-    delGroup(idx) {
-      axiosUtil.get('/api/admin/deleteGroup/' + idx, {}, result => {
+    delGroup() {
+      axiosUtil.get('/api/admin/deleteGroup/' + this.groupDetail.groupIdx, {}, result => {
         if (result.data.result == 1) {
           alert('삭제되었습니다.');
           location.reload();
