@@ -1,6 +1,7 @@
 package memoWeb.web.post.domain;
 
 import lombok.*;
+import memoWeb.common.utils.ObjectMapperUtils;
 import memoWeb.web.main.domain.UserMemo;
 
 import javax.persistence.*;
@@ -51,8 +52,12 @@ public class Post {
 				.delFlag(postDTO.getDelFlag())
 				.delDate(postDTO.getDelDate())
 				.userMemo(postDTO.getUserMemo())
-				.postFiles(postDTO.getPostFiles());
+				.postFiles(toPostFileEntity(postDTO.getPostFiles()));
+//				.postFiles(postDTO.getPostFiles());
 	}
 
 
+	private static List<PostFile> toPostFileEntity(List<PostFileDTO> postFiles) {
+		return ObjectMapperUtils.mapAll(postFiles, PostFile.class);
+	}
 }
