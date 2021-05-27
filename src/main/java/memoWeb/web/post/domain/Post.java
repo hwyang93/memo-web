@@ -36,6 +36,8 @@ public class Post {
 	private String delFlag;
 	@Column(name="DEL_DATE")
 	private String delDate;
+	@Column(name = "REG_DATE")
+	private String regDate;
 
 	@OneToOne
 	@JoinColumn(name = "MEMO_IDX")
@@ -43,17 +45,19 @@ public class Post {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "POST_IDX")
 	private List<PostFile> postFiles;
+	@OneToMany
+	@JoinColumn(name = "POST_IDX")
+	private List<PostLike> postLikes;
 
 	public static PostBuilder toEntity(PostDTO postDTO) {
+
 		return PostBuilder()
 				.postIdx(postDTO.getPostIdx())
-//				.memoIdx(postDTO.getMemoIdx())
 				.contents(postDTO.getContents())
 				.delFlag(postDTO.getDelFlag())
 				.delDate(postDTO.getDelDate())
 				.userMemo(postDTO.getUserMemo())
 				.postFiles(toPostFileEntity(postDTO.getPostFiles()));
-//				.postFiles(postDTO.getPostFiles());
 	}
 
 

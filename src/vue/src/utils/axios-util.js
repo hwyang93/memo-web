@@ -58,17 +58,21 @@ const axiosUtil = {
       .then(cbSuccess)
       .catch(cbFail)
       .then(cbComplete);
-  }
+  },
 
-  // delete: function (url, data, cbSuccess, cbFail, cbComplete) {
-  //   axios
-  //     .delete(url, data, {
-  //       headers: { 'Content-Type': 'Application/json' }
-  //     })
-  //     .then(cbSuccess)
-  //     .catch(cbFail)
-  //     .then(cbComplete);
-  // }
+  delete: function (url, data, cbSuccess, cbFail, cbComplete) {
+    axios
+      .delete(url, {
+        headers: {
+          'Content-Type': 'Application/json',
+          token: store.state.auth.userInfo.token
+        },
+        data: data
+      })
+      .then(cbSuccess)
+      .catch(cbFail)
+      .then(cbComplete);
+  }
 
   // get: function (url, data, cbSuccess, cbFail, cbComplete) {
   //   debugger;

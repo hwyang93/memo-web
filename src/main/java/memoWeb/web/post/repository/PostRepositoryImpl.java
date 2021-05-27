@@ -6,8 +6,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import memoWeb.web.main.domain.*;
 import memoWeb.web.myGroup.domain.QGroupsVO;
-import memoWeb.web.post.domain.Post;
-import memoWeb.web.post.domain.QPost;
+import memoWeb.web.post.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +26,9 @@ public class PostRepositoryImpl implements PostRepository {
 
 	QPost qPost = QPost.post;
 	QUserMemo qUserMemo = QUserMemo.userMemo;
+	QPostLike qPostLike = QPostLike.postLike;
+	QPostReply qPostReplyParent = new QPostReply("qPostReplyParent");
+	QPostReply qPostReplyChildren = new QPostReply("qPostReplyChildren");
 
 	public PostRepositoryImpl(JPAQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
@@ -43,6 +45,7 @@ public class PostRepositoryImpl implements PostRepository {
 	public List<Post> getPostList(Post post) {
 		return queryFactory.selectFrom(qPost)
 				.where(qUserMemo.userId.eq(post.getUserMemo().getUserId()))
+				.orderBy(qPost.regDate.desc())
 				.fetch();
 	}
 
@@ -50,4 +53,29 @@ public class PostRepositoryImpl implements PostRepository {
 	public void savePost(Post post) {
 		em.persist(post);
 	}
+
+	@Override
+	public void saveLike(PostLike postLike) {
+		em.persist(postLike);
+	}
+
+	@Override
+	public void cancelLike(PostLike postLike) {
+		queryFactory.delete(qPostLike)
+				.where(qPostLike.postIdx.eq(postLike.getPostIdx())
+						.and(qPostLike.userId.eq(postLike.getUserId())))
+				.execute();
+	}
+
+	@Override
+	public List<PostReply> getPostReplyList(Post post) {
+		return queryFactory.selectFrom(qPostReplyParent)
+				.distinct()
+				.leftJoin(qPostReplyParent.children, qPostReplyChildren)
+				.fetchJoin()
+//				.where(qPostReplyParent.parent.isNull())
+				.orderBy(qPostReplyParent.idx.desc(), qPostReplyChildren.idx.desc())
+				.fetch();
+	}
+
 }
