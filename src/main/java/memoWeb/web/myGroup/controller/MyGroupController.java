@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,6 +85,7 @@ public class MyGroupController {
 
 		group.setGroupMasterUser(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
 		group.setGroupIdx(groupIdx);
+		group.setDelFlag("N");
 
 
 		GroupMemberVO masterUser = new GroupMemberVO();
@@ -122,7 +126,13 @@ public class MyGroupController {
 
 	@PostMapping("deleteGroup.do")
 	public String deleteGroup(Model model, @RequestBody GroupDTO group) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date day = new Date();
+		String today = sdf.format(day);
+		group.setDelFlag("Y");
+		group.setDelDate(today);
 		myGroupService.deleteGroup(group);
+		
 		return "jsonView";
 	}
 

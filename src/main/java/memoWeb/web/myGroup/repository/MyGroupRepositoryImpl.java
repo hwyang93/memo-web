@@ -95,7 +95,7 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 				.from(qGroups)
 				.innerJoin(qGroupMember)
 				.on(qGroups.groupIdx.eq(qGroupMember.groupIdx))
-				.where(qGroupMember.groupUser.eq(user.getUserId()))
+				.where(qGroupMember.groupUser.eq(user.getUserId()), qGroups.delFlag.eq("N"))
 				.fetch();
 	}
 
@@ -126,7 +126,11 @@ public class MyGroupRepositoryImpl implements MyGroupRepository {
 
 	@Override
 	public void deleteGroup(GroupDTO group) {
-		queryFactory.delete(qGroups).where(qGroups.groupIdx.eq(group.getGroupIdx())).execute();
+		queryFactory.update(qGroups)
+					.set(qGroups.delFlag, group.getDelFlag())
+					.set(qGroups.delDate, group.getDelDate())
+					.where(qGroups.groupIdx.eq(group.getGroupIdx()))
+					.execute();
 	}
 
 	@Override

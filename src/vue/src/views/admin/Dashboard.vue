@@ -31,8 +31,8 @@
               <div class="card-content">
                 <div class="c-box title">Group</div>
                 <div class="c-box icon"><img src="../../images/dashboard/group.png" id="dashIcon" /></div>
-                <div class="c-box groupInfo"></div>
-                <div class="c-box total">Total :{{ this.groupTotal }}</div>
+                <div class="c-box data"><group-chart style="height: 230px; width: 230px; margin: auto"></group-chart></div>
+                <div class="c-box total">Total : {{ this.groupTotal }}</div>
               </div>
             </div>
           </div>
@@ -47,15 +47,18 @@ import SideMenu from '../../components/sideMenu.vue';
 import UserChart from '@/components/UserChart.vue';
 import BoardChart from '@/components/BoardChart.vue';
 import EventBus from '@/eventBus.js';
+import GroupChart from '@/components/GroupChart.vue';
 export default {
   name: 'Dashboard',
   components: {
     SideMenu,
     AdminTopMenu,
     UserChart,
-    BoardChart
+    BoardChart,
+    GroupChart
   },
   data() {
+    GroupChart;
     return {
       pageName: 'Dashboard',
       userTotal: 0,
@@ -70,6 +73,9 @@ export default {
     });
     EventBus.$on('userTotal', payload => {
       this.userTotal = payload;
+    });
+    EventBus.$on('groupTotal', payload => {
+      this.groupTotal = payload;
     });
   }
 };

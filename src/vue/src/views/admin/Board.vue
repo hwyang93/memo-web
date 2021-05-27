@@ -10,7 +10,7 @@
               <img src="../../images/dashboard/post.png" id="title-icon" alt="postIcon" />
               <h4 class="title-left">Board List</h4>
               <div class="left-listBox listBox">
-                <table class="listTbl">
+                <table class="listTbl" v-if="this.postList != null">
                   <colgroup>
                     <col width="20%" />
                     <col width="80%" />
@@ -25,6 +25,21 @@
                     <tr v-for="(post, index) in postList" :key="index">
                       <th>{{ index + 1 }}</th>
                       <th scope="col" @click="detail(post.postIdx)">{{ post.userMemo.title }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="listTbl" v-else>
+                  <colgroup>
+                    <col width="100%" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="col">게시글이 존재하지 않습니다.</th>
                     </tr>
                   </tbody>
                 </table>
@@ -49,7 +64,8 @@
                         <th scope="col">Writer</th>
                         <td>{{ this.userMemo.userId }}</td>
                         <th scope="col">Register Date</th>
-                        <td>{{ $moment(this.userMemo.regDate).format('YYYY-MM-DD') }}</td>
+                        <td v-if="this.postList != null">{{ $moment(this.userMemo.regDate).format('YYYY-MM-DD') }}</td>
+                        <td v-else></td>
                       </tr>
                       <tr scope="row" v-if="this.postFiles != null">
                         <th scope="col">File</th>
@@ -139,11 +155,13 @@ export default {
   created() {
     axiosUtil.get('/api/admin/postList', {}, result => {
       this.postList = result.data.postList;
-      axiosUtil.get('/api/admin/postDetail/' + this.postList[0].postIdx, {}, result => {
-        this.postDetail = result.data.postDetail;
-        this.userMemo = result.data.postDetail.userMemo;
-        this.postFiles = result.data.postDetail.postFiles;
-      });
+      if (this.postList != null) {
+        axiosUtil.get('/api/admin/postDetail/' + this.postList[0].postIdx, {}, result => {
+          this.postDetail = result.data.postDetail;
+          this.userMemo = result.data.postDetail.userMemo;
+          this.postFiles = result.data.postDetail.postFiles;
+        });
+      }
     });
   }
 };

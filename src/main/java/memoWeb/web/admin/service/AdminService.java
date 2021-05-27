@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import com.querydsl.core.Tuple;
 
 import memoWeb.web.admin.repository.AdminRepository;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
 import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.post.domain.Post;
+import memoWeb.web.post.domain.PostDTO;
 
 @Service
 public class AdminService {
@@ -21,11 +24,15 @@ public class AdminService {
 		this.adminRepository = adminRepository;
 	}
 
-	public List<UserVO> getUserList() {
-		return adminRepository.getUserList();
+	public List<UserDTO> getUserList() {
+		List<UserDTO> list = adminRepository.getUserList();
+		if(list.isEmpty()) {
+			list = null;
+		}
+		return list;
 	}
 
-	public long deleteUser(UserVO member) {
+	public long deleteUser(UserDTO member) {
 		return adminRepository.deleteUser(member);
 	}
 
@@ -61,23 +68,43 @@ public class AdminService {
 		return adminRepository.getGscheduleCnt();
 	}
 
-	public List<Post> getPostList() {
-		return adminRepository.getPostList();
+	public List<PostDTO> getPostList() {
+		List<PostDTO> list = adminRepository.getPostList();
+		if(list.isEmpty()) {
+			list = null;
+		}
+		return list;
 	}
 
 	public Post getPostDetail(int idx) {
 		return adminRepository.getPostDetail(idx);
 	}
 
-	public long deletePost(Post post) {
+	public long deletePost(PostDTO post) {
 		return adminRepository.deletePost(post);
 	}
 
-	public List<GroupsVO> getGroupList() {
-		return adminRepository.getGroupList();
+	public List<GroupDTO> getGroupList() {
+		List<GroupDTO> list = adminRepository.getGroupList();
+		if(list.isEmpty()) {
+			list = null;
+		}
+		return list;
 	}
 
 	public GroupsVO getGroupDetail(int idx) {
 		return adminRepository.getGroupDetail(idx);
+	}
+
+	public long getGroupActive() {
+		return adminRepository.getGroupActive();
+	}
+
+	public long getGroupOther() {
+		return adminRepository.getGroupOther();
+	}
+
+	public long deleteGroup(GroupDTO groups) {
+		return adminRepository.deleteGroup(groups);
 	}
 }

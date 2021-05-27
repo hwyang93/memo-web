@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.From;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,26 +14,25 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
-import com.querydsl.jpa.impl.JPADeleteClause;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAUpdateClause;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import memoWeb.web.main.domain.GroupSchedule;
 import memoWeb.web.main.domain.QGroupSchedule;
 import memoWeb.web.main.domain.QUserMemo;
 import memoWeb.web.main.domain.QUserScheduleVO;
 import memoWeb.web.main.domain.QUserVO;
-import memoWeb.web.main.domain.UserMemo;
-import memoWeb.web.main.domain.UserScheduleVO;
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
 import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.myGroup.domain.QGroupMemberVO;
 import memoWeb.web.myGroup.domain.QGroupsVO;
 import memoWeb.web.post.domain.Post;
+import memoWeb.web.post.domain.PostDTO;
 import memoWeb.web.post.domain.QPost;
 
 @Repository
@@ -40,9 +40,11 @@ import memoWeb.web.post.domain.QPost;
 public class AdminRepositoryImpl implements AdminRepository {
 	
 	
-	private static final Object SYSDATE = null;
+
 	@PersistenceContext
 	private EntityManager em;
+	
+	private final JPAQueryFactory queryFactory;
 	QUserVO quser = QUserVO.userVO;
 	QGroupMemberVO qGroupMember = QGroupMemberVO.groupMemberVO;
 	QGroupsVO qGroups = QGroupsVO.groupsVO;
@@ -51,12 +53,15 @@ public class AdminRepositoryImpl implements AdminRepository {
 	QUserScheduleVO qSchedule = QUserScheduleVO.userScheduleVO;
 	QGroupSchedule qGschedule = QGroupSchedule.groupSchedule;
 	
+	public AdminRepositoryImpl(JPAQueryFactory queryFactory) {
+		this.queryFactory = queryFactory;
+	}
+	
 	// ******** dashboard
 	@Override
 	public List<Tuple> getMonthData() {
-		final JPAQuery<UserVO> query = new JPAQuery<>(em);
 		Path<String> regDate = Expressions.stringPath("regDate");
-		return query.from(quser)
+		return queryFactory.selectFrom(quser)
 				.select(((StringExpression) to_char(quser.regDate,("yyyy-mm"))).as(regDate), quser.userId.count().as("cnt"))
 				.where(quser.openFlag.eq("Y"))
 				.groupBy(to_char(quser.regDate,("yyyy-mm")))
@@ -70,34 +75,30 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 	@Override
 	public long getPostCnt() {
-		final JPAQuery<Post> query = new JPAQuery<>(em);
-		return query.from(qPost)
+		return queryFactory.selectFrom(qPost)
 				.where(qPost.delFlag.eq("N")).fetchCount();
 	}
 	
 	@Override
 	public long getMemoCnt() {
-		final JPAQuery<UserMemo> query = new JPAQuery<>(em);
-		return query.from(qMemo).fetchCount();
+		return queryFactory.selectFrom(qMemo).fetchCount();
 	}
 
 	@Override
 	public long getScheduleCnt() {
-		final JPAQuery<UserScheduleVO> query = new JPAQuery<>(em);
-		return query.from(qSchedule).fetchCount();
+		return queryFactory.selectFrom(qSchedule).fetchCount();
 	}
 
 	@Override
 	public long getGscheduleCnt() {
-		final JPAQuery<GroupSchedule> query = new JPAQuery<>(em);
-		return query.from(qGschedule).fetchCount();
+		return queryFactory.selectFrom(qGschedule).fetchCount();
 	}
 	
 	// ******** users
 	@Override
-	public List<UserVO> getUserList() {
-		final JPAQuery<UserVO> query = new JPAQuery<>(em);
-		return query.from(quser)
+	public List<UserDTO> getUserList() {
+		return queryFactory.select(Projections.fields(UserDTO.class, quser.userId))
+				.from(quser)
 				.where(quser.userId.notLike("admin"), quser.openFlag.eq("Y"))
 				.orderBy(quser.regDate.desc())
 				.fetch();
@@ -105,16 +106,14 @@ public class AdminRepositoryImpl implements AdminRepository {
 	
 	@Override
 	public UserVO getUserInfo(String id) {
-		final JPAQuery<UserVO> query = new JPAQuery<>(em);
-		return query.from(quser)
+		return queryFactory.selectFrom(quser)
 				.where(quser.userId.eq(id))
 				.fetchOne();
 	}
 
 	@Override
 	public long getuPostCnt(String id) {
-		final JPAQuery<Post> query = new JPAQuery<>(em);
-		return query.from(qPost)
+		return queryFactory.selectFrom(qPost)
 				.leftJoin(qMemo)
 				.on(qPost.userMemo.idx.eq(qMemo.idx))
 				.fetchJoin()
@@ -125,8 +124,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 	@Override
 	public List<Tuple> getuGroupCnt(String id) {
-		final JPAQuery<UserVO> query = new JPAQuery<>(em);
-		return query
+		return queryFactory
 				.select(qGroups.groupTitle, qGroups.count())
 				.from(qGroups)
 				.leftJoin(qGroupMember)
@@ -138,9 +136,8 @@ public class AdminRepositoryImpl implements AdminRepository {
 	}
 	
 	@Override
-	public long deleteUser(UserVO member) {
-		final JPAUpdateClause updateClause = new JPAUpdateClause(em, quser);
-		return updateClause
+	public long deleteUser(UserDTO member) {
+		return queryFactory.update(quser)
 				.set(quser.openFlag, member.getOpenFlag())
 				.set(quser.delDate, member.getDelDate())
 				.where(quser.userId.eq(member.getUserId()))
@@ -150,9 +147,9 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 	// ******** board
 	@Override
-	public List<Post> getPostList() {
-		final JPAQuery<Post> query = new JPAQuery<>(em);
-		return query.from(qPost)
+	public List<PostDTO> getPostList() {
+		return queryFactory.select(Projections.fields(PostDTO.class, qPost.postIdx, qMemo.title))
+				.from(qPost)
 				.leftJoin(qMemo)
 				.on(qPost.userMemo.idx.eq(qMemo.idx))
 				.fetchJoin()
@@ -162,8 +159,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 
 	@Override
 	public Post getPostDetail(int idx) {
-		final JPAQuery<Post> query = new JPAQuery<>(em);
-		return query.from(qPost)
+		return queryFactory.selectFrom(qPost)
 				.leftJoin(qMemo)
 				.on(qPost.userMemo.idx.eq(qMemo.idx))
 				.fetchJoin()
@@ -172,9 +168,8 @@ public class AdminRepositoryImpl implements AdminRepository {
 	}
 
 	@Override
-	public long deletePost(Post post) {
-		final JPAUpdateClause updateClause = new JPAUpdateClause(em, qPost);
-		return updateClause
+	public long deletePost(PostDTO post) {
+		return queryFactory.update(qPost)
 				.set(qPost.delFlag, post.getDelFlag())
 				.set(qPost.delDate, post.getDelDate())
 				.where(qPost.postIdx.eq(post.getPostIdx()))
@@ -182,18 +177,41 @@ public class AdminRepositoryImpl implements AdminRepository {
 	}
 
 	@Override
-	public List<GroupsVO> getGroupList() {
-		final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
-		return query.from(qGroups)
-				.where(qGroups.delFlag.eq("N")).fetch();
+	public List<GroupDTO> getGroupList() {
+		return queryFactory.select(Projections.fields(GroupDTO.class, qGroups.groupIdx, qGroups.groupTitle))
+				.from(qGroups)
+				.where(qGroups.delFlag.eq("N"))
+				.fetch();
 	}
 
 	@Override
 	public GroupsVO getGroupDetail(int idx) {
-		final JPAQuery<GroupsVO> query = new JPAQuery<>(em);
-		return query.from(qGroups)
+		return queryFactory.selectFrom(qGroups)
 				.where(qGroups.groupIdx.eq(idx))
 				.fetchOne();
+	}
+
+	@Override
+	public long getGroupActive() {
+		return queryFactory.from(qGroups)
+				.where(qGroups.delFlag.eq("N"))
+				.fetchCount();
+	}
+
+	@Override
+	public long getGroupOther() {
+		return queryFactory.from(qGroups)
+				.where(qGroups.delFlag.eq("Y"))
+				.fetchCount();
+	}
+
+	@Override
+	public long deleteGroup(GroupDTO groups) {
+		return queryFactory.update(qGroups)
+				.set(qGroups.delFlag, groups.getDelFlag())
+				.set(qGroups.delDate, groups.getDelDate())
+				.where(qGroups.groupIdx.eq(groups.getGroupIdx()))
+				.execute();
 	}
 
 }

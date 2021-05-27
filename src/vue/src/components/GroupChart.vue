@@ -3,6 +3,7 @@ import { Doughnut, mixins } from 'vue-chartjs';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 import axiosUtil from '@/utils/axios-util';
+import EventBus from '@/eventBus.js';
 export default {
   extends: Doughnut,
   data() {
@@ -13,35 +14,36 @@ export default {
       chartData: {
         hoverBackgroundColor: 'red',
         hoverBorderWidth: 3,
-        labels: ['Active', 'other'],
+        labels: ['Active', 'Other'],
         datasets: [
           {
             label: 'Data One',
             backgroundColor: ['#41B883', '#FFB937'],
-            data: [10, 5]
+            data: []
           }
         ],
         active: 0,
-        other: 0
+        other: 0,
+        total: 0
       }
     };
   },
   methods: {
     getGroupActive() {
-      axiosUtil.get('/api/admin/getGroupActiveDate', {}, result => {
-        this.active = result.data.active;
-        this.other = result.data.other;
+      axiosUtil.get('/api/admin/getGroupActiveData', {}, result => {
+        this.chartData.datasets[0].data = [result.data.active, result.data.other];
+        this.total = result.data.active + result.data.other;
+        EventBus.$emit('groupTotal', this.total);
+        this.renderChart(this.chartData, this.chartOptions, {
+          borderWidth: '5px',
+          hoverBackgroundColor: 'red',
+          hoverBorderWidth: '5px'
+        });
       });
     }
   },
-  mounted() {
-    // this.chartData is created in the mixin.
-    // If you want to pass options please create a local options object
-    this.renderChart(this.chartData, this.chartOptions, {
-      borderWidth: '10px',
-      hoverBackgroundColor: 'red',
-      hoverBorderWidth: '10px'
-    });
+  beforeMount() {
+    this.getGroupActive();
   }
 };
 </script>

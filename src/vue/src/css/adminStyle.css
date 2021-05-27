@@ -189,7 +189,7 @@ canvas {
   overflow-x: hidden;
   border: 1px solid #ccc;
   position: absolute;
-  background-color: #fff;
+  background-color: #f1f1f1;
   box-shadow: inset 0px 0px 5px white;
 }
 .gitem {
@@ -252,8 +252,9 @@ canvas {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 180px;
+  height: 120px;
 }
+
 .mProfile {
   width: 40px;
   display: inline-block;

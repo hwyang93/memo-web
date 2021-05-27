@@ -4,13 +4,16 @@ import java.util.List;
 
 import com.querydsl.core.Tuple;
 
+import memoWeb.web.main.domain.UserDTO;
 import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
 import memoWeb.web.myGroup.domain.GroupsVO;
 import memoWeb.web.post.domain.Post;
+import memoWeb.web.post.domain.PostDTO;
 
 public interface AdminRepository {
-	List<UserVO> getUserList();
-	long deleteUser(UserVO member);
+	List<UserDTO> getUserList();
+	long deleteUser(UserDTO member);
 	UserVO getUserInfo(String id);
 	List<Tuple> getMonthData();
 	List<Tuple> getuGroupCnt(String id);
@@ -19,10 +22,13 @@ public interface AdminRepository {
 	long getMemoCnt();
 	long getScheduleCnt();
 	long getGscheduleCnt();
-	List<Post> getPostList();
+	List<PostDTO> getPostList();
 	Post getPostDetail(int idx);
-	long deletePost(Post post);
-	List<GroupsVO> getGroupList();
+	long deletePost(PostDTO post);
+	List<GroupDTO> getGroupList();
 	GroupsVO getGroupDetail(int idx);
+	long getGroupActive();
+	long getGroupOther();
+	long deleteGroup(GroupDTO groups);
 
 }
