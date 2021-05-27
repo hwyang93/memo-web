@@ -58,6 +58,9 @@ export default {
     }
   },
   methods: {
+    test() {
+      alert(123);
+    },
     closeModal() {
       this.$emit('closeModal');
     },
@@ -68,7 +71,9 @@ export default {
       this.files.push(this.file);
       const imageUrl = URL.createObjectURL(this.file);
       this.previewImgs.push(imageUrl);
-      this.$refs.preview.setSlide(this.previewImgs.length - 1);
+      debugger;
+      const slide = this.previewImgs.length - 1;
+      this.$refs.preview.setSlide(slide);
     },
     onSave() {
       let files = [];
@@ -76,7 +81,6 @@ export default {
       const formData = new FormData();
       formData.append('contents', this.contents);
       this.files.forEach(item => {
-        console.log(item);
         formData.append(item.name, item);
         file.fileOrgName = item.name;
         files.push(file);
@@ -84,6 +88,7 @@ export default {
 
       axiosUtil.multipartPost('/api/post/post/userMemo/' + this.idx, formData, () => {
         alert('포스트가 저장되었습니다.');
+        this.$emit('closeModal');
       });
     }
   },

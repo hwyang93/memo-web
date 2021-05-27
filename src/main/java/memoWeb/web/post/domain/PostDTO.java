@@ -20,13 +20,16 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PostDTO {
 	private int postIdx;
-	private int memoIdx;
+//	private int memoIdx;
 	private String contents;
 	private String delFlag;
 	private String delDate;
+	private String regDate;
+	private String likeYn;
 
 	private UserMemo userMemo = new UserMemo();
 	private List<PostFileDTO> postFiles = new ArrayList<>();
+	private List<PostLikeDTO> postLikes = new ArrayList<>();
 
 	public PostDTO(Post post) {
 		this.postIdx = post.getPostIdx();
@@ -36,9 +39,16 @@ public class PostDTO {
 		this.postFiles = this.toPostFileDTO(post.getPostFiles());
 		this.delFlag  = post.getDelFlag();
 		this.delDate = post.getDelDate();
+		this.regDate = post.getRegDate();
+		this.postLikes = this.toPostLikeDTO(post.getPostLikes());
+
 	}
 
 	public List<PostFileDTO> toPostFileDTO(List<PostFile> postFiles) {
 		return ObjectMapperUtils.mapAll(postFiles, PostFileDTO.class);
+	}
+
+	public List<PostLikeDTO> toPostLikeDTO(List<PostLike> postLikes) {
+		return ObjectMapperUtils.mapAll(postLikes, PostLikeDTO.class);
 	}
 }
