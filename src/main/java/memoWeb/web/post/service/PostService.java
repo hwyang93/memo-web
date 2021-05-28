@@ -45,8 +45,24 @@ public class PostService {
 		postRepository.cancelLike(postLike);
 	}
 
-	public List<PostReply> getPostReplyList(PostDTO postDTO) {
+	public List<PostReplyDTO> getPostReplyList(PostDTO postDTO) {
 		Post post = Post.toEntity(postDTO).build();
-		return postRepository.getPostReplyList(post);
+		List<PostReply> result = postRepository.getPostReplyList(post);
+		return ObjectMapperUtils.mapAll(result, PostReplyDTO.class);
 	}
+
+	public int getOriginNoMax(PostReplyDTO postReplyDTO) {
+		PostReply postReply = PostReply.toEntity(postReplyDTO).build();
+		return postRepository.getOriginNoMax(postReply);
+	}
+	public int getGroupOrdMax(PostReplyDTO postReplyDTO) {
+		PostReply postReply = PostReply.toEntity(postReplyDTO).build();
+		return postRepository.getGroupOrdMax(postReply);
+	}
+
+	public void saveReply(PostReplyDTO postReplyDTO) {
+		PostReply postReply = PostReply.toEntity(postReplyDTO).build();
+		postRepository.saveReply(postReply);
+	}
+
 }

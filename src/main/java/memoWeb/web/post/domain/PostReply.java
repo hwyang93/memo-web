@@ -20,32 +20,30 @@ import java.util.List;
 		allocationSize=1
 )
 @Table(name = "POST_REPLY")
-//@Builder(builderMethodName = "PostLikeBuilder")
+@Builder(builderMethodName = "PostReplyBuilder")
 public class PostReply {
 	@Id
 	@Column(name = "IDX")
 	private int idx;
 	@Column(name = "POST_IDX")
 	private int postIdx;
-//	@Column(name = "GROUP_IDX")
-//	private int groupIdx;
+	@Column(name = "ORIGIN_NO")
+	private int originNo;
 	@Column(name = "REG_DATE")
 	private String regDate;
 	@Column(name = "CONTENTS")
 	private String contents;
 	@Column(name = "USER_ID")
 	private String userId;
+	@Column(name = "GROUP_ORD")
+	private int groupOrd;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GROUP_IDX")
-	private PostReply parent;
-
-	@OneToMany(mappedBy = "parent")
-	private List<PostReply> children = new ArrayList<>();
-
-//	public static PostReply.PostLikeBuilder toEntity(PostLikeDTO postLikeDTO) {
-//		return PostLikeBuilder()
-//				.postIdx(postLikeDTO.getPostIdx())
-//				.userId(postLikeDTO.getUserId());
-//	}
+	public static PostReplyBuilder toEntity(PostReplyDTO postReplyDTO) {
+		return PostReplyBuilder()
+				.postIdx(postReplyDTO.getPostIdx())
+				.originNo(postReplyDTO.getOriginNo())
+				.contents(postReplyDTO.getContents())
+				.userId(postReplyDTO.getUserId())
+				.groupOrd(postReplyDTO.getGroupOrd());
+	}
 }

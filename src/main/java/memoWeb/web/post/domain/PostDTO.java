@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import memoWeb.common.utils.ObjectMapperUtils;
 import memoWeb.web.main.domain.UserMemo;
+import memoWeb.web.main.domain.UserMemoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PostDTO {
 	private int postIdx;
-//	private int memoIdx;
+	//	private int memoIdx;
 	private String contents;
 	private String delFlag;
 	private String delDate;
@@ -31,17 +32,23 @@ public class PostDTO {
 	private List<PostFileDTO> postFiles = new ArrayList<>();
 	private List<PostLikeDTO> postLikes = new ArrayList<>();
 
+	private List<PostReplyDTO> postReplyList = new ArrayList<>();
+
 	public PostDTO(Post post) {
 		this.postIdx = post.getPostIdx();
 //		this.memoIdx = post.getMemoIdx();
 		this.contents = post.getContents();
 //		this.userMemo = post.getUserMemo();
 		this.postFiles = this.toPostFileDTO(post.getPostFiles());
-		this.delFlag  = post.getDelFlag();
+		this.delFlag = post.getDelFlag();
 		this.delDate = post.getDelDate();
 		this.regDate = post.getRegDate();
 		this.postLikes = this.toPostLikeDTO(post.getPostLikes());
 
+	}
+
+	public UserMemoDTO toUserMemoDTO(UserMemo userMemo) {
+		return ObjectMapperUtils.map(userMemo, UserMemoDTO.class);
 	}
 
 	public List<PostFileDTO> toPostFileDTO(List<PostFile> postFiles) {
