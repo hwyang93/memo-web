@@ -19,7 +19,7 @@ import java.util.Optional;
 @Repository
 //public class PostRepositoryImpl{
 public class PostRepositoryImpl implements PostRepository {
-	@Autowired
+
 	private final JPAQueryFactory queryFactory;
 	@PersistenceContext
 	private EntityManager em;
@@ -27,8 +27,7 @@ public class PostRepositoryImpl implements PostRepository {
 	QPost qPost = QPost.post;
 	QUserMemo qUserMemo = QUserMemo.userMemo;
 	QPostLike qPostLike = QPostLike.postLike;
-	QPostReply qPostReplyParent = new QPostReply("qPostReplyParent");
-	QPostReply qPostReplyChildren = new QPostReply("qPostReplyChildren");
+	QPostReply qPostReply = QPostReply.postReply;
 
 	public PostRepositoryImpl(JPAQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
@@ -69,13 +68,25 @@ public class PostRepositoryImpl implements PostRepository {
 
 	@Override
 	public List<PostReply> getPostReplyList(Post post) {
-		return queryFactory.selectFrom(qPostReplyParent)
-				.distinct()
-				.leftJoin(qPostReplyParent.children, qPostReplyChildren)
-				.fetchJoin()
-//				.where(qPostReplyParent.parent.isNull())
-				.orderBy(qPostReplyParent.idx.desc(), qPostReplyChildren.idx.desc())
+		return queryFactory.selectFrom(qPostReply)
+				.where(qPostReply.postIdx.eq(post.getPostIdx()))
+				.orderBy(qPostReply.originNo.asc(),qPostReply.groupOrd.asc())
 				.fetch();
+	}
+
+	@Override
+	public int getOriginNoMax(PostReply postReply) {
+		return Optional.ofNullable(queryFactory.select(qPostReply.originNo.max()).from(qPostReply).where(qPostReply.postIdx.eq(postReply.getPostIdx())).fetchOne()).orElseGet(() -> 0);
+	}
+
+	@Override
+	public int getGroupOrdMax(PostReply postReply) {
+		return Optional.ofNullable(queryFactory.select(qPostReply.groupOrd.max()).from(qPostReply).where(qPostReply.postIdx.eq(postReply.getPostIdx()).and(qPostReply.originNo.eq(postReply.getOriginNo()))).fetchOne()).orElseGet(() -> 0);
+	}
+
+	@Override
+	public void saveReply(PostReply postReply) {
+		em.persist(postReply);
 	}
 
 }

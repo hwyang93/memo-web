@@ -43,19 +43,17 @@ public class PostController {
 					post.setLikeYn("Y");
 				}
 			}
+			List<PostReplyDTO> postReplyList = postService.getPostReplyList(post);
+			post.setPostReplyList(postReplyList);
 		}
-
-
 		resultMap.put("postList", result);
 		return resultMap;
 	}
 
 	@PostMapping("/post/userMemo/{idx}")
 	public Map<String, Object> savePost(HttpSession session, @PathVariable int idx, MultipartHttpServletRequest request) {
-//	public Map<String, Object> savePost(HttpSession session, @RequestBody PostDTO postDTO, MultipartHttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		PostDTO postDTO = new PostDTO();
-//		PostFile postFile = null;
 		PostFileDTO postFileDTO = null;
 		UserMemo userMemo = postService.getUserMemo(idx);
 		postDTO.setUserMemo(userMemo);
@@ -100,8 +98,15 @@ public class PostController {
 	@GetMapping("/postReply")
 	public Map<String, Object> cancelPost(@ModelAttribute PostDTO postDTO) {
 		Map<String, Object> resultMap = new HashMap<>();
-		List<PostReply> result = postService.getPostReplyList(postDTO);
+		List<PostReplyDTO> result = postService.getPostReplyList(postDTO);
 		resultMap.put("result", result);
+		return resultMap;
+	}
+
+	@PostMapping("/postReply")
+	public Map<String, Object> saveReply(@RequestBody PostReplyDTO postReplyDTO) {
+		Map<String, Object> resultMap = new HashMap<>();
+
 		return resultMap;
 	}
 }

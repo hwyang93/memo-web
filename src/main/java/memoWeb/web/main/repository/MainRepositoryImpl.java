@@ -108,7 +108,7 @@ public class MainRepositoryImpl implements MainRepository {
 				.from(qUser)
 				.innerJoin(qUserRelation)
 				.on(qUserRelation.followUserId.eq(user.getUserId()))
-				.where(qUser.userId.eq(qUserRelation.followUserId)
+				.where(qUser.userId.eq(qUserRelation.userId)
 						.and(qUserRelation.relationStatus.eq("I"))
 						.and((qUser.userId.contains(user.getKeyword())
 								.or(qUser.userName.contains(user.getKeyword())
