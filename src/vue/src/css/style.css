@@ -2031,6 +2031,10 @@ ul.about-plannings.nav li {
   padding-bottom: 30px;
 }
 
+.blog_post-details .icon {
+  cursor: pointer;
+}
+
 .blog_post-details .post_user h4 {
   font-size: 18px;
   color: #00adb5;
