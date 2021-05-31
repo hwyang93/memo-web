@@ -55,11 +55,8 @@ public class MainController {
 	}
 
 	@PostMapping("signUp.do")
-
 	public ResponseEntity signUp(@RequestBody UserVO member) {
-
 		UserVO result = mainService.signUp(member);
-
 		return ResponseEntity.ok().body(result);
 	}
 
@@ -81,10 +78,11 @@ public class MainController {
 		return "jsonView";
 	}
 
-	@PostMapping("saveGroupSchedule.do")
+	@PutMapping("saveGroupSchedule.do")
 	public String saveGroupSchedule(Model model, @RequestBody GroupSchedule groupSchedule, HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
 		groupSchedule.setRegUser(user.getUserId());
+		System.out.println(groupSchedule);
 		GroupSchedule result = mainService.saveGroupSchedule(groupSchedule);
 
 		model.addAttribute("result", result);

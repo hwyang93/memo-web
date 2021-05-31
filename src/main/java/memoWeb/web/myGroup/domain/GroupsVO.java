@@ -36,7 +36,7 @@ public class GroupsVO {
     private String regDate;
     @Column(name = "GROUP_COMMENT")
     private String groupComment;
-    @Column(name="DEL_FLAG")
+    @Column(name="DEL_FLAG", columnDefinition = "varchar(10) default 'N'")
 	private String delFlag;
 	@Column(name="DEL_DATE")
 	private String delDate;

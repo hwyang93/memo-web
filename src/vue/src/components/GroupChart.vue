@@ -32,7 +32,7 @@ export default {
     getGroupActive() {
       axiosUtil.get('/api/admin/getGroupActiveData', {}, result => {
         this.chartData.datasets[0].data = [result.data.active, result.data.other];
-        this.total = result.data.active + result.data.other;
+        this.total = result.data.active;
         EventBus.$emit('groupTotal', this.total);
         this.renderChart(this.chartData, this.chartOptions, {
           borderWidth: '5px',

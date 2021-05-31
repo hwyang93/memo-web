@@ -22,9 +22,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(post, index) in postList" :key="index">
+                    <tr v-for="(p, index) in this.postList" :key="index">
                       <th>{{ index + 1 }}</th>
-                      <th scope="col" @click="detail(post.postIdx)">{{ post.userMemo.title }}</th>
+                      <th scope="col" @click="detail(p.postIdx)">{{ p.userMemo.title }}</th>
                     </tr>
                   </tbody>
                 </table>
@@ -67,7 +67,7 @@
                         <td v-if="this.postList != null">{{ $moment(this.userMemo.regDate).format('YYYY-MM-DD') }}</td>
                         <td v-else></td>
                       </tr>
-                      <tr scope="row" v-if="this.postFiles != null">
+                      <tr scope="row" v-if="this.postFiles.length != 0">
                         <th scope="col">File</th>
                         <td colspan="3">
                           <ul class="fileList">
@@ -83,7 +83,8 @@
                       </tr>
                       <tr scope="row">
                         <th scope="col">Place</th>
-                        <td colspan="3">{{ this.userMemo.memoPlace }}</td>
+                        <td colspan="3" v-if="this.userMemo.memoPlace != null">{{ this.userMemo.memoPlace }}</td>
+                        <td colspan="3" v-else>지정된 장소가 없습니다.</td>
                       </tr>
                       <tr scope="row">
                         <th scope="col">Title</th>
@@ -139,6 +140,8 @@ export default {
         this.postDetail = result.data.postDetail;
         this.userMemo = result.data.postDetail.userMemo;
         this.postFiles = result.data.postDetail.postFiles;
+        console.log(this.userMemo);
+        console.log(this.postFiles);
       });
     },
     delPost(idx) {
