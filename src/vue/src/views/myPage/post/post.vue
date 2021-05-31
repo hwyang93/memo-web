@@ -16,43 +16,6 @@
       <div class="col-lg-8 col-md-12">
         <div class="blog_post-details" v-for="(item, index) in postList" :key="'post' + index">
           <post-detail :post="item"></post-detail>
-          <!--          <div class="shadow-wrap-2">-->
-          <!--            <img src="" class="img-fluid" />-->
-          <!--            <div class="post_catipon text-left">-->
-          <!--              <ul class="nav post_nav">-->
-          <!--                <li class="post_user">-->
-          <!--                  <img src="" class="img_post_user" />-->
-          <!--                  <h4>작성자</h4>-->
-          <!--                  <span class="date"> 작성일 </span>-->
-          <!--                </li>-->
-          <!--              </ul>-->
-          <!--              <p>{{ item.contents }}</p>-->
-          <!--            </div>-->
-          <!--            <b-carousel id="carousel-1" :interval="4000" controls indicators img-width="720" img-height="450" style="text-shadow: 1px 1px 2px #333">-->
-          <!--              <b-carousel-slide img-height="450" v-for="(fileItem, index) in item.postFiles" :key="'postFile' + index" :img-src="'data:image/jpeg;base64,' + fileItem.fileContent"></b-carousel-slide>-->
-          <!--            </b-carousel>-->
-          <!--            <hr />-->
-          <!--            <div class="d-flex justify-content-between">-->
-          <!--              <div>-->
-          <!--                <div @click="onLike(item)" class="icon">-->
-          <!--                  <i :class="[item.likeYn === 'Y' ? 'fas fa-heart fa-2x' : 'far fa-heart fa-2x']"></i>-->
-          <!--                </div>-->
-          <!--                <div>좋아요 {{ item.postLikes.length }}개</div>-->
-          <!--              </div>-->
-          <!--              <div>댓글 {{ item.postReplyList.length }}개</div>-->
-          <!--            </div>-->
-          <!--            <hr />-->
-          <!--            <div class="d-flex flex-column">-->
-          <!--              <div class="reply" v-for="reItem in item.postReplyList" :key="'post' + reItem.idx" :class="[reItem.groupOrd > 0 ? 're' : '']">-->
-          <!--                <div>{{ reItem.userId }}</div>-->
-          <!--                <div>{{ reItem.contents }}</div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--            <hr />-->
-          <!--            <div>-->
-          <!--              <b-form-textarea v-model="reply" max-rows="4" placeholder="댓글을 입력하세요..." rows="1" @keydown.enter="onEnter"></b-form-textarea>-->
-          <!--            </div>-->
-          <!--          </div>-->
         </div>
       </div>
     </div>

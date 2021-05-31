@@ -17,6 +17,8 @@ public class PostReplyDTO {
 	private String userId;
 	private int groupOrd;
 
+	private String mode;
+
 	public PostReplyDTO(PostReply postReply) {
 		this.idx = postReply.getIdx();
 		this.postIdx = postReply.getPostIdx();

@@ -104,8 +104,25 @@ public class PostController {
 	}
 
 	@PostMapping("/postReply")
-	public Map<String, Object> saveReply(@RequestBody PostReplyDTO postReplyDTO) {
+	public Map<String, Object> saveReply(HttpSession session, @RequestBody PostReplyDTO postReplyDTO) {
 		Map<String, Object> resultMap = new HashMap<>();
+		PostDTO postDTO = new PostDTO();
+		postReplyDTO.setUserId(((UserDTO) session.getAttribute(CommonConstants.SESSION)).getUserId());
+		if (postReplyDTO.getOriginNo() == 0) {
+			int originNo = postService.getOriginNoMax(postReplyDTO) + 1;
+			postReplyDTO.setOriginNo(originNo);
+			postReplyDTO.setGroupOrd(0);
+		} else {
+			int groupOrd = postService.getGroupOrdMax(postReplyDTO) + 1;
+			postReplyDTO.setGroupOrd(groupOrd);
+		}
+		postService.saveReply(postReplyDTO);
+
+		postDTO.setPostIdx(postReplyDTO.getPostIdx());
+
+		List<PostReplyDTO> postReplyList = postService.getPostReplyList(postDTO);
+
+		resultMap.put("result", postReplyList);
 
 		return resultMap;
 	}
