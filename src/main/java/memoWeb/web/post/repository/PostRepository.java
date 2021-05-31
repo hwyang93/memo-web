@@ -16,4 +16,7 @@ public interface PostRepository {
 	void saveLike(PostLike postLike);
 	void cancelLike(PostLike postLike);
 	List<PostReply> getPostReplyList(Post post);
+	int getOriginNoMax(PostReply postReply);
+	int getGroupOrdMax(PostReply postReply);
+	void saveReply(PostReply postReply);
 }

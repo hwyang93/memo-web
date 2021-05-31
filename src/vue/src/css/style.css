@@ -2042,6 +2042,22 @@ ul.about-plannings.nav li {
   font-family: 'PT Serif', serif !important;
 }
 
+.blog_post-details .reply {
+  display: inline-block;
+  background-color: #d3d3d370;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.blog_post-details hr {
+  margin-top:5px;
+}
+
+.blog_post-details .re {
+  margin-left:50px;
+}
+
 .blog_post-details .post_user span.date {
   font-size: 14px;
   font-weight: 400;

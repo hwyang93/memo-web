@@ -30,7 +30,7 @@ public class UserMemo implements Serializable {
 	@Column(name = "TITLE")
 	private String title;
 
-	@Column(name = "USER_ID")
+	@Column(name = "USER_ID", insertable = false, updatable = false)
 	private String userId;
 
 	@Column(name = "REG_DATE", insertable = false, updatable = false,
@@ -49,4 +49,7 @@ public class UserMemo implements Serializable {
 	@Column(name = "MEMO")
 	private String memo;
 
+	@OneToOne
+	@JoinColumn(name = "USER_ID")
+	private UserVO user;
 }

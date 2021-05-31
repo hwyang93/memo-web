@@ -12,4 +12,6 @@ public class UserMemoDTO {
     private String lon;
     private String lat;
     private String memo;
+
+    private UserDTO userDTO;
 }

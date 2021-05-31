@@ -16,7 +16,7 @@
           </div>
           <div>
             <div class="user-info">
-              {{ '사용자 이름' }}
+              {{ item.sendUserId }}
             </div>
             <div class="message-recieve">
               {{ item.sendMessage }}
