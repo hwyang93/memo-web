@@ -27,13 +27,7 @@
     <hr />
     <div class="d-flex flex-column">
       <div v-for="reItem in post.postReplyList" :key="'post' + reItem.idx" :class="[reItem.groupOrd > 0 ? 're' : '']">
-        <div class="reply">
-          <div>{{ post.userMemo.user.userName }}</div>
-          <div>{{ reItem.contents }}ㄹㅇ남러ㅣㅏㄴㅇ럼;ㅣㅏㅇ널;ㅣㅏ너라ㅣ;ㄴ런;ㅣ아런아ㅣ;런ㅇ;ㅏㅣㄹ넝;ㅣㅏ</div>
-        </div>
-        <div>
-          <a>답글달기</a>
-        </div>
+        <post-reply :post-user-info="post.userMemo.user" :post-reply-info="reItem" @setReply="setReply"></post-reply>
       </div>
     </div>
     <hr />
@@ -45,9 +39,10 @@
 
 <script>
 import axiosUtil from '@/utils/axios-util';
-
+import PostReply from '@/views/myPage/post/postReply';
 export default {
   name: 'postDetail',
+  components: { PostReply },
   props: {
     post: Object
   },
@@ -88,19 +83,30 @@ export default {
         });
       });
     },
-    onEnter(e, params) {
+    onEnter(e) {
       e.preventDefault();
       if (this.reply.length > 0) {
         if (e.ctrlKey) {
           this.reply += '\n';
         } else {
-          this.saveReply(params);
+          this.saveReply();
         }
       }
       // this.$refs.textarea.focus();
     },
-    saveReply(params) {
-      console.log(params.groupOrd);
+    saveReply() {
+      console.log(this.post);
+      const params = {
+        postIdx: this.post.postIdx,
+        contents: this.reply
+      };
+      axiosUtil.post('/api/post/postReply', params, result => {
+        this.reply = '';
+        this.post.postReplyList = result.data.result;
+      });
+    },
+    setReply(replyList) {
+      this.post.postReplyList = replyList;
     }
   }
 };

@@ -6,6 +6,7 @@ import memoWeb.web.main.domain.UserMemo;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,7 +37,8 @@ public class Post {
 	private String delFlag;
 	@Column(name="DEL_DATE")
 	private String delDate;
-	@Column(name = "REG_DATE")
+	@Column(name = "REG_DATE", insertable = false, updatable = false,
+			columnDefinition = "Date default sysdate")
 	private String regDate;
 
 	@OneToOne
@@ -50,7 +52,6 @@ public class Post {
 	private List<PostLike> postLikes;
 
 	public static PostBuilder toEntity(PostDTO postDTO) {
-
 		return PostBuilder()
 				.postIdx(postDTO.getPostIdx())
 				.contents(postDTO.getContents())

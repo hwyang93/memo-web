@@ -92,7 +92,11 @@ public class MainController {
 	@PostMapping(value = "/memo")
 	public String saveUserMemo(Model model, @RequestBody UserMemo userMemo, HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute(CommonConstants.SESSION);
-		userMemo.setUserId(user.getUserId());
+		UserVO userVO = new UserVO();
+		userVO.setUserId(user.getUserId());
+ 		userMemo.setUser(userVO);
+
+//		userMemo.setUserId(user.getUserId());
 		UserMemo result = mainService.saveUserMemo(userMemo);
 
 		model.addAttribute("result", result);
