@@ -2,16 +2,23 @@ package memoWeb.web.myGroup.domain;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "GROUP_MEMBER")
 public class GroupMemberVO {
-
+	
     @Column(name = "GROUP_IDX")
     private int groupIdx;
     @Id
@@ -28,4 +35,9 @@ public class GroupMemberVO {
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "GROUP_IDX")
 //    private GroupsVO groups;
+    @ManyToOne
+    @JoinColumn(name="GROUP_IDX",insertable = false, updatable = false)
+    @ToString.Exclude
+    @JsonIgnore
+    private GroupsVO groups;
 }

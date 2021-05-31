@@ -1,15 +1,20 @@
 package memoWeb.web.myGroup.service;
 
-import com.querydsl.core.Tuple;
-import memoWeb.web.main.domain.UserDTO;
-import memoWeb.web.main.domain.UserVO;
-import memoWeb.web.myGroup.domain.*;
-import memoWeb.web.myGroup.repository.MyGroupRepository;
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
+import memoWeb.web.main.domain.UserDTO;
+import memoWeb.web.main.domain.UserVO;
+import memoWeb.web.myGroup.domain.GroupDTO;
+import memoWeb.web.myGroup.domain.GroupMemberDTO;
+import memoWeb.web.myGroup.domain.GroupMemberVO;
+import memoWeb.web.myGroup.domain.GroupsVO;
+import memoWeb.web.myGroup.domain.UserRelationDTO;
+import memoWeb.web.myGroup.domain.UserRelationVO;
+import memoWeb.web.myGroup.repository.MyGroupRepository;
 
 @Service
 public class MyGroupService {
@@ -53,7 +58,7 @@ public class MyGroupService {
 	public int getGroupIdx() {
 		return myGroupRepository.getGroupIdx();
 	}
-
+	
 	public void createGroup(GroupDTO groupDTO) {
 		GroupsVO group = GroupsVO.toEntity(groupDTO).build();
 		myGroupRepository.createGroup(group);

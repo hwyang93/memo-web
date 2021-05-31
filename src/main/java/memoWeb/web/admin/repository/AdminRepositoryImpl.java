@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.From;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +33,7 @@ import memoWeb.web.myGroup.domain.QGroupsVO;
 import memoWeb.web.post.domain.Post;
 import memoWeb.web.post.domain.PostDTO;
 import memoWeb.web.post.domain.QPost;
+import memoWeb.web.post.domain.QPostFile;
 
 @Repository
 @Transactional
@@ -50,6 +50,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	QGroupsVO qGroups = QGroupsVO.groupsVO;
 	QPost qPost = QPost.post;
 	QUserMemo qMemo = QUserMemo.userMemo;
+	QPostFile qPostFile = QPostFile.postFile;
 	QUserScheduleVO qSchedule = QUserScheduleVO.userScheduleVO;
 	QGroupSchedule qGschedule = QGroupSchedule.groupSchedule;
 	
@@ -148,7 +149,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	// ******** board
 	@Override
 	public List<PostDTO> getPostList() {
-		return queryFactory.select(Projections.fields(PostDTO.class, qPost.postIdx, qMemo.title))
+		return queryFactory.select(Projections.fields(PostDTO.class, qPost.postIdx, qPost.userMemo))
 				.from(qPost)
 				.leftJoin(qMemo)
 				.on(qPost.userMemo.idx.eq(qMemo.idx))
