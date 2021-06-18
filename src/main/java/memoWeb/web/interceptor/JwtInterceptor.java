@@ -14,12 +14,12 @@ import javax.servlet.http.HttpSession;
 public class JwtInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession();
-		UserDTO userInfo = (UserDTO) session.getAttribute(CommonConstants.SESSION);
-		String token = request.getHeader("token");
-		if (userInfo == null || token == null || !token.equals(userInfo.getToken())) {
-			throw new JwtException("로그인 정보가 없습니다.");
-		}
+//		HttpSession session = request.getSession();
+//		UserDTO userInfo = (UserDTO) session.getAttribute(CommonConstants.SESSION);
+//		String token = request.getHeader("token");
+//		if (userInfo == null || token == null || !token.equals(userInfo.getToken())) {
+//			throw new JwtException("로그인 정보가 없습니다.");
+//		}
 		return true;
 	}
 }

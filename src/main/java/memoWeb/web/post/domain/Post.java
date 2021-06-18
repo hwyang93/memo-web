@@ -5,8 +5,6 @@ import memoWeb.common.utils.ObjectMapperUtils;
 import memoWeb.web.main.domain.UserMemo;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
